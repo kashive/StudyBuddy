@@ -6,7 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-
+gem 'bootstrap-sass', '2.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -21,6 +21,14 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :development, :test do
+	gem 'pry' #command line interactive debugger as well as an interative online shell
+	gem 'rspec-rails' #testing framework
+	gem 'better_errors' #makes the exception page pretty and adds interactive debugging tool
+	gem 'binding_of_caller'
+	gem 'meta_request'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
