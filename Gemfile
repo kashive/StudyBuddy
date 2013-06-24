@@ -5,7 +5,6 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 gem 'bootstrap-sass', '2.0.0'
 
 # Gems used only for assets and not required
@@ -23,6 +22,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+	gem 'sqlite3' 
 	gem 'pry' #command line interactive debugger as well as an interative online shell
 	gem 'rspec-rails' #testing framework
 	gem 'better_errors' #makes the exception page pretty and adds interactive debugging tool
@@ -30,6 +30,9 @@ group :development, :test do
 	gem 'meta_request'
 end
 
+group :production do
+  gem 'pg'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
