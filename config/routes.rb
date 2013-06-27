@@ -1,4 +1,13 @@
 StudyBuddy::Application.routes.draw do
+  devise_for :users do
+    get "/", :to => "devise/sessions#new"
+  end
+
+  resources :users do
+    resources :courses
+  end  
+
+  root :to => "devise/sessions#new"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
