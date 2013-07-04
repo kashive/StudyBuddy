@@ -25,7 +25,7 @@ class CoursesController < ApplicationController
   # GET /courses/new.json
   def new
     @course = Course.new
-    @user   = current_user;
+    @user   = current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,7 +36,7 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
-    @user   = User.find(params[:user_id])
+    @user   = current_user
   end
 
   # POST /courses
@@ -46,6 +46,10 @@ class CoursesController < ApplicationController
     @course.user_id = params[:user_id]    
     respond_to do |format|
       if @course.save
+        @enrollment = Enrollment.new
+        @enrollment.user_id   =  current_user.id
+        @enrollment.course_id =  @course.id
+        @enrollment.save
         format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
         format.json { render json: @course, status: :created, location: @course }
       else

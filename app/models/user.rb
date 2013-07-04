@@ -9,6 +9,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :college,
   :major_minors,:exp_graduation_date,:gender,:highschool,:about_yourself,:contact_number
   # attr_accessible :title, :body
-
-  has_many :courses, dependent: :destroy
+  has_many :enrollments
+  has_many :courses, through: :enrollments, dependent: :destroy
 end
