@@ -20,6 +20,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'nokogiri'
+gem "mechanize", "~> 2.7.2"
 
 group :development, :test do
 	gem 'sqlite3' 

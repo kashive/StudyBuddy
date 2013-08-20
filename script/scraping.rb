@@ -1,16 +1,20 @@
 require 'rubygems'
 require 'nokogiri'
 require 'mechanize'
-#mechianize user agent
+require 'storable'
+
 a = Mechanize.new { |agent|
   agent.user_agent_alias = 'Mac Safari'
 }
+
 # hashes to store the data in
-subjectCourseTeacher = {}
-courseAndTeacher = {}
+# subjectCourseTeacher = {}
+# courseAndTeacher = {}
+subjectAndCourses = {}
+courseList = []
 
 a.get('http://www.brandeis.edu/registrar/schedule/search?strm=1133&view=UGRD') do |searchPage|
-	#algorithm:
+#algorithm:
 # get the search form website, get all the subject values, iterate through each subject,
 # get the list of courses in the subject, put it in a hash
 	searchForm 	= searchPage.form_with(:id => "searchForm")
@@ -24,12 +28,18 @@ a.get('http://www.brandeis.edu/registrar/schedule/search?strm=1133&view=UGRD') d
 		coursePage = searchForm.submit(searchForm.buttons[1])
 		allSubjectOptions[indexToSelect].untick
 		courseHTML = Nokogiri::HTML(coursePage.body)
+		#iterating over the courses table
 		courseHTML.xpath('//table[@id="classes-list"]/tr').collect do |row|
 			className = row.at("td[3]/strong/text()").to_s.strip;
-			teachersName = row.at("td[6]/a/text()").to_s.strip.inspect;
-			courseAndTeacher[className] = teachersName
+			# teachersName = row.at("td[6]/a/text()").to_s.strip.inspect;
+			# courseAndTeacher[className] = teachersName
+			courseList.push(className)
 		end
-		subjectCourseTeacher[subjectName]=courseAndTeacher
+		subjectAndCourses[subjectName]=courseList.uniq
+		courseList=[]
 	end
 end
 
+File.open('CoursesList','w') do|file|
+ Marshal.dump(subjectAndCourses, file)
+end
