@@ -8,10 +8,8 @@ a = Mechanize.new { |agent|
 }
 
 # hashes to store the data in
-# subjectCourseTeacher = {}
-# courseAndTeacher = {}
-subjectAndCourses = {}
-courseList = []
+subjectCourseTeacher = {}
+courseAndTeacher = {}
 
 a.get('http://www.brandeis.edu/registrar/schedule/search?strm=1133&view=UGRD') do |searchPage|
 #algorithm:
@@ -31,15 +29,14 @@ a.get('http://www.brandeis.edu/registrar/schedule/search?strm=1133&view=UGRD') d
 		#iterating over the courses table
 		courseHTML.xpath('//table[@id="classes-list"]/tr').collect do |row|
 			className = row.at("td[3]/strong/text()").to_s.strip;
-			# teachersName = row.at("td[6]/a/text()").to_s.strip.inspect;
-			# courseAndTeacher[className] = teachersName
-			courseList.push(className)
+			teachersName = row.at("td[6]/a/text()").to_s.strip.inspect;
+			courseAndTeacher[className] = teachersName
 		end
-		subjectAndCourses[subjectName]=courseList.uniq
-		courseList=[]
+		subjectCourseTeacher[subjectName]=courseAndTeacher
+		courseAndTeacher = {}
 	end
 end
 
 File.open('CoursesList','w') do|file|
- Marshal.dump(subjectAndCourses, file)
+ Marshal.dump(subjectCourseTeacher, file)
 end
