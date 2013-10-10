@@ -1,7 +1,11 @@
 StudyBuddy::Application.routes.draw do
-  devise_for :users do
-    get "/", :to => "devise/sessions#new"
-  end
+  # devise_for :users do
+  #   get "/", :to => "sessions#new"
+  # end
+
+  devise_for :users, :controllers => { :sessions => "sessions"}
+
+  devise_scope :user do get "/" => "devise/sessions#new" end
 
   resources :users do
     resources :courses

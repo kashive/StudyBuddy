@@ -30,6 +30,7 @@ group :development, :test do
 	gem 'better_errors' #makes the exception page pretty and adds interactive debugging tool
 	gem 'binding_of_caller'
 	gem 'meta_request'
+	gem 'debugger'
 end
 
 group :production do
