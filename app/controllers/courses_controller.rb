@@ -23,9 +23,9 @@ class CoursesController < ApplicationController
   # GET /courses/new
   # GET /courses/new.json
   def new
+    # make sure that you pass in the list of departments and courses to the views
     @course = Course.new
     @user   = current_user
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @course }
