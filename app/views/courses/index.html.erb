@@ -2,21 +2,20 @@
 
 <table>
   <tr>
+  	<th>Department</th>
     <th>Name</th>
     <th>Term</th>
     <th>Professor</th>
-    <th>Number</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
 
 <% @courses.each do |course| %>
-  <tr>
+  <tr>    
+    <td><%= course.department %></td>
     <td><%= course.name %></td>
     <td><%= course.term %></td>
     <td><%= course.professor %></td>
-    <td><%= course.number %></td>
     <td><%= link_to 'Show', user_course_path(current_user,course)%></td>
     <td><%= link_to 'Edit', edit_user_course_path(current_user,course)%></td>
     <td><%= link_to 'Destroy', user_course_path(current_user,course), method: :delete, data: { confirm: 'Are you sure?' } %></td>
