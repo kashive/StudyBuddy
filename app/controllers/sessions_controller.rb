@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
       resource.ensure_authentication_token
       respond_to do |format|
         format.html { redirect_to user_courses_path(current_user), notice: 'You are logged in' }
-        format.json { render json: resource.inspect.to_json }
+        format.json { render :json=> { :auth_token=> current_user.authentication_token, :success=> true, :status=> :created }}
       end
       return
     end
@@ -24,9 +24,15 @@ class SessionsController < Devise::SessionsController
     if signed_out
       resource.authentication_token = nil
       resource.save
-      render :json=> {:success=>true}
+      respond_to do |format|
+        format.html{super}
+        format.json{render :json=> {:success=>true}}
+      end
     else
-      render :json=> {:success=>false, :message=>"Logout unsuccessful"}, :status=>401
+      respond_to do |format|
+        format.html{super}
+        format.json{render :json=> {:success=>false, :message=>"Logout unsuccessful", :status=>401}}
+      end
     end  
   end
 
