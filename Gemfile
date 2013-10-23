@@ -22,6 +22,7 @@ end
 gem 'jquery-rails'
 gem 'nokogiri'
 gem "mechanize", "~> 2.7.2"
+gem 'gon'
 
 group :development, :test do
 	gem 'sqlite3' 

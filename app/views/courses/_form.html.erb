@@ -10,18 +10,18 @@
       </ul>
     </div>
   <% end %>
-   
-  <div class="field">
-    <%= f.label :department %><br />
-    <%= f.text_field :department %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  
-  <%= f.hidden_field :term, :value => "Fall 2013" %>
-  <%= f.hidden_field :professor, :value => "Dummy Professor" %>
+
+ <div class="field">
+  <%= f.label :department %><br />
+  <%= select_tag "course[department]", options_for_select(@subjectHash.keys), :prompt=>"Please select department" %>
+</div>
+<div class="field">
+  <%= f.label :name %><br />
+  <%= select_tag "course[name]" %>
+</div>
+
+<%= f.hidden_field :term, :value => "Fall 2013" %>
+<%= f.hidden_field :professor, :value => "Dummy Professor" %>
 <div class="actions">
     <%= f.submit %>
   </div>

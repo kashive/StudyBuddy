@@ -65,6 +65,9 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     hike (1.2.3)
     http-cookie (1.0.1)
       domain_name (~> 0.5)
@@ -181,6 +184,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   debugger
   devise
+  gon
   jquery-rails
   mechanize (~> 2.7.2)
   meta_request

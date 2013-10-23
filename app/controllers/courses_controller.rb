@@ -24,8 +24,10 @@ class CoursesController < ApplicationController
   # GET /courses/new.json
   def new
     # make sure that you pass in the list of departments and courses to the views
-    @course = Course.new
-    @user   = current_user
+    @course         = Course.new
+    @user           = current_user
+    @subjectHash    = Marshal.load (File.binread('/home/avishek/Documents/StudyBuddy/script/CoursesList')) 
+    gon.subjectHash = @subjectHash;
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @course }
@@ -43,6 +45,8 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(params[:course])
     @course.user_id = params[:user_id]    
+    subjectHash    = Marshal.load (File.binread('/home/avishek/Documents/StudyBuddy/script/CoursesList'))
+    @course.professor = subjectHash[@course.department][@course.name]
     respond_to do |format|
       if @course.save
         @enrollment = Enrollment.new

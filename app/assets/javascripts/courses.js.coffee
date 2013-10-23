@@ -1,3 +1,13 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+// # Place all the behaviors and hooks related to the matching controller here.
+// # All this logic will automatically be available in application.js.
+// # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+jQuery ($) ->
+	$(document).ready ->
+		$("#course_department").change ->
+			$('#course_name').empty()
+			selected_text = $( "#course_department option:selected" ).text()
+			if selected_text != ""
+				for course in Object.keys(gon.subjectHash[selected_text])
+					teacher = gon.subjectHash[selected_text][course]
+					teacher = teacher.substring(1,teacher.length - 1)
+					$("#course_name").append($('<option></option>').val(course).html(course+" by " + teacher)) if course != ""
