@@ -26,7 +26,7 @@ class CoursesController < ApplicationController
     # make sure that you pass in the list of departments and courses to the views
     @course         = Course.new
     @user           = current_user
-    @subjectHash    = Marshal.load (File.binread('/home/avishek/Documents/StudyBuddy/script/CoursesList')) 
+    @subjectHash    = Marshal.load (File.binread('script/CoursesList')) 
     gon.subjectHash = @subjectHash;
     respond_to do |format|
       format.html # new.html.erb
@@ -45,7 +45,7 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(params[:course])
     @course.user_id = params[:user_id]    
-    subjectHash    = Marshal.load (File.binread('/home/avishek/Documents/StudyBuddy/script/CoursesList'))
+    subjectHash    = Marshal.load (File.binread('script/CoursesList'))
     @course.professor = subjectHash[@course.department][@course.name]
     respond_to do |format|
       if @course.save
