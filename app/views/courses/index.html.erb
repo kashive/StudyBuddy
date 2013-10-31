@@ -18,7 +18,7 @@
     <td><%= course.professor %></td>
     <td><%= link_to 'Show', user_course_path(current_user,course)%></td>
     <td><%= link_to 'Edit', edit_user_course_path(current_user,course)%></td>
-    <td><%= link_to 'Destroy', user_course_path(current_user,course), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Delete', user_course_path(current_user,course), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

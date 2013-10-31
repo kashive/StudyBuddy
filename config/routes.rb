@@ -12,6 +12,7 @@ StudyBuddy::Application.routes.draw do
   end  
 
   root :to => "devise/sessions#new"
+  get "home_pages/index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
