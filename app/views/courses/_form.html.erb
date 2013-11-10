@@ -1,28 +1,25 @@
-<%= form_for([@user, @course]) do |f| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-      <ul>
-      <% @course.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for ([@user, @course]), :html => { :class => 'form-horizontal' } do |f| %>
+  
+  <div class="control-group">
+    <%= f.label :department, :class => 'control-label'%><br />
+    <div class ="controls">    
+      <%= select_tag "course[department]", options_for_select(@subjectHash.keys), :prompt=>"Please select department" %>
     </div>
-  <% end %>
+  </div>
 
- <div class="field">
-  <%= f.label :department %><br />
-  <%= select_tag "course[department]", options_for_select(@subjectHash.keys), :prompt=>"Please select department" %>
-</div>
-<div class="field">
-  <%= f.label :name %><br />
-  <%= select_tag "course[name]" %>
-</div>
+  <div class="control-group">
+    <%= f.label :course,:class => 'control-label' %><br />
+    <div class ="controls">    
+      <%= select_tag "course[name]" %>
+    </div>
+  </div>
+
 
 <%= f.hidden_field :term, :value => "Fall 2013" %>
 <%= f.hidden_field :professor, :value => "Dummy Professor" %>
-<div class="actions">
-    <%= f.submit %>
-  </div>
+
+<%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+              user_courses_path, :class => 'btn' %>
+
 <% end %>

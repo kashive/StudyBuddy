@@ -8,6 +8,6 @@ jQuery ($) ->
 			selected_text = $( "#course_department option:selected" ).text()
 			if selected_text != ""
 				for course in Object.keys(gon.subjectHash[selected_text])
-					teacher = gon.subjectHash[selected_text][course]
-					teacher = teacher.substring(1,teacher.length - 1)
-					$("#course_name").append($('<option></option>').val(course).html(course+" by " + teacher)) if course != ""
+					# teacher = gon.subjectHash[selected_text][course]
+					# teacher = teacher.substring(1,teacher.length - 1)
+					$("#course_name").append($('<option></option>').val(course).html(course)) if course != ""
