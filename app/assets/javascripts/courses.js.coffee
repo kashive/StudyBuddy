@@ -11,3 +11,12 @@ jQuery ($) ->
 					# teacher = gon.subjectHash[selected_text][course]
 					# teacher = teacher.substring(1,teacher.length - 1)
 					$("#course_name").append($('<option></option>').val(course).html(course)) if course != ""
+		$(document).on 'click', 'tr[data-link]', (evt) -> 
+			window.location = this.dataset.link
+		$("table").delegate "td", "mouseover mouseleave", (e) ->
+		  if e.type is "mouseover"
+		    $(this).parent().addClass "hover"
+		    $("colgroup").eq($(this).index()).addClass "hover"
+		  else
+		    $(this).parent().removeClass "hover"
+		    $("colgroup").eq($(this).index()).removeClass "hover"

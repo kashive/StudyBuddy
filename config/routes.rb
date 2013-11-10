@@ -7,8 +7,8 @@ StudyBuddy::Application.routes.draw do
 
   devise_scope :user do get "/" => "devise/sessions#new" end
 
-  resources :users do
-    resources :courses
+  resources :users  do
+    resources :courses, :only => [:index,:create,:show,:new]
   end  
 
   root :to => "devise/sessions#new"

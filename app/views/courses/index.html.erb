@@ -1,11 +1,10 @@
 <%- model_class = Course -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1><%=t '.title', :default => "All "+ model_class.model_name.human.pluralize %></h1>
 </div>
-<table class="table table-striped">
+<table class="table table-striped", id="course_index">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:term) %></th>
       <th><%= model_class.human_attribute_name(:professor) %></th>
@@ -15,8 +14,7 @@
   </thead>
   <tbody>
     <% @courses.each do |course| %>
-      <tr>
-        <td><%= link_to course.id, user_course_path(current_user,course) %></td>
+      <tr data-link="<%=user_course_path(current_user,course)%>">
         <td><%= course.name %></td>
         <td><%= course.term %></td>
         <td><%= course.professor %></td>
@@ -24,8 +22,6 @@
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       user_course_path(current_user,course), :class => 'btn btn-mini' %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_user_course_path(current_user,course), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       user_course_path(current_user,course),
                       :method => :delete,
