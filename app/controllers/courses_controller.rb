@@ -46,7 +46,7 @@ class CoursesController < ApplicationController
     @course = Course.new(params[:course])
     @course.user_id = params[:user_id]    
     subjectHash    = Marshal.load (File.binread('script/CoursesList'))
-    @course.professor = subjectHash[@course.department][@course.name]
+    @course.professor = subjectHash[@course.department][@course.name].gsub! /"/, ''
     respond_to do |format|
       if @course.save
         @enrollment = Enrollment.new

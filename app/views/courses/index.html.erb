@@ -9,9 +9,7 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:term) %></th>
       <th><%= model_class.human_attribute_name(:professor) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
       <th><%= model_class.human_attribute_name(:department) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -22,9 +20,7 @@
         <td><%= course.name %></td>
         <td><%= course.term %></td>
         <td><%= course.professor %></td>
-        <td><%= course.user_id %></td>
         <td><%= course.department %></td>
-        <td><%=l course.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       user_course_path(current_user,course), :class => 'btn btn-mini' %>
