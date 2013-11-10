@@ -5,7 +5,6 @@ class SessionsController < Devise::SessionsController
   def create
     resource = User.find_by_email(params[:user][:email])
     return invalid_login_attempt unless resource
-
     if resource.valid_password?(params[:user][:password])
       sign_in(:user, resource)
       resource.ensure_authentication_token
