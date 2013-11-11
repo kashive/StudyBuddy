@@ -3,16 +3,15 @@ StudyBuddy::Application.routes.draw do
   #   get "/", :to => "sessions#new"
   # end
 
-  devise_for :users, :controllers => { :sessions => "sessions"}
+  devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registrations"}
 
   devise_scope :user do get "/" => "devise/sessions#new" end
 
   resources :users  do
-    resources :courses, :only => [:index,:create,:show,:new]
+    resources :courses, :only => [:index,:create,:show,:new,:destroy]
   end  
 
   root :to => "devise/sessions#new"
-  get "home_pages/index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

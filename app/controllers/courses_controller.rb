@@ -34,12 +34,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  # GET /courses/1/edit
-  def edit
-    @course = Course.find(params[:id])
-    @user   = current_user
-  end
-
   # POST /courses
   # POST /courses.json
   def create
@@ -85,7 +79,7 @@ class CoursesController < ApplicationController
     @course.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_courses_path }
+      format.html { redirect_to user_courses_path, notice: 'Course was successfully deleted' }
       format.json { head :no_content }
     end
   end
