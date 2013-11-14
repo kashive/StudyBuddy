@@ -20,7 +20,7 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{provider.to_s.titleize} (FB's primary email should end with .edu)", omniauth_authorize_path(resource_name, provider), 
+    <%= link_to "Sign in/up with #{provider.to_s.titleize} (FB's primary email should end with .edu)", omniauth_authorize_path(resource_name, provider), 
     	html_options = {"data-original-title"=>"Warning",
     					"title"=>"Will only work if your Facebook's primary email address is @brandeis.edu",
     					"id"=>"fb_link"} %><br />
