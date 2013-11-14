@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'devise'
+gem 'omniauth-facebook'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -24,15 +25,21 @@ gem 'jquery-rails'
 gem 'nokogiri'
 gem "mechanize", "~> 2.7.2"
 gem 'gon'
+gem "rspec-rails", :group => [:test, :development]
 
 group :development, :test do
 	gem 'sqlite3' 
 	gem 'pry' #command line interactive debugger as well as an interative online shell
-	gem 'rspec-rails' #testing framework
 	gem 'better_errors' #makes the exception page pretty and adds interactive debugging tool
 	gem 'binding_of_caller'
 	gem 'meta_request'
 	gem 'debugger'
+end
+
+group :test do
+  gem "factory_girl_rails", "~> 4.0"
+  gem "capybara"
+  gem "guard-rspec"
 end
 group :production do
   gem 'rails_12factor', '0.0.2'

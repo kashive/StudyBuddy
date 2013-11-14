@@ -2,8 +2,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = current_user.courses
-
+    @courses = Course.where("user_id='#{current_user.id}'")
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @courses }
@@ -14,6 +13,11 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @course = Course.find(params[:id])
+    allEnrollments = Enrollment.where("course_name='#{@course.name}'")
+    @classmates = []
+    allEnrollments.each do |enrollment|
+      @classmates.push(User.where("id='#{enrollment.user_id}'").first)
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @course }
@@ -45,7 +49,7 @@ class CoursesController < ApplicationController
       if @course.save
         @enrollment = Enrollment.new
         @enrollment.user_id   =  current_user.id
-        @enrollment.course_id =  @course.id
+        @enrollment.course_name =  @course.name
         @enrollment.save
         format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
         format.json { render json: @course, status: :created, location: @course }
@@ -76,6 +80,8 @@ class CoursesController < ApplicationController
   # DELETE /courses/1.json
   def destroy
     @course = Course.find(params[:id])
+    enrollments = Enrollment.where("user_id='#{current_user.id}' AND course_name = '#{@course.name}'")
+    enrollments.each do |enrollment| enrollment.destroy end
     @course.destroy
 
     respond_to do |format|

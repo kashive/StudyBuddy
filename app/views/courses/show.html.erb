@@ -10,11 +10,27 @@
   <dd><%= @course.term %></dd>
   <dt><strong><%= model_class.human_attribute_name(:professor) %>:</strong></dt>
   <dd><%= @course.professor %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-  <dd><%= @course.user_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:department) %>:</strong></dt>
   <dd><%= @course.department %></dd>
 </dl>
+<br>
+<br>
+<h1>Classmates</h1>
+<table class="table", id="classmates">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @classmates.each do |classmate| %>
+        <td><%= classmate.first_name + " " + classmate.last_name %></td>
+        <td><%= classmate.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <div class ="action butttons">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               user_courses_path, :class => 'btn'  %>
