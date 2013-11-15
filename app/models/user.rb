@@ -22,9 +22,12 @@ class User < ActiveRecord::Base
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
+      user.oauth_token = auth.credentials.token
       user.first_name = auth["info"]["first_name"]
       user.last_name  = auth["info"]["last_name"]
+      user.image  = auth["info"]["image"]
       user.email = auth["info"]["email"]
+      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.college = "Brandeis University"
     end
   end
@@ -50,7 +53,22 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end  
+
+  def facebook
+    @facebook ||= Koala::Facebook::API.new(oauth_token)
+    block_given? ? yield(@facebook) : @facebook
+    @facebook.exchange_access_token(oauth_token)
+  rescue Koala::Facebook::APIError => e
+    logger.info e.to_s
+    nil # or consider a custom null object
   end
+
+  def friends_count
+    facebook { |fb| fb.get_connection("me", "friends").size }
+  end
+
+
 
   private
     def generate_authentication_token
