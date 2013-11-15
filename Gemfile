@@ -26,7 +26,7 @@ gem 'nokogiri'
 gem "mechanize", "~> 2.7.2"
 gem 'gon'
 gem "rspec-rails", :group => [:test, :development]
-
+gem "koala"
 group :development, :test do
 	gem 'sqlite3' 
 	gem 'pry' #command line interactive debugger as well as an interative online shell

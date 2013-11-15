@@ -1,7 +1,10 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
     user = User.from_omniauth(request.env["omniauth.auth"])
-    alreadyExist = User.where("email = '#{user.email}'").first!
+    begin
+      alreadyExist = User.where("email = '#{user.email}'").first!
+    rescue ActiveRecord::RecordNotFound
+    end
     if user.persisted? && user.email[-13..-1] == "@brandeis.edu" && alreadyExist == nil
       flash.notice = "Signed in!" if user.confirmed_at != nil
       sign_in_and_redirect user
