@@ -219,6 +219,7 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
+    sass (3.2.9)
     slop (3.4.5)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -275,6 +276,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rails_12factor (= 0.0.2)
   rspec-rails
+  sass
   sqlite3
   therubyracer
   twitter-bootstrap-rails
