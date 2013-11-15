@@ -17,7 +17,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       session["devise.user_attributes"] = user.attributes
       user.destroy
-      redirect_to new_user_registration_url, :alert=>"Error Occured!! Please check if Facebook primary email addresss is .edu"
+      redirect_to new_user_registration_url, :alert=>"Error Occured!! Please check if Facebook primary email addresss is @brandeis.edu"
     end
   end
   alias_method :facebook, :all

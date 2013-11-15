@@ -60,5 +60,6 @@ module StudyBuddy
     config.assets.version = '1.0'
     #from devise
     config.assets.initialize_on_precompile = false
-  end
+
+   end
 end

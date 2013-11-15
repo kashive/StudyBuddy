@@ -3,8 +3,9 @@ StudyBuddy::Application.routes.draw do
   #   get "/", :to => "sessions#new"
   # end
 
-  devise_for :users, :controllers => { :sessions => "sessions", 
-                                       :omniauth_callbacks=> "omniauth_callbacks"}
+  devise_for :users, :controllers => {  :omniauth_callbacks=> "omniauth_callbacks",
+                                        :sessions => "sessions"
+                                       }
 
   devise_scope :user do get "/" => "devise/sessions#new" end
 
