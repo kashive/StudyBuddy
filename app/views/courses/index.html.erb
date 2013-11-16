@@ -2,7 +2,7 @@
 
 <% if current_user.provider="facebook"%>
   <div id = "friends">
-    <p><%=link_to "Invite your Facebook Friends", "#", :id => "invite_fb_friends"%></p>
+    <p><%=link_to "Invite your Facebook Friends To Join Study Buddy", "#", :id => "invite_fb_friends",:class => "btn btn-primary btn-large"%></p>
 
     <div id = "fb-root"></div>
     <script src = "//connect.facebook.net/en_US/all.js"></script>

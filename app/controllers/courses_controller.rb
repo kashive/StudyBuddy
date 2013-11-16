@@ -30,7 +30,7 @@ class CoursesController < ApplicationController
     # make sure that you pass in the list of departments and courses to the views
     @course         = Course.new
     @user           = current_user
-    @subjectHash    = Marshal.load (File.binread('script/CoursesList')) 
+    @subjectHash    = Marshal.load (File.binread('script/CourseList1')) 
     gon.subjectHash = @subjectHash;
     respond_to do |format|
       format.html # new.html.erb
@@ -42,20 +42,48 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(params[:course])
-    @course.user_id = params[:user_id]    
-    subjectHash    = Marshal.load (File.binread('script/CoursesList'))
+    @course.user_id = params[:user_id]
+    alreadyExists = false
+    if Course.where("user_id = '#{@course.user_id}' AND name = '#{@course.name}'").first != nil
+      alreadyExists = true
+    end
+    subjectHash    = Marshal.load (File.binread('script/CourseList1'))
+    timingHash     = Marshal.load (File.binread('script/CourseTimings'))
     @course.professor = subjectHash[@course.department][@course.name].gsub! /"/, ''
     respond_to do |format|
-      if @course.save
-        @enrollment = Enrollment.new
-        @enrollment.user_id   =  current_user.id
-        @enrollment.course_name =  @course.name
-        @enrollment.save
-        format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
-        format.json { render json: @course, status: :created, location: @course }
+      if alreadyExists == false
+        if @course.save
+          # updating the schedule timings
+          @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
+          @schedule = Schedule.new if @schedule == nil
+          timingHash[@course.name]['daysInWeek'].each do |day|
+            if day == "M"
+              @schedule.monday = @schedule.monday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+            elsif day =="T"
+              @schedule.tuesday = @schedule.tuesday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+            elsif day =="W"
+              @schedule.wednesday = @schedule.wednesday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+            elsif day =="Th"
+              @schedule.thursday = @schedule.thursday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+            elsif day = "F"
+              @schedule.friday = @schedule.friday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+            end
+          end
+          @schedule.user_id = params[:user_id]
+          @schedule.save
+
+          @enrollment = Enrollment.new
+          @enrollment.user_id   =  current_user.id
+          @enrollment.course_name =  @course.name
+          @enrollment.save
+          format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
+          format.json { render json: @course, status: :created, location: @course }
+        else
+          format.html { redirect_to user_courses_path(current_user), alert: 'Error occured. Did you try adding more than 6 courses?' }
+          format.json { render json: @course.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: "new" }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
+        format.html { redirect_to user_courses_path(current_user), alert: 'Course already exists' }
       end
     end
   end

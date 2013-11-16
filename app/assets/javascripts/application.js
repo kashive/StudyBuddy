@@ -17,7 +17,7 @@
 $( document ).ready(function() {
 	$('#fb_link').popover({
                   'selector': '',
-                  'trigger':'hover'
+                  'trigger':'hover',
                   'placement': 'bottom',
                   'container': 'body'
     });
