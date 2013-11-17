@@ -63,5 +63,5 @@ File.open('CourseTimings','w') do|file|
 end
 
 File.open('CourseList1','w') do|file|
- Marshal.dump(subjectCourseTeacher, file)
+ Marshal.dump(subjectCourseTeacherπ, file)
 end

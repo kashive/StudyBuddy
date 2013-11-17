@@ -14,11 +14,21 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
-$( document ).ready(function() {
+
+$(document).ready(function() {
 	$('#fb_link').popover({
                   'selector': '',
                   'trigger':'hover',
                   'placement': 'bottom',
-                  'container': 'body'
+                  'container': 'body',
+                  
     });
+
+   	if (document.cookie == "signed_in=1"){
+		$("body").css("background-color","white")
+	}
+
+	if (document.cookie == ""){
+		$("body").css("background-color","#5283B0")
+	}
 });
