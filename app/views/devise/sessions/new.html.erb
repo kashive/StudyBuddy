@@ -13,6 +13,7 @@
 		  <% end -%>
 		  <div class = "login_buttons">
 			  <%= f.submit "Sign in", :class=>'btn btn-info', :id=>'sign_in_button' %>
+			  <%= link_to "Sign Up",new_user_registration_path, :class => 'btn btn-warning', :id=>'sign_up_button' %>
 				  <%- if devise_mapping.omniauthable? %>
 					  <%- resource_class.omniauth_providers.each do |provider| %>
 					    <%= link_to "Or, Sign in/up with Facebook", omniauth_authorize_path(resource_name, provider), 

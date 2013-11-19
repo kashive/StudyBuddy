@@ -2,7 +2,7 @@
 
 <% if current_user.provider="facebook"%>
   <div id = "friends">
-    <p><%=link_to "Invite your Facebook Friends To Join Study Buddy", "#", :id => "invite_fb_friends",:class => "btn btn-primary btn-large"%></p>
+    <%=link_to "Invite your Facebook Friends", "#", :id => "invite_fb_friends",:class => "btn btn-primary btn-large"%>
 
     <div id = "fb-root"></div>
     <script src = "//connect.facebook.net/en_US/all.js"></script>
@@ -35,7 +35,6 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:term) %></th>
       <th><%= model_class.human_attribute_name(:professor) %></th>
-      <th><%= model_class.human_attribute_name(:department) %></th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -45,7 +44,6 @@
         <td><%= course.name %></td>
         <td><%= course.term %></td>
         <td><%= course.professor %></td>
-        <td><%= course.department %></td>
         <td>
           <%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
                       user_course_path(current_user,course), :class => 'btn btn-mini btn-primary' %>

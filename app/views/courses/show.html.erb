@@ -32,11 +32,14 @@
   </tbody>
 </table>
 <div class ="action butttons">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              user_courses_path, :class => 'btn'  %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+  <%= link_to t('.add_course', :default => t("helpers.links.add_more_courses")),
+            new_user_course_path,
+            :class => 'btn btn-primary' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.delete")),
               user_course_path(current_user,@course),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              user_courses_path, :class => 'btn'  %>
 </div>

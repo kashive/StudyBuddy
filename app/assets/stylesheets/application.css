@@ -54,13 +54,13 @@ input#user_last_name{
 input#sign_in_button{
 	margin-top: 17px; 
 }
+
+#sign_up_button{
+	margin-top: 17px; 
+}
  .hover { 
  	background-color: #ccc !important; 
  	cursor: pointer;
- }
- #invite_fb_friends{
- 	margin-left: 28%;
- 	width: 40%;
  }
 
  .navbar .nav{
@@ -84,5 +84,14 @@ input#sign_in_button{
 	height: 17px;
  }
  a.brand{
- 	margin-left: 20px !important;
- }
+  width: 20%;
+  height: 20px;
+  margin-left: 20px !important;
+  background: url("/assets/study_buddy_transparent.gif") no-repeat scroll 0px 7px;
+}
+
+#friends{
+	width: 320px;
+	margin-left: auto;
+	margin-right: auto;
+}
