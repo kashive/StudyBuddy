@@ -49,29 +49,80 @@ class CoursesController < ApplicationController
     end
     subjectHash    = Marshal.load (File.binread('script/CourseList1'))
     timingHash     = Marshal.load (File.binread('script/CourseTimings'))
+    scheduleTable  = {"00:00 - 01:00" => "one","01:00 - 02:00" => "two","02:00 - 03:00" => "three","03:00 - 04:00" => "four","04:00 - 05:00" => "five","05:00 - 06:00" => "six","06:00 - 07:00" => "seven","07:00 - 08:00" => "eight","08:00 - 09:00" => "nine","09:00 - 10:00" => "ten","10:00 - 11:00" => "eleven","11:00 - 12:00" => "twelve","12:00 - 13:00" => "thirteen","13:00 - 14:00" => "fourteen","14:00 - 15:00" => "fifteen","15:00 - 16:00" => "sixteen","16:00 - 17:00" => "seventeen","17:00 - 18:00" => "eighteen","18:00 - 19:00" => "nineteen","19:00 - 20:00" => "twenty","20:00 - 21:00" => "twentyone","21:00 - 22:00" => "twentytwo","22:00 - 23:00" => "twentythree","23:00 - 24:00" => "twentyfour"}
     @course.professor = subjectHash[@course.department][@course.name].gsub! /"/, ''
     respond_to do |format|
       if alreadyExists == false
         if @course.save
           # updating the schedule timings
-          @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
-          @schedule = Schedule.new if @schedule == nil
+            timesToUpdate = []
+            startTime = timingHash[@course.name]['startTime']
+            endTime = timingHash[@course.name]['endTime']
+            militaryStartTime = DateTime.parse(startTime).strftime("%H:%M")
+            militaryEndTime   = DateTime.parse(endTime).strftime("%H:%M")
+
+            timesToUpdate.push(militaryStartTime + " - " + ((militaryStartTime[0..1].to_i + 1).to_s + ":00"))
+            if militaryEndTime[3..-1] == "20"
+              timesToUpdate.push(militaryEndTime[0..1] + ":00" + " - " + ((militaryEndTime[0..1].to_i + 1).to_s + ":00"))
+            end
           timingHash[@course.name]['daysInWeek'].each do |day|
             if day == "M"
-              @schedule.monday = @schedule.monday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              timesToUpdate.each do |time|
+                methodName = scheduleTable[time]
+                if methodName != nil
+                  @monday = Monday.where("user_id = '#{current_user.id}'").first
+                  @monday = Monday.new if @monday == nil 
+                  @monday.send(methodName+"=","0")
+                  @monday.user_id = current_user.id
+                  @monday.save
+                end
+              end
             elsif day =="T"
-              @schedule.tuesday = @schedule.tuesday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              timesToUpdate.each do |time|
+                methodName = scheduleTable[time]
+                if methodName != nil
+                  @tuesday = Tuesday.where("user_id = '#{current_user.id}'").first
+                  @tuesday = Tuesday.new if @tuesday == nil
+                  @tuesday.send(methodName+"=","0")
+                  @tuesday.user_id = current_user.id
+                  @tuesday.save
+                end
+              end
             elsif day =="W"
-              @schedule.wednesday = @schedule.wednesday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              timesToUpdate.each do |time|
+                methodName = scheduleTable[time]
+                if methodName != nil
+                  @wednesday = Wednesday.where("user_id = '#{current_user.id}'").first
+                  @wednesday = Wednesday.new if @wednesday == nil
+                  @wednesday.send(methodName+"=","0")
+                  @wednesday.user_id = current_user.id
+                  @wednesday.save
+                end
+              end
             elsif day =="Th"
-              @schedule.thursday = @schedule.thursday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              timesToUpdate.each do |time|
+                methodName = scheduleTable[time]
+                if methodName != nil
+                  @thursday = Thursday.where("user_id = '#{current_user.id}'").first
+                  @thursday = Thursday.new if @thursday == nil
+                  @thursday.send(methodName+"=","0")
+                  @thursday.user_id = current_user.id
+                  @thursday.save
+                end
+              end
             elsif day = "F"
-              @schedule.friday = @schedule.friday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              timesToUpdate.each do |time|
+                methodName = scheduleTable[time]
+                if methodName != nil
+                  @friday = Friday.where("user_id = '#{current_user.id}'").first
+                  @friday = Friday.new if @friday == nil
+                  @friday.send(methodName+"=","0")
+                  @friday.user_id = current_user.id
+                  @friday.save
+                end
+              end
             end
           end
-          @schedule.user_id = params[:user_id]
-          @schedule.save
-
           @enrollment = Enrollment.new
           @enrollment.user_id   =  current_user.id
           @enrollment.course_name =  @course.name
