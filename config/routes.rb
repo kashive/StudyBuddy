@@ -16,6 +16,8 @@ StudyBuddy::Application.routes.draw do
   end  
 
   root :to => "devise/sessions#new"
+  
+  get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
 
   get "study_sessions/index" 
   # The priority is based upon order of creation:

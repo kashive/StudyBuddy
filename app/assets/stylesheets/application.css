@@ -95,3 +95,69 @@ input#sign_in_button{
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.header_row h2{
+	display: inline-flex;
+}
+
+.paginations{
+	margin-left: 15px;
+}
+
+.add_course_button{
+	margin-left:270px; 
+}
+
+div.class_box{
+	border: 2px solid #a1a1a1;
+	background-color: rgb(249,249,300);
+	margin-bottom: 15px;
+	padding: 20px;
+}
+
+div.class_box_info{
+	display: inline-flex;
+	height: 50px;
+	width: 100%;
+}
+
+div.left_info{
+	padding-top: 4px;
+	width: 60%;
+}
+
+div.right_info{
+	padding-top: 4px;
+	width:40%;
+}
+
+div.classname_heading{
+	padding:5px;
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+div.news_heading{
+	border-bottom: 4px solid rgb(193, 194, 195);
+	font-size: 31.5px;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+div.news_content{
+	display: inline-flex;
+}
+
+div.facebook_marketing{
+	width:43%;
+}
+
+div.recent_updates{
+	width: 57%;
+}
+
+div.news_headings{
+	font-size: 12pt;
+	font-weight: bold;
+}
