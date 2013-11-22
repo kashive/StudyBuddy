@@ -21,7 +21,7 @@
         <td><%= course.department %></td>
         <td>
           <%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
-                      user_course_path(current_user,course), :class => 'btn btn-mini btn-primary' %>
+                      new_user_course_StudySession_path(current_user,course), :class => 'btn btn-mini btn-primary' %>
           <%= link_to t('.remove_course', :default => t("helpers.links.remove_course")),
                       user_course_path(current_user,course),
                       :method => :delete,

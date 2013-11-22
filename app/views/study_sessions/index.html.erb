@@ -1,1 +1,28 @@
-<h1>Test</h1>
+<%- model_class = StudySession -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => "All "+ model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table", id="study_sessions_index">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:date) %></th>
+      <th><%= model_class.human_attribute_name(:time) %></th>
+      <th><%= model_class.human_attribute_name(:location) %></th>
+      <th><%= model_class.human_attribute_name(:category) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_study_sessions.each do |session| %>
+      <tr data-link="<%=studysession_path(session)%>">
+        <td><%= course.title %></td>
+      	<td><%= course.date %></td>
+      	<td><%= course.time %></td>
+      	<td><%= course.location %></td>
+      	<td><%= course.category %></td>
+      	<td><%= course.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
