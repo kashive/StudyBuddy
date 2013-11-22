@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<script>
+	function sendLogin() {
+	    alert('Form submitted!');
+	    function loadXMLDoc()
+		{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.onreadystatechange=function()
+		  {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    {
+		    alert(xmlhttp.responseText);
+		    }
+		  }
+		xmlhttp.open("POST"," https://studybuddy.fwd.wf/users/sign_in.json",true);
+		xmlhttp.send('{"user":{"email":"avishek@brandeis.edu","password":"password"}}');
+		}
+	    return false;
+	}
+</script>
+
+<body>
+	<form id="input" onsubmit="return sendLogin()">
+	Username: <input type="text" id="user">
+	Password: <input type="password" name="password">
+	<input type="submit" value="Submit">
+	</form> 
+</body>
