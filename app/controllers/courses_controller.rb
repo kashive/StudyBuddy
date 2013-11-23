@@ -81,11 +81,11 @@ class CoursesController < ApplicationController
           format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
           format.json { render json: @course, status: :created, location: @course }
         else
-          format.html { redirect_to user_courses_path(current_user), alert: 'Error occured. Did you try adding more than 6 courses?' }
+          format.html { redirect_to dashboard_path(current_user), alert: 'Error occured. Did you try adding more than 6 courses?' }
           format.json { render json: @course.errors, status: :unprocessable_entity }
         end
       else
-        format.html { redirect_to user_courses_path(current_user), alert: 'Course already exists' }
+        format.html { redirect_to dashboard_path(current_user), alert: 'Course already exists' }
       end
     end
   end
@@ -115,7 +115,7 @@ class CoursesController < ApplicationController
     @course.create_activity :delete, owner: current_user
     @course.destroy
     respond_to do |format|
-      format.html { redirect_to user_courses_path, notice: 'Course was successfully deleted' }
+      format.html { redirect_to dashboard_path(current_user), notice: 'Course was successfully deleted' }
       format.json { head :no_content }
     end
   end

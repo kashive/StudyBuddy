@@ -17,6 +17,6 @@
 
 <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-              user_courses_path, :class => 'btn' %>
+              dashboard_path(current_user), :class => 'btn' %>
 
 <% end %>
