@@ -22,6 +22,9 @@
         </div>
 	</div>
 	<div class = "class_list">
+		<% if @courses.size == 0%>
+			<h4>Please start by adding a new course</h4>
+		<%end%>
 		<% @courses.each_with_index do |course,index| %>
 			<% if index>=0 && index<=3 %>
 				<div class = "class_box top_class" data-link ="<%=user_course_path(current_user,course)%>" >

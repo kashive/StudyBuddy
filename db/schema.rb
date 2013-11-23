@@ -47,37 +47,6 @@ ActiveRecord::Schema.define(:version => 20131123045956) do
     t.string   "course_name"
   end
 
-  create_table "fridays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "marketings", :force => true do |t|
     t.string   "inviting_user_id"
     t.boolean  "status"
@@ -87,68 +56,6 @@ ActiveRecord::Schema.define(:version => 20131123045956) do
     t.string   "study_session_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-  end
-
-  create_table "mondays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "saturdays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
   end
 
   create_table "schedules", :force => true do |t|
@@ -171,99 +78,6 @@ ActiveRecord::Schema.define(:version => 20131123045956) do
     t.date     "date"
     t.string   "location"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "sundays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "thursdays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "tuesdays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -304,36 +118,5 @@ ActiveRecord::Schema.define(:version => 20131123045956) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "wednesdays", :force => true do |t|
-    t.string   "user_id"
-    t.string   "zero"
-    t.string   "one"
-    t.string   "two"
-    t.string   "three"
-    t.string   "four"
-    t.string   "five"
-    t.string   "six"
-    t.string   "seven"
-    t.string   "eight"
-    t.string   "nine"
-    t.string   "ten"
-    t.string   "eleven"
-    t.string   "twelve"
-    t.string   "thirteen"
-    t.string   "fourteen"
-    t.string   "fifteen"
-    t.string   "sixteen"
-    t.string   "seventeen"
-    t.string   "eighteen"
-    t.string   "nineteen"
-    t.string   "twenty"
-    t.string   "twentyone"
-    t.string   "twentytwo"
-    t.string   "twentythree"
-    t.string   "twentyfour"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
 
 end
