@@ -1,4 +1,5 @@
 StudyBuddy::Application.routes.draw do
+
   # devise_for :users do
   #   get "/", :to => "sessions#new"
   # end
@@ -6,7 +7,8 @@ StudyBuddy::Application.routes.draw do
   match'/users',to:'application#destroyUser', via: :delete
 
   devise_for :users, :controllers => {  :omniauth_callbacks=> "omniauth_callbacks",
-                                        :sessions => "sessions"
+                                        :sessions => "sessions",
+                                        :registrations => "registrations"
                                        }
 
   devise_scope :user do get "/" => "devise/sessions#new" end
@@ -19,6 +21,7 @@ StudyBuddy::Application.routes.draw do
   
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
 
+  resources :activities
   get "study_sessions/index" 
   # The priority is based upon order of creation:
   # first created -> highest priority.

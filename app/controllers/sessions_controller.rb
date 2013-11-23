@@ -9,7 +9,7 @@ class SessionsController < Devise::SessionsController
       sign_in(:user, resource)
       resource.ensure_authentication_token
       respond_to do |format|
-        format.html { redirect_to user_courses_path(current_user), notice: 'You are logged in' }
+        format.html { redirect_to dashboard_path(current_user), notice: 'You are logged in' }
         format.json { render :json=> { :auth_token=> current_user.authentication_token, :success=> true, :status=> :created }}
       end
       return

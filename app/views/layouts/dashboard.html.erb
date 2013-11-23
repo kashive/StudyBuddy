@@ -1,4 +1,4 @@
-<div class = "span5">
+<div class = "span5" id = "list_table">
 	<!-- This is where the course block gets rendered -->
 	
 	
@@ -7,23 +7,27 @@
 	<!-- show class classes button that is a bit -->
 	<!-- Heading -->
 	<div class = "header_row">
-		<h2>My Classes
-		<!-- pagination of the table-->
-		<div class = "paginations">
-			<i class="icon-circle-arrow-left"></i>
-			<i class="icon-circle-arrow-right"></i>
+		<div class = "header_pagination">
+			My Classes
+			<!-- pagination of the table-->
+			
+				<i class="icon-circle-arrow-left" id ="class_pagination_left"></i>
+				<i class="icon-circle-arrow-right" id ="class_pagination_right"></i>
+			
 		</div>
 		<div class = "add_course_button">
 			<%= link_to t('.add_course', :default => t("helpers.links.add_course")),
             	new_user_course_path(current_user),
             	:class => 'btn btn-primary' %>
         </div>
-		</h2>
 	</div>
-
 	<div class = "class_list">
-		<% @courses.each do |course| %>
-			<div class = "class_box" >
+		<% @courses.each_with_index do |course,index| %>
+			<% if index>=0 && index<=3 %>
+				<div class = "class_box top_class" data-link ="<%=user_course_path(current_user,course)%>" >
+			<%elsif index>=4 && index<=5%>
+				<div class = "class_box bottom_class" data-link ="<%=user_course_path(current_user,course)%>">		
+			<%end%>
 				<div class = "class_box_info">
 					<div class = "left_info">
 						<div class = "classname_heading">
@@ -32,7 +36,7 @@
 					</div>
 					<div class = "right_info">
 						 <ul class="class_stats">
-							<li>Current Enrollment: 45</li>
+							<li>Current Enrollment: <%=Enrollment.where("course_name='#{course.name}'").size()%></li>
 							<li>Upcoming Study Sessions: 10</li>
 						</ul>
 					</div>
@@ -40,11 +44,17 @@
 			</div>
 		<%end%>
 	</div>
+	<div class = "class_box" id = "show_all_courses" data-link="<%=user_courses_path(current_user)%>">
+		<div class="classname_heading" id = "show_all_courses_text">
+			Show all courses
+			
+		</div>
+	</div>
+
 </div>
 
-<div class = "span5">
-	<h2>Activity Feed</h2>
-	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+<div class = "span5" id = "activity_feed_list">
+	<%= render "activities/index"%>
 </div>
 
 </div>
@@ -58,18 +68,16 @@
 		<div class = "news_heading">
 			<p>News</p>
 		</div>
-		<div class = "news_content">			
-			<div class = "facebook_marketing">
+			<div class = "span5 facebook_marketing">
 				<div class = "news_headings">
 					<p>Like us on Facebook</p>
 				</div> 
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+				For the latest updates on Study Buddy, please join our <a href="https://www.facebook.com/studybuddy22" target="_blank">Facebook Page!</a> 
 				
 			</div>
-			<div class = "recent_updates">
+			<div class = "span5 recent_updates">
 				<div class = "news_headings">
 					<p>Recent Updates<p>
 				</div>
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+				Checkout our new Dashboard Page. It's going to give you a quick overview of the application. We are continiously adding new features!<br><br> If you have a feature in mind then please use the contact us page to tell us about your amazing idea..
 			</div>
-		</div>
