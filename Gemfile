@@ -7,6 +7,9 @@ gem 'rails', '3.2.13'
 gem 'sass'
 gem 'devise'
 gem 'omniauth-facebook', '1.4.0'
+gem 'public_activity'
+gem 'kaminari'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

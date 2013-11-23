@@ -53,6 +53,8 @@ class CoursesController < ApplicationController
     respond_to do |format|
       if alreadyExists == false
         if @course.save
+          # updating the activity table
+          @course.create_activity :create, owner: current_user
           # updating the schedule timings
           @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
           @schedule = Schedule.new if @schedule == nil
@@ -110,8 +112,8 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     enrollments = Enrollment.where("user_id='#{current_user.id}' AND course_name = '#{@course.name}'")
     enrollments.each do |enrollment| enrollment.destroy end
+    @course.create_activity :delete, owner: current_user
     @course.destroy
-
     respond_to do |format|
       format.html { redirect_to user_courses_path, notice: 'Course was successfully deleted' }
       format.json { head :no_content }

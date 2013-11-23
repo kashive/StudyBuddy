@@ -1,0 +1,83 @@
+<div class = "span5" id = "list_table">
+	<!-- This is where the course block gets rendered -->
+	
+	
+	<!-- create courses button-->
+	<!-- list of classes -->
+	<!-- show class classes button that is a bit -->
+	<!-- Heading -->
+	<div class = "header_row">
+		<div class = "header_pagination">
+			My Classes
+			<!-- pagination of the table-->
+			
+				<i class="icon-circle-arrow-left" id ="class_pagination_left"></i>
+				<i class="icon-circle-arrow-right" id ="class_pagination_right"></i>
+			
+		</div>
+		<div class = "add_course_button">
+			<%= link_to t('.add_course', :default => t("helpers.links.add_course")),
+            	new_user_course_path(current_user),
+            	:class => 'btn btn-primary' %>
+        </div>
+	</div>
+	<div class = "class_list">
+		<% @courses.each_with_index do |course,index| %>
+			<% if index>=0 && index<=3 %>
+				<div class = "class_box top_class" data-link ="<%=user_course_path(current_user,course)%>" >
+			<%elsif index>=4 && index<=5%>
+				<div class = "class_box bottom_class" data-link ="<%=user_course_path(current_user,course)%>">		
+			<%end%>
+				<div class = "class_box_info">
+					<div class = "left_info">
+						<div class = "classname_heading">
+							<%= course.name.upcase %>
+						</div>
+					</div>
+					<div class = "right_info">
+						 <ul class="class_stats">
+							<li>Current Enrollment: <%=Enrollment.where("course_name='#{course.name}'").size()%></li>
+							<li>Upcoming Study Sessions: 10</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		<%end%>
+	</div>
+	<div class = "class_box" id = "show_all_courses" data-link="<%=user_courses_path(current_user)%>">
+		<div class="classname_heading" id = "show_all_courses_text">
+			Show all courses
+			
+		</div>
+	</div>
+
+</div>
+
+<div class = "span5" id = "activity_feed_list">
+	<%= render "activities/index"%>
+</div>
+
+</div>
+<div class = "span1"></div>
+</div>
+
+<div class = "row-fluid">
+	<div class = "span1"></div>
+	
+	<div class = "span10">
+		<div class = "news_heading">
+			<p>News</p>
+		</div>
+			<div class = "span5 facebook_marketing">
+				<div class = "news_headings">
+					<p>Like us on Facebook</p>
+				</div> 
+				For the latest updates on Study Buddy, please join our <a href="https://www.facebook.com/studybuddy22" target="_blank">Facebook Page!</a> 
+				
+			</div>
+			<div class = "span5 recent_updates">
+				<div class = "news_headings">
+					<p>Recent Updates<p>
+				</div>
+				Checkout our new Dashboard Page. It's going to give you a quick overview of the application. We are continiously adding new features!<br><br> If you have a feature in mind then please use the contact us page to tell us about your amazing idea..
+			</div>

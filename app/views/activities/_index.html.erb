@@ -1,0 +1,17 @@
+<div class = "header_row">
+	<div class = "header_pagination">
+		Activity Feed
+		<%= paginate @activities %>	
+	</div>
+</div>
+
+<% @activities.each do |activity| %>
+  <div class="activity">
+    <i class="icon-hand-right"></i> 
+    <%= activity.owner.first_name if activity.owner %>
+    <%= render_activity activity %><br>
+    <div class = "time_ago">
+		<%=time_ago_in_words(activity.created_at)%> ago
+	</div>
+  </div>
+<% end %>

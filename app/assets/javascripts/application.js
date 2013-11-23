@@ -24,6 +24,50 @@ $(document).ready(function() {
                   
     });
 
+    if (($('.class_box').length)>5){
+    	$('.bottom_class').css('display','none');
+    	$('#class_pagination_right').css('display','inline');
+    	$('#class_pagination_left').css('display','inline');
+    };
+
+    $('#class_pagination_right').click(function(){
+    	$('.top_class').css('display','none');
+    	$('.bottom_class').css('display','block');
+    });
+
+    $('#class_pagination_left').click(function(){
+    	$('.bottom_class').css('display','none');
+    	$('.top_class').css('display','block');
+    });
+
+    $('.icon-circle-arrow-left').mouseover(function(){
+    	$(this).addClass("hover");
+    });
+    
+    $('.icon-circle-arrow-left').mouseleave(function(){
+    	$(this).removeClass("hover");
+    });
+
+    $('.icon-circle-arrow-right').mouseover(function(){
+    	$(this).addClass("hover");
+    });
+    
+    $('.icon-circle-arrow-right').mouseleave(function(){
+    	$(this).removeClass("hover");
+    });
+
+    $('.class_box').mouseover(function(){
+    	$(this).addClass("hover");
+    });
+
+    $('.class_box').mouseleave(function(){
+    	$(this).removeClass("hover");
+    });
+
+    $('.class_box').click(function(){
+    	return window.location = this.dataset.link;
+    });
+
    	if (document.cookie == "signed_in=1"){
 		$("body").css("background-color","white")
 	}

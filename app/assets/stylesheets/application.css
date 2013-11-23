@@ -16,6 +16,7 @@
  	/*background-color: rgb(82, 131, 176) !important;*/
  	font-family: "ars-maquette-web","open sans",sans-serif !important;
  	color: rgb(102,102,102) !important;
+ 	font-size: 12px !important;
  }
  label {
     display: inline-block !important;
@@ -94,4 +95,111 @@ input#sign_in_button{
 	width: 320px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+div.header_row{
+	position: relative;
+	margin-bottom: 50px;
+}
+
+div.header_pagination{
+	position: absolute;
+	left: 0px;
+	font-size: 20px !important;
+    font-weight: bold;
+    padding-top: 4px;
+}
+}
+
+.paginations{
+	margin-left: 15px;
+}
+
+div.add_course_button{
+	position: absolute;
+	right: 0px;
+}
+
+div.class_box{
+	border: 2px solid #a1a1a1;
+	background-color: rgb(249,249,300);
+	margin-bottom: 15px;
+	padding: 20px;
+}
+
+div.class_box_info{
+	position: relative;
+	height: 50px;
+	width: 100%;
+}
+
+div.left_info{
+	padding-top: 4px;
+	position: absolute;
+	left:0px;
+}
+
+div.right_info{
+	padding-top: 4px;
+	position: absolute;
+	right:0px;
+}
+
+div.classname_heading{
+	padding:5px;
+	font-weight: bold;
+}
+
+div.news_heading{
+	border-bottom: 4px solid rgb(193, 194, 195);
+	font-size: 31.5px;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+div.span5.facebook_marketing{
+	width:50%;
+	margin-left: 0px;
+}
+
+div.span5.recent_updates{
+	margin-left: 8%;
+}
+
+div.news_headings{
+	font-size: 12pt;
+	font-weight: bold;
+}
+#list_table{
+	width: 55%;
+}
+
+div.time_ago{
+	margin-left: 17px;
+	font-style: italic;
+	font-size: 11px !important;
+}
+
+div.activity{
+	margin-bottom: 22px;
+}
+
+#show_all_courses{
+	padding: 5px;
+}
+
+#show_all_courses_text{
+	margin-left: auto;
+	margin-right: auto;
+	width: 120px;
+}
+
+#class_pagination_left{
+	display: none;
+}
+
+#class_pagination_right{
+	display: none;
 }
