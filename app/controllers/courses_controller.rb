@@ -13,15 +13,13 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @course = Course.find(params[:id])
-<<<<<<< HEAD
     @studysessions = @course.study_sessions
-=======
+    @allstudysessions = StudySession.where("course_name='#{@course.name}'")
     allEnrollments = Enrollment.where("course_name='#{@course.name}'")
     @classmates = []
     allEnrollments.each do |enrollment|
       @classmates.push(User.where("id='#{enrollment.user_id}'").first)
     end
->>>>>>> master
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @course }

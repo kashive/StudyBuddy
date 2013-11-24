@@ -1,9 +1,7 @@
 <%- model_class = Course -%>
-
 <% if current_user.provider="facebook"%>
   <div id = "friends">
     <%=link_to "Invite your Facebook Friends", "#", :id => "invite_fb_friends",:class => "btn btn-primary btn-large"%>
-
     <div id = "fb-root"></div>
     <script src = "//connect.facebook.net/en_US/all.js"></script>
     <script>

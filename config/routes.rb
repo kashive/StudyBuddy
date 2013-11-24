@@ -3,15 +3,11 @@ StudyBuddy::Application.routes.draw do
   #   get "/", :to => "sessions#new"
   # end
 
-<<<<<<< HEAD
-  devise_for :users, :controllers => { :sessions => "sessions", :registrations => "devise/registrations"}
-=======
   match'/users',to:'application#destroyUser', via: :delete
 
   devise_for :users, :controllers => {  :omniauth_callbacks=> "omniauth_callbacks",
                                         :sessions => "sessions"
                                        }
->>>>>>> master
 
   devise_scope :user do get "/" => "devise/sessions#new" end
 
