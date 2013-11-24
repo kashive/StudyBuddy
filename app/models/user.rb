@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   has_many :enrollments
   has_many :courses, through: :enrollments, dependent: :destroy
+  has_many :study_sessions, through: :courses, dependent: :destroy
 
   def ensure_authentication_token
     if authentication_token.blank?

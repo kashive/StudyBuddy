@@ -24,7 +24,7 @@
 			          <li><%= link_to "About Us" %></li>
 			          <li><%= link_to "Contact Us" %></li>
 			          <% if user_signed_in? %>
-			          	<li><%= link_to "See All Study Sessions" %></li>
+			          	<li><%= link_to "See All Study Sessions", user_study_sessions_path %></li>
 			          	<li><%= link_to "Edit Profile", edit_user_registration_path %></li>
 			          	<li><p class="navbar-text">Signed in as <a href="#" class="navbar-link"><%= current_user.email %></a></p></li>
 			          	<li><%= link_to "Log out",destroy_user_session_path, method: :delete %></li>

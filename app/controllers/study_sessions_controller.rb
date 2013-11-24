@@ -2,22 +2,22 @@ class StudySessionsController < ApplicationController
 
 	def index
 		# get each session for every course in a array
-		@all_study_sessions = Array.new
-		@courses = current_user.courses
-		@courses.each do |course|
-			study_sessions = course.studysessions
-			study_sessions.each do |session| 
-				@all_study_sessions.push(session)
-			end
-		end
+		@all_study_sessions = current_user.study_sessions
 	end
 
   	def new 
-    	@study_session  = StudySession.new
+    	@studysession  = StudySession.new
   	end
 
 	def create
-    	@study_session  = StudySession.new(params[:study_session])
-    	@study_session.course_id = params[:course_id]    
+    	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location])
+    	@studysession.course_id = params[:course_id]  
+    	respond_to do |format|
+      		if @studysession.save
+        		format.html { redirect_to user_course_path(current_user,params[:course_id] ), notice: 'Study Session was successfully created.' }
+      		else  
+      			format.html { render action: "new" }
+    		end
+    	end
     end
 end

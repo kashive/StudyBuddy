@@ -1,6 +1,6 @@
 <%- model_class = StudySession -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => "All "+ model_class.model_name.human.pluralize %></h1>
+  <h2><%=t '.title', :default => model_class.model_name.human.pluralize %></h2>
 </div>
 <table class="table", id="study_sessions_index">
   <thead>
@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @all_study_sessions.each do |session| %>
+    <% @studysessions.each do |session| %>
       <tr data-link="<%=users_path%>">
         <td><%= session.title %></td>
       	<td><%= session.date %></td>
