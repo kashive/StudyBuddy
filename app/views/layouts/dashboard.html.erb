@@ -41,6 +41,8 @@
 						 <ul class="class_stats">
 							<li>Current Enrollment: <%=Enrollment.where("course_name='#{course.name}'").size()%></li>
 							<li>Upcoming Study Sessions: 10</li>
+							<li><%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
+                      user_course_path(current_user,course) %></li>
 						</ul>
 					</div>
 				</div>
