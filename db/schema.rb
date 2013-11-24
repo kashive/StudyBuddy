@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20131121221107) do
+=======
+ActiveRecord::Schema.define(:version => 20131115023614) do
+>>>>>>> master
 
   create_table "courses", :force => true do |t|
     t.string   "name"
@@ -26,7 +30,31 @@ ActiveRecord::Schema.define(:version => 20131121221107) do
 
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "course_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "course_name"
+  end
+
+  create_table "marketings", :force => true do |t|
+    t.string   "inviting_user_id"
+    t.boolean  "status"
+    t.integer  "times_contacted"
+    t.string   "email"
+    t.string   "course_id"
+    t.string   "study_session_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "schedules", :force => true do |t|
+    t.string   "user_id"
+    t.string   "monday"
+    t.string   "tuesday"
+    t.string   "wednesday"
+    t.string   "thursday"
+    t.string   "friday"
+    t.string   "saturday"
+    t.string   "sunday"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -70,6 +98,11 @@ ActiveRecord::Schema.define(:version => 20131121221107) do
     t.string   "about_yourself"
     t.string   "contact_number"
     t.string   "authentication_token"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "oauth_token"
+    t.string   "image"
+    t.string   "oauth_expires_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

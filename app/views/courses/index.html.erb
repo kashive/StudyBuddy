@@ -1,4 +1,31 @@
 <%- model_class = Course -%>
+
+<% if current_user.provider="facebook"%>
+  <div id = "friends">
+    <%=link_to "Invite your Facebook Friends", "#", :id => "invite_fb_friends",:class => "btn btn-primary btn-large"%>
+
+    <div id = "fb-root"></div>
+    <script src = "//connect.facebook.net/en_US/all.js"></script>
+    <script>
+      $(function(){
+        $("a#invite_fb_friends").click(function(){
+          FB.init({
+            appId:'405059632873984',
+            cookie:true,
+            status:true,
+            oauth: true,
+          });
+
+          FB.ui({
+            method:'apprequests',
+            message:'<%= current_user.first_name + " " + current_user.last_name%> wants you to join Study Buddy'
+          });
+        });
+      });
+    </script>
+  </div>
+<%end%>
+
 <div class="page-header">
   <h1><%=t '.title', :default => "All "+ model_class.model_name.human.pluralize %></h1>
 </div>
@@ -8,7 +35,6 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:term) %></th>
       <th><%= model_class.human_attribute_name(:professor) %></th>
-      <th><%= model_class.human_attribute_name(:department) %></th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -18,7 +44,6 @@
         <td><%= course.name %></td>
         <td><%= course.term %></td>
         <td><%= course.professor %></td>
-        <td><%= course.department %></td>
         <td>
           <%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
                       new_user_course_study_session_path(current_user,course), :class => 'btn btn-mini btn-primary' %>

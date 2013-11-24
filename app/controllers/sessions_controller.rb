@@ -38,6 +38,6 @@ class SessionsController < Devise::SessionsController
   protected
 
   def invalid_login_attempt
-    render :json=> {:success=>false, :message=>"Error with your login or password"}, :status=>401
+    redirect_to root_path, alert: 'Login unsuccessful, please check username and/or password!'
   end
 end

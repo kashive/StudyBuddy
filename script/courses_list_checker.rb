@@ -1,2 +1,2 @@
-newhash = Marshal.load (File.binread('CoursesList'))
-puts newhash['Latin']['Beginning Latin']
+newhash = Marshal.load (File.binread('CourseTimings'))
+puts newhash['']

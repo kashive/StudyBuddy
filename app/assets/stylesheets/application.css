@@ -11,7 +11,87 @@
  *= require_self
  *= require_tree .
  */
+ 
+ body{
+ 	/*background-color: rgb(82, 131, 176) !important;*/
+ 	font-family: "ars-maquette-web","open sans",sans-serif !important;
+ 	color: rgb(102,102,102) !important;
+ }
+ label {
+    display: inline-block !important;
+    margin-bottom: 3px !important;
+ }
+input#user_email{
+	width: 95%;
+	margin-top: 12px;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+input#user_password{
+	width: 95% ;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
+input#user_password_confirmation{
+	width: 95% ;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
+input#user_first_name{
+	width: 95% ;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
+input#user_last_name{
+	width: 95% ;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
+input#sign_in_button{
+	margin-top: 17px; 
+}
+
+#sign_up_button{
+	margin-top: 17px; 
+}
  .hover { 
  	background-color: #ccc !important; 
  	cursor: pointer;
  }
+
+ .navbar .nav{
+ 	float: right !important;
+ }
+
+ div.login{
+ 	width: 450px;
+	background-color: rgb(233,233,233);
+	margin-left: auto;
+	margin-right: auto;
+ }
+
+ div.login_inner{
+ 	padding: 2px;
+	margin: 20px;
+ }
+
+ a#fb_link{
+ 	margin-top: 17px;
+	height: 17px;
+ }
+ a.brand{
+  width: 20%;
+  height: 20px;
+  margin-left: 20px !important;
+  background: url("/assets/study_buddy_transparent.gif") no-repeat scroll 0px 7px;
+}
+
+#friends{
+	width: 320px;
+	margin-left: auto;
+	margin-right: auto;
+}

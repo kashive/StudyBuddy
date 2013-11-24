@@ -10,6 +10,17 @@ class ApplicationController < ActionController::Base
   	user_courses_path(user)
   end
 
+  def destroyUser
+  	# delete all the courses of the user
+  	# delete all the enrollments of the user
+	  	Enrollment.where("user_id = '#{current_user.id}'").each do |enrollment| enrollment.destroy end
+	  	Course.where("user_id = '#{current_user.id}'").each do |course| course.destroy end
+	  	user = User.where("id= '#{current_user.id}'").first
+	  	signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource))
+	  	user.destroy
+	  	format.html { redirect_to root_path, notice: 'Account deleted' }
+	end
+
    private
 	def authenticate_user_from_token!
 		user_email = params[:user_email].presence

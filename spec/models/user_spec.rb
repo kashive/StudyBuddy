@@ -1,5 +1,8 @@
 require 'spec_helper'
-
+debugger
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "creates a 100 record" do
+    FactoryGirl.create_list(:user, 5)
+  end
+  
 end
