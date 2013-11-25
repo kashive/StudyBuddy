@@ -31,7 +31,7 @@
 				      <div class="nav-collapse">
 				        <ul class="nav">
 				          <% if user_signed_in? %>
-				          	<li><%= link_to "See All Study Sessions" %></li>
+				          	<li><%= link_to "See All Study Sessions", user_study_sessions_path %></li>
 				          	<li><%= link_to "Update Study Preference" %></li>
 				          	<li class="dropdown">
 						        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About us <b class="caret"></b></a>

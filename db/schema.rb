@@ -12,6 +12,7 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20131124232614) do
+<<<<<<< HEAD
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -29,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20131124232614) do
   add_index "activities", ["owner_id", "owner_type"], :name => "index_activities_on_owner_id_and_owner_type"
   add_index "activities", ["recipient_id", "recipient_type"], :name => "index_activities_on_recipient_id_and_recipient_type"
   add_index "activities", ["trackable_id", "trackable_type"], :name => "index_activities_on_trackable_id_and_trackable_type"
+=======
+>>>>>>> Mustapha's-Branch
 
   create_table "courses", :force => true do |t|
     t.string   "name"
