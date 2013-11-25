@@ -20,6 +20,7 @@ class StudySessionsController < ApplicationController
       @studysession.course_name = Course.find(params[:course_id]).name 
     	respond_to do |format|
       		if @studysession.save
+            @studysession.create_activity :create, owner: current_user
         		format.html { redirect_to user_course_path(current_user,params[:course_id] ), notice: 'Study Session was successfully created.' }
       		else  
       			format.html { render action: "new" }
