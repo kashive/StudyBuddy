@@ -25,7 +25,7 @@ StudyBuddy::Application.routes.draw do
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
 
   resources :activities
-  get "study_sessions/index" 
+ 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

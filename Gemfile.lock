@@ -170,11 +170,7 @@ GEM
       omniauth (~> 1.0)
     orm_adapter (0.5.0)
     polyglot (0.3.3)
-<<<<<<< HEAD
-    pry (0.9.12.3)
-=======
     pry (0.9.12.4)
->>>>>>> Mustapha's-Branch
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
