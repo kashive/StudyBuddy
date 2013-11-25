@@ -8,4 +8,8 @@ class StudySession < ActiveRecord::Base
   		user_id = Course.where("id = '#{self.course_id}'").first.user_id
   		return User.where("id = '#{user_id}'")
   	end
+
+  	def getCourse
+  		return Course.where("id='#{self.course_id}'").first
+  	end
 end

@@ -1,6 +1,8 @@
 added study session 
 <% if activity.trackable %>
   <%= link_to activity.trackable.title, user_course_study_session_path(activity.owner.id,activity.trackable) %>
+  in 
+  <%= link_to activity.trackable.getCourse.name, user_course_path(activity.owner.id,activity.trackable.getCourse) %>
 <% else %>
   which has since been removed 
 <% end %>
