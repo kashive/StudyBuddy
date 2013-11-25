@@ -9,8 +9,16 @@ class Course < ActiveRecord::Base
 
 
   def cannot_have_more_than_six_courses
-	if  Course.where("user_id='#{@attributes['user_id']}'").size() > 5
-		errors.add(:term,"You can only add upto six courses")
-	end
+  	if  Course.where("user_id='#{@attributes['user_id']}'").size() > 5
+  		errors.add(:term,"You can only add upto six courses")
+  	end
+  end
+  # this method returns all the study session for the course
+  def getAllStudySessions
+    StudySession.where("course_name = '#{self.name}'")
+  end
+
+  def getUpcomingStudySessions
+    StudySession.where("course_name = '#{self.name}' AND time >= '#{Time.now}'")
   end
 end
