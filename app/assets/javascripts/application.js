@@ -69,7 +69,7 @@ $(document).ready(function() {
     });
 
    	if (document.cookie == "signed_in=1"){
-		$("body").css("background-color","white")
+		$("body").css("background-color","rgb(247, 246, 246)")
 	}
 
 	if (document.cookie == ""){
