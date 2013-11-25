@@ -14,7 +14,10 @@ StudyBuddy::Application.routes.draw do
   devise_scope :user do get "/" => "devise/sessions#new" end
 
   resources :users  do
-    resources :courses, :only => [:index,:create,:show,:new,:destroy]
+    resources :study_sessions, :only => [:index]
+    resources :courses, :only => [:index,:create,:show,:new,:destroy] do
+      resources :study_sessions, :only => [:index,:create,:show,:new,:destroy]
+    end
   end  
 
   root :to => "devise/sessions#new"
@@ -22,7 +25,7 @@ StudyBuddy::Application.routes.draw do
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
 
   resources :activities
-  get "study_sessions/index" 
+ 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

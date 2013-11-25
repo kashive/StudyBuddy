@@ -2,7 +2,9 @@ class Course < ActiveRecord::Base
   include PublicActivity::Common
   validate :cannot_have_more_than_six_courses, on: :create
   attr_accessible :name, :department, :professor, :term
-  has_many :enrollments, foreign_key: :course_name, dependent: :destroy
+
+  has_many :study_sessions
+  has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments , dependent: :destroy
 
 

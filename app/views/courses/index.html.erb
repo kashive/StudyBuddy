@@ -1,9 +1,7 @@
 <%- model_class = Course -%>
-
 <% if current_user.provider="facebook"%>
   <div id = "friends">
     <%=link_to "Invite your Facebook Friends", "#", :id => "invite_fb_friends",:class => "btn btn-primary btn-large"%>
-
     <div id = "fb-root"></div>
     <script src = "//connect.facebook.net/en_US/all.js"></script>
     <script>
@@ -46,7 +44,7 @@
         <td><%= course.professor %></td>
         <td>
           <%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
-                      user_course_path(current_user,course), :class => 'btn btn-mini btn-primary' %>
+                      new_user_course_study_session_path(current_user,course), :class => 'btn btn-mini btn-primary' %>
           <%= link_to t('.remove_course', :default => t("helpers.links.remove_course")),
                       user_course_path(current_user,course),
                       :method => :delete,

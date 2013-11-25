@@ -13,6 +13,8 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @course = Course.find(params[:id])
+    @studysessions = @course.study_sessions
+    @allstudysessions = StudySession.where("course_name='#{@course.name}'")
     allEnrollments = Enrollment.where("course_name='#{@course.name}'")
     @classmates = []
     allEnrollments.each do |enrollment|
