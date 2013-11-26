@@ -203,3 +203,17 @@ div.activity{
 #class_pagination_right{
 	display: none;
 }
+
+div.login.our_idea{
+	width: 75%;
+}
+
+div.login_inner.our_idea{
+	font-size: 13.5px !important;
+}
+
+div.bio_photo{
+	height: 200px;
+	width: 225px;
+	background: url("/assets/avishek.jpeg") no-repeat
+}

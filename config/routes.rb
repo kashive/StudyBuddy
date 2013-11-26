@@ -1,5 +1,10 @@
 StudyBuddy::Application.routes.draw do
 
+  get "static_pages/bugs"
+  get "static_pages/how"
+  get "static_pages/team"
+  get "static_pages/idea"
+
   # devise_for :users do
   #   get "/", :to => "sessions#new"
   # end
