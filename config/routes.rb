@@ -1,9 +1,14 @@
 StudyBuddy::Application.routes.draw do
 
+<<<<<<< HEAD
   get "static_pages/bugs"
   get "static_pages/how"
   get "static_pages/team"
   get "static_pages/idea"
+=======
+  resources :get_in_touches, :only=>[:new, :create]
+
+>>>>>>> f198d98e7b475f0e35ebd9242034e70a951180ba
 
   # devise_for :users do
   #   get "/", :to => "sessions#new"

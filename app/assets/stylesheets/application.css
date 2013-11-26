@@ -215,5 +215,8 @@ div.login_inner.our_idea{
 div.bio_photo{
 	height: 200px;
 	width: 225px;
-	background: url("/assets/avishek.jpeg") no-repeat
+	background: url("/assets/avishek.jpeg") no-repeat;
+}
+.contact_us_text{
+	width:97%;
 }
