@@ -1,0 +1,24 @@
+<div class = "login">
+  <div class = "login_inner">
+    <h2>Contact Us</h2>
+    <%= form_for(@get_in_touch) do |f| %>
+      <% if @get_in_touch.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@get_in_touch.errors.count, "error") %> prohibited this get_in_touch from being saved:</h2>
+
+          <ul>
+          <% @get_in_touch.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.email_field :email, :autofocus => true, :placeholder =>'Email Address', :class => 'contact_us_text' %>
+      <%= f.text_field :name, :autofocus => true, :placeholder =>'Your Name' , :class=>'contact_us_text'%>
+      <%= f.text_area :message, :autofocus => true, :placeholder =>'Message' , :class=>'contact_us_text'%>
+      <br>
+      
+     <%= f.submit "Submit", :class=>'btn btn-info', :id=>'sign_in_button' %>
+    <% end %>
+  </div>
+</div>

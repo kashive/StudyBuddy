@@ -1,5 +1,8 @@
 StudyBuddy::Application.routes.draw do
 
+  resources :get_in_touches, :only=>[:new, :create]
+
+
   # devise_for :users do
   #   get "/", :to => "sessions#new"
   # end

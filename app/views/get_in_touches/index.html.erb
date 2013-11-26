@@ -1,0 +1,27 @@
+<h1>Listing get_in_touches</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Message</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @get_in_touches.each do |get_in_touch| %>
+  <tr>
+    <td><%= get_in_touch.name %></td>
+    <td><%= get_in_touch.email %></td>
+    <td><%= get_in_touch.message %></td>
+    <td><%= link_to 'Show', get_in_touch %></td>
+    <td><%= link_to 'Edit', edit_get_in_touch_path(get_in_touch) %></td>
+    <td><%= link_to 'Destroy', get_in_touch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Get in touch', new_get_in_touch_path %>
