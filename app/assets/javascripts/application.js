@@ -25,6 +25,20 @@ $(document).ready(function() {
                   
     });
 
+    $("a#invite_fb_friends").click(function(){
+          FB.init({
+            appId:'405059632873984',
+            cookie:true,
+            status:true,
+            oauth: true,
+          });
+
+          FB.ui({
+            method:'apprequests',
+            message:'<%= current_user.first_name + " " + current_user.last_name%> wants you to join Study Buddy'
+        });
+    });
+
     if (($('.class_box').length)>5){
     	$('.bottom_class').css('display','none');
     	$('#class_pagination_right').css('display','inline');
