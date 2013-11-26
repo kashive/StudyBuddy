@@ -16,6 +16,7 @@
 //= require_tree .
 
 $(document).ready(function() {
+
 	$('#fb_link').popover({
                   'selector': '',
                   'trigger':'hover',
@@ -75,4 +76,12 @@ $(document).ready(function() {
 	if (document.cookie == ""){
 		$("body").css("background-color","#5283B0")
 	}
+    // to make sure that the body color is blue if we are viewing the static pages
+    if (window.location.pathname == "/static_pages/idea" || 
+        window.location.pathname == "/static_pages/how"  ||
+        window.location.pathname == "/static_pages/team" ||
+        window.location.pathname == "/get_in_touches/new" ||
+        window.location.pathname == "/static_pages/bugs"){
+        $("body").css("background-color","#5283B0");
+    }
 });
