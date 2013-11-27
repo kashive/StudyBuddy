@@ -69,19 +69,6 @@ ActiveRecord::Schema.define(:version => 20131125193826) do
     t.datetime "updated_at",       :null => false
   end
 
-  create_table "schedules", :force => true do |t|
-    t.string   "user_id"
-    t.string   "monday"
-    t.string   "tuesday"
-    t.string   "wednesday"
-    t.string   "thursday"
-    t.string   "friday"
-    t.string   "saturday"
-    t.string   "sunday"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "study_sessions", :force => true do |t|
     t.text     "title"
     t.string   "category"
