@@ -15,11 +15,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @studysessions = @course.study_sessions
     @allstudysessions = StudySession.where("course_name='#{@course.name}'")
-    allEnrollments = Enrollment.where("course_name='#{@course.name}'")
-    @classmates = []
-    allEnrollments.each do |enrollment|
-      @classmates.push(User.where("id='#{enrollment.user_id}'").first)
-    end
+    @classmates = @course.getClassmates
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @course }

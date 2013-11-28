@@ -21,4 +21,13 @@ class Course < ActiveRecord::Base
   def getUpcomingStudySessions
     StudySession.where("course_name = '#{self.name}' AND time >= '#{Time.now}'")
   end
+
+  def getClassmates
+    allEnrollments = Enrollment.where("course_name='#{self.name}'")
+    classmates = []
+    allEnrollments.each do |enrollment|
+      classmates.push(User.where("id='#{enrollment.user_id}'").first)
+    end
+    return classmates;
+  end
 end
