@@ -21,6 +21,7 @@ StudyBuddy::Application.routes.draw do
   devise_scope :user do get "/" => "devise/sessions#new" end
 
   resources :users  do
+    resources :schedules, :only=>[:new, :create]
     resources :study_sessions, :only => [:index]
     resources :courses, :only => [:index,:create,:show,:new,:destroy] do
       resources :study_sessions, :only => [:index,:create,:show,:new,:destroy]

@@ -14,9 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
-
 $(document).ready(function() {
-
 	$('#fb_link').popover({
                   'selector': '',
                   'trigger':'hover',
@@ -98,4 +96,43 @@ $(document).ready(function() {
         window.location.pathname == "/static_pages/bugs"){
         $("body").css("background-color","#5283B0");
     }
+
+    if (window.location.pathname == "/users/1/schedules/new"){ 
+        $('#table0').css('display','none');
+        $('#table1').css('display','none');
+    }
+
+    $("#afternoon").click(function(){
+        $('#table2').css('display','table');
+        $('#table0').css('display','none');
+        $('#table1').css('display','none');
+    });
+
+    $("#morning").click(function(){
+        $('#table2').css('display','none');
+        $('#table0').css('display','none');
+        $('#table1').css('display','table');
+    });
+    $("#night").click(function(){
+        $('#table2').css('display','none');
+        $('#table0').css('display','table');
+        $('#table1').css('display','none');
+    });
+
+    // $("#update_schedule").click(function(){
+    //     var allValues = []
+    //     var valueToSend = {}
+    //  $('input:checkbox:checked').each(function () {
+    //         allValues.push(this.value);
+    //     });
+    //     valueToSend["params"] = allValues.join();
+        
+    //     alert(valueToSend["params"]);
+    //     $.ajax({
+    //       url: "/users/1/schedules_update",
+    //       type: "PUT",     
+    //       data: valueToSend,
+    //       dataType: 'json'
+    //     });
+    // });
 });

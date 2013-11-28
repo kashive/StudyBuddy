@@ -212,11 +212,29 @@ div.login_inner.our_idea{
 	font-size: 13.5px !important;
 }
 
-div.bio_photo{
+div.bio_photo_avishek{
 	height: 200px;
 	width: 225px;
 	background: url("/assets/avishek.jpeg") no-repeat;
 }
+
+div.bio_photo_soha{
+	height: 200px;
+	width: 225px;
+	background: url("/assets/soha.jpg") no-repeat;
+}
 .contact_us_text{
 	width:97%;
+}
+#buttons_wrapper{
+	display: block;
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#schedule_buttons{
+	margin-left: auto;
+	margin-right: auto;
+	width: 375px;
 }

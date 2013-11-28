@@ -32,7 +32,7 @@
 				        <ul class="nav">
 				          <% if user_signed_in? %>
 				          	<li><%= link_to "See All Study Sessions", user_study_sessions_path(current_user) %></li>
-				          	<li><%= link_to "Update Study Preference" %></li>
+				          	<li><%= link_to "Update Study Preference", new_user_schedule_path(current_user) %></li>
 				          	<li><%= link_to "Dashboard", dashboard_path(current_user) %></li>
 				          	<li class="dropdown">
 						        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About us <b class="caret"></b></a>
@@ -41,7 +41,7 @@
 								  <li><%= link_to "How it works", static_pages_how_path %></li>
 						          <li><%= link_to "Team", static_pages_team_path %></li>
 						          <li><%= link_to "Contact us", new_get_in_touch_path %></li>
-						          <li><%= link_to "Known Bugs", "#" %></li>
+						          <li><%= link_to "Known Bugs", static_pages_bugs_path %></li>
 						        </ul>
 						    </li>
 				          	<li class="dropdown">
@@ -61,7 +61,7 @@
 						          <li><%= link_to "How it works", static_pages_how_path %></li>
 						          <li><%= link_to "Team", static_pages_team_path %></li>
 						          <li><%= link_to "Contact us", new_get_in_touch_path %></li>
-						          <li><%= link_to "Known Bugs", "#" %></li>
+						          <li><%= link_to "Known Bugs", static_pages_bugs_path %></li>
 						        </ul>
 						    </li>
 				          <%end%>

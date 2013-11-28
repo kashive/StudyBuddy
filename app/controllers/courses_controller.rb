@@ -60,21 +60,36 @@ class CoursesController < ApplicationController
           # updating the schedule timings
           @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
           @schedule = Schedule.new if @schedule == nil
+          @schedule.user_id = current_user
+          @schedule.course_id = @course.id
           timingHash[@course.name]['daysInWeek'].each do |day|
             if day == "M"
-              @schedule.monday = @schedule.monday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              @schedule.day = "Monday"
+              @schedule.start_time = timingHash[@course.name]['startTime']
+              @schedule.end_time   = timingHash[@course.name]['endTime']
+              @schedule.save
             elsif day =="T"
-              @schedule.tuesday = @schedule.tuesday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              @schedule.day = "Tuesday"
+              @schedule.start_time = timingHash[@course.name]['startTime']
+              @schedule.end_time   = timingHash[@course.name]['endTime']
+              @schedule.save
             elsif day =="W"
-              @schedule.wednesday = @schedule.wednesday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              @schedule.day = "Wednesday"
+              @schedule.start_time = timingHash[@course.name]['startTime']
+              @schedule.end_time   = timingHash[@course.name]['endTime']
+              @schedule.save
             elsif day =="Th"
-              @schedule.thursday = @schedule.thursday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              @schedule.day = "Thursday"
+              @schedule.start_time = timingHash[@course.name]['startTime']
+              @schedule.end_time   = timingHash[@course.name]['endTime']
+              @schedule.save
             elsif day = "F"
-              @schedule.friday = @schedule.friday.to_s + timingHash[@course.name]['startTime'] +"-"+ timingHash[@course.name]['endTime']+","
+              @schedule.day = "Friday"
+              @schedule.start_time = timingHash[@course.name]['startTime']
+              @schedule.end_time   = timingHash[@course.name]['endTime']
+              @schedule.save
             end
           end
-          @schedule.user_id = params[:user_id]
-          @schedule.save
 
           @enrollment = Enrollment.new
           @enrollment.user_id   =  current_user.id

@@ -1,0 +1,41 @@
+This data is used to recommend timings when most of your classmates are free to study.
+<div id = 'buttons_wrapper'>
+  <div id ='schedule_buttons'>
+    <button class = 'btn btn-info' id = "afternoon">4pm till 12am</button>
+    <button class = 'btn btn-info' id = "night">12am till 8am</button>
+    <button class = 'btn btn-info' id = "morning">8am till 4pm</button>
+  </div>
+</div>
+<%= form_for([@user,@schedule]) do |f| %>
+  
+  <%@tableNumbers.each do |tableNumber|%>
+      <% tableName = "table"+tableNumber.to_s%>
+      <table id="<%=tableName%>" class = "table">
+          <thead>
+              <tr>
+                  <th></th>
+                  <%@columnNumbers.each do |columnNumber|%>    
+                    <th><%= @times[tableNumber][columnNumber]+"-"%>  <br> <%=@times[tableNumber][columnNumber+1]%></th>
+                  <%end%>
+              </tr>
+          </thead>
+          <%@days.each do |day|%>
+              <tr>
+                  <td><%=day%></td>
+                  <%@columnNumbers.each do |columnNumber|%>
+                    <td>
+                    <% if @toCheckOff.include?("#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1]}")%>    
+                        
+                          <%=check_box_tag "time[#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1]}]", "", "yes" %>
+                        
+                    <%else%>
+                         <%=check_box_tag "time[#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1]}]", "" %>
+                    <%end%>
+                    </td>
+                  <%end%>
+              </tr>
+          <%end%>
+      </table>
+  <%end%>
+  <%= f.submit "Update Schedule", :class => 'btn btn-primary' %>
+<% end %>
