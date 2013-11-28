@@ -6,7 +6,7 @@ class Course < ActiveRecord::Base
   has_many :study_sessions
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments , dependent: :destroy
-
+  has_many :notifications, as: :notifiable
 
   def cannot_have_more_than_six_courses
   	if  Course.where("user_id='#{@attributes['user_id']}'").size() > 5

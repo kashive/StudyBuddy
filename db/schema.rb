@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128154606) do
+ActiveRecord::Schema.define(:version => 20131128170857) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -78,6 +78,19 @@ ActiveRecord::Schema.define(:version => 20131128154606) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
+
+  create_table "notifications", :force => true do |t|
+    t.string   "host_id"
+    t.string   "user_id"
+    t.string   "action"
+    t.integer  "notifiable_id"
+    t.string   "notifiable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.boolean  "seen"
+  end
+
+  add_index "notifications", ["notifiable_id", "notifiable_type"], :name => "index_notifications_on_notifiable_id_and_notifiable_type"
 
   create_table "schedules", :force => true do |t|
     t.string   "user_id"

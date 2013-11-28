@@ -91,6 +91,15 @@ class CoursesController < ApplicationController
           @enrollment.user_id   =  current_user.id
           @enrollment.course_name =  @course.name
           @enrollment.save
+
+          @course.getClassmates.each do |classmate|
+            next if classmate.id == current_user.id
+            @course.notifications.create("host_id"=>current_user.id,
+                                         "user_id"=>classmate.id,
+                                         "action"=> "user_join",
+                                         "seen"=>false )
+
+          end
           format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
           format.json { render json: @course, status: :created, location: @course }
         else

@@ -24,11 +24,16 @@ class StudySessionsController < ApplicationController
             @studysession.create_activity :create, owner: current_user
             course.getClassmates.each do |classmate|
               next if classmate.id == current_user.id
-              Invitation.create("host_id"=>current_user.id,
+              invitation = Invitation.create("host_id"=>current_user.id,
                                 "user_id"=>classmate.id,
                                 "course_id"=>course.id,
                                 "study_session_id"=>@studysession.id,
                                 "status"=>"invited")
+
+              invitation.notifications.create("host_id"=>current_user.id,
+                                         "user_id"=>classmate.id,
+                                         "action"=> "invited",
+                                         "seen"=>false )
             end
         		format.html { redirect_to user_course_path(current_user,params[:course_id] ), notice: 'Study Session was successfully created. Invitations sent to all classmates' }
       		else  

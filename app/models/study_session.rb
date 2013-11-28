@@ -2,6 +2,7 @@ class StudySession < ActiveRecord::Base
 	include PublicActivity::Common
   	attr_accessible :category, :date, :description, :location, :time, :title
   	belongs_to :course
+    has_many :notifications, as: :notifiable
 
   	# returns the user that created this study session
   	def getUser
