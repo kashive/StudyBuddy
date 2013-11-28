@@ -238,3 +238,6 @@ div.bio_photo_soha{
 	margin-right: auto;
 	width: 375px;
 }
+ul.dropdown-menu.notification{
+	min-width: 450px;
+}

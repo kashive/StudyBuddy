@@ -118,4 +118,14 @@ $(document).ready(function() {
         $('#table0').css('display','table');
         $('#table1').css('display','none');
     });
+
+    $(".notification_list").click(function(){
+        var data = $(this).find("a").text() + ","+ $(this).find("a").attr('href');
+        $.ajax({
+            type: "PUT",
+            url: "/notification_seen",
+            dataType: "json",
+            data: {"data":data},
+        });
+    });
 });

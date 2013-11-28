@@ -21,6 +21,7 @@ StudyBuddy::Application.routes.draw do
   devise_scope :user do get "/" => "devise/sessions#new" end
 
   resources :users  do
+    resources :notifications, :only => [:index]
     resources :schedules, :only=>[:new, :create]
     resources :study_sessions, :only => [:index]
     resources :courses, :only => [:index,:create,:show,:new,:destroy] do
@@ -31,6 +32,8 @@ StudyBuddy::Application.routes.draw do
   root :to => "devise/sessions#new"
   
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
+  put '/notification_seen', to: "notifications#seen" 
+
 
   resources :activities
  

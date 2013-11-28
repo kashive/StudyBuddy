@@ -1,0 +1,10 @@
+<h2> Your Notifications</h2>
+<ul>
+<% getAllNotifications().each do |key,value| %>
+	<li><%= link_to key, value[0] %></li>
+	<div class = "time_ago">
+   		<%=time_ago_in_words(value[1])%> ago
+    </div>		
+<%end%>
+</ul>
+

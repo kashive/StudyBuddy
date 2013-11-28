@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 	before_filter :authenticate_user_from_token!
 	# This is Devise's authentication
 	before_filter :authenticate_user!
+
+  helper_method :getAllNotifications, :numNewNotifications
   
   def after_sign_in_path_for(user)
   	dashboard_path(user)
@@ -20,7 +22,36 @@ class ApplicationController < ActionController::Base
 	  	format.html { redirect_to root_path, notice: 'Account deleted' }
 	end
 
-   private
+	def getAllNotifications
+  	notifications = Notification.where("user_id = '#{current_user.id}'").order("created_at desc")
+  	toShow = {}
+  	notifications.each do |notification|
+  		hostUser = User.where("id = '#{notification.host_id}'").first
+  		if notification.action == "user_join"
+  			course = notification.notifiable
+        pathAndTime = []
+        pathAndTime.push(user_course_path(current_user,course))
+        pathAndTime.push(notification.created_at)
+  			toShow["#{hostUser.first_name} has joined #{course.name} and is now a classmate"] = pathAndTime
+  		end
+  		if notification.action == "invited"
+  			invitation = notification.notifiable
+  			studySession = StudySession.where("id = '#{invitation.study_session_id}'").first
+  			course = Course.where("id = '#{invitation.course_id}'").first
+  			pathAndTime=[]
+        pathAndTime.push("#")
+        pathAndTime.push(notification.created_at)
+        toShow["#{hostUser.first_name} has invited you to join #{studySession.title} for your #{course.name} class"] = pathAndTime
+  		end
+  	end
+  	return toShow
+  end
+
+  def numNewNotifications
+    return Notification.where("user_id = '#{current_user.id}' AND seen = 'f'").size
+  end
+
+  private
 	def authenticate_user_from_token!
 		user_email = params[:user_email].presence
 		user = user_email && User.find_by_email(user_email)
