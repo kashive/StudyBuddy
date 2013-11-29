@@ -21,6 +21,11 @@
     </div>
   </div>
 
+Top Recommendations Time Maker<br>
+<% @course.getTimingRecommendation.each do |key,value| %>
+  <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
+  <br>
+<%end%>
 
 <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

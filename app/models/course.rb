@@ -30,4 +30,20 @@ class Course < ActiveRecord::Base
     end
     return classmates;
   end
+
+  def getTimingRecommendation
+    dayTimeAndPopularity = Hash.new { |hash, key| hash[key] = {} }
+    classmates = self.getClassmates
+    classmates.each do |classmate|
+      Schedule.where("user_id = '#{classmate.id}' AND course_id IS NULL").each do |schedule|
+        time = schedule.start_time + "-" + schedule.end_time
+        dayTimeAndPopularity[schedule.day][time] = dayTimeAndPopularity[schedule.day][time].to_i + 1
+      end
+    end
+    dayTopChoice = {}
+    dayTimeAndPopularity.keys.each do |day|
+      dayTopChoice[day] = dayTimeAndPopularity[day].sort_by{|key,value| value}.reverse.first
+    end
+    return dayTopChoice
+  end
 end

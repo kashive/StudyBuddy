@@ -10,8 +10,9 @@ class StudySessionsController < ApplicationController
     end
 	end
 
-  	def new 
+  	def new
     	@studysession  = StudySession.new
+      @course = Course.where("id = '#{params[:course_id]}'").first
   	end
 
 	def create
