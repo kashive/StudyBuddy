@@ -1,6 +1,7 @@
 class StudySessionsController < ApplicationController
 
 	def index
+    @courses = Course.where("user_id='#{current_user.id}'")
     @all_study_sessions = []
     @all_user_courses = Course.where("user_id = '#{current_user.id}'")
     @all_user_courses.each do |course|
@@ -11,6 +12,7 @@ class StudySessionsController < ApplicationController
 	end
 
   	def new
+      @courses = Course.where("user_id='#{current_user.id}'")
     	@studysession  = StudySession.new
       @course = Course.where("id = '#{params[:course_id]}'").first
   	end

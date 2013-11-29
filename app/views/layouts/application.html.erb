@@ -31,9 +31,28 @@
 				      <div class="nav-collapse">
 				        <ul class="nav">
 				          <% if user_signed_in? %>
-				          	<li><%= link_to "See All Study Sessions", user_study_sessions_path(current_user) %></li>
-				          	<li><%= link_to "Study Preference", new_user_schedule_path(current_user) %></li>
-				          	<li><%= link_to "Dashboard", dashboard_path(current_user) %></li>
+				          <li><%= link_to "Dashboard", dashboard_path(current_user) %></li>
+				          <li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">All Courses <b class="caret"></b></a>
+						        <ul class="dropdown-menu">
+						        <%@courses.each do |course|%>
+						        	<li class="dropdown-submenu">
+					                  <%= link_to course.name, user_course_path(current_user,course)%>
+					                  <ul class="dropdown-menu">
+					                    <li><%= link_to "Add Study Session", new_user_course_study_session_path(current_user, course)%></li>
+					                    <li><a href="#">My Study Sessions</a></li>
+					                    <li><a href="#">All Study Sessions</a></li>
+					                    <li><%=link_to "Remove Class",user_course_path(current_user,course),
+					                    	 :method=>"delete",
+					                    	 :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) } %></li> 
+					                  </ul>
+					                </li>
+					            <%end%>  
+					              <li class="divider"></li>
+								  <li><%= link_to "Add New Course", new_user_course_path(current_user) %></li>
+								  <li><%= link_to "See All Course's Study Sessions", user_study_sessions_path(current_user) %></li>
+						        </ul>
+						    </li>
 				          	<li class="dropdown">
 						        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Notifications <sub><%=numNewNotifications%></sub> <b class="caret"></b></a>
 						        <ul class="dropdown-menu notification">
@@ -54,6 +73,7 @@
 				          	<li class="dropdown">
 						        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Signed in as <%= current_user.email %> <b class="caret"></b></a>
 						        <ul class="dropdown-menu">
+						          <li><%= link_to "Update Study Preference", new_user_schedule_path(current_user) %></li>
 								  <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
 						          <li><%= link_to "Sign out",destroy_user_session_path, method: :delete %></li>
 						        </ul>

@@ -3,6 +3,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/new
   # GET /schedules/new.json
   def new
+    @courses = Course.where("user_id='#{current_user.id}'")
     @user = current_user
     @toCheckOff = []
     Schedule.where("user_id = '#{current_user.id}'").each do |schedule|
