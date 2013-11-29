@@ -15,6 +15,19 @@
 //= require twitter/bootstrap
 //= require_tree .
 $(document).ready(function() {
+
+    window.setInterval(function(){
+        $.ajax({
+            type: "GET",
+            url: "/new_notification",
+            complete: function(data){
+              var response = jQuery.parseJSON(data.responseText)
+              $('sub').html(response["number"]);
+            }
+        });
+    }, 5000);
+
+
 	$('#fb_link').popover({
                   'selector': '',
                   'trigger':'hover',

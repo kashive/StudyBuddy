@@ -2,9 +2,19 @@
 <% getAllNotifications().each do |key,value| %>
 	<%counter= counter+1%>
 	<%break if counter == 6%>
-	<li class = "notification_list"><%= link_to key, value[0] %></li>
+	<li class = "notification_list">
+			
+		<%= link_to key, value[0] %>
+	</li>
 	<div class = "time_ago">
    		<%=time_ago_in_words(value[1])%> ago
+   			<b>
+				<%if value[2] == false%>
+					Unseen
+				<%elsif value[2] == true%>
+					Seen
+				<%end%>
+			</b>
     </div>	
 	<li class="divider"></li> 
 <%end%>

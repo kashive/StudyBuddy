@@ -33,7 +33,7 @@ StudyBuddy::Application.routes.draw do
   
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
   put '/notification_seen', to: "notifications#seen" 
-
+  get '/new_notification', to: "application#numNewNotifications"
 
   resources :activities
  

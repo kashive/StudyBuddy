@@ -32,7 +32,9 @@ class ApplicationController < ActionController::Base
         pathAndTime = []
         pathAndTime.push(user_course_path(current_user,course))
         pathAndTime.push(notification.created_at)
-  			toShow["#{hostUser.first_name} has joined #{course.name} and is now a classmate"] = pathAndTime
+        pathAndTime.push(notification.seen)
+        notificationText = "#{hostUser.first_name} has joined #{course.name} and is now a classmate"
+  			toShow[notificationText] = pathAndTime
   		end
   		if notification.action == "invited"
   			invitation = notification.notifiable
@@ -41,14 +43,20 @@ class ApplicationController < ActionController::Base
   			pathAndTime=[]
         pathAndTime.push("#")
         pathAndTime.push(notification.created_at)
-        toShow["#{hostUser.first_name} has invited you to join #{studySession.title} for your #{course.name} class"] = pathAndTime
+        pathAndTime.push(notification.seen)
+        notificationText = "#{hostUser.first_name} has invited you to join #{studySession.title} for your #{course.name} class"
+        toShow[notificationText] = pathAndTime
   		end
   	end
   	return toShow
   end
 
   def numNewNotifications
-    return Notification.where("user_id = '#{current_user.id}' AND seen = 'f'").size
+    number = Notification.where("user_id = '#{current_user.id}' AND seen = 'f'").size
+    respond_to do |format|
+        format.json { render :json=> { :number=> number}}
+    end
+    return number
   end
 
   private
