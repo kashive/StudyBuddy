@@ -5,9 +5,6 @@
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:date) %></th>
       <th><%= model_class.human_attribute_name(:time) %></th>
-      <th><%= model_class.human_attribute_name(:location) %></th>
-      <th><%= model_class.human_attribute_name(:category) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
     </tr>
   </thead>
   <tbody>
@@ -16,9 +13,6 @@
         <td><%= session.title %></td>
       	<td><%= session.date %></td>
       	<td><%= session.time %></td>
-      	<td><%= session.location %></td>
-      	<td><%= session.category %></td>
-      	<td><%= session.description %></td>
       </tr>
     <% end %>
   </tbody>
