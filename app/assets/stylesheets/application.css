@@ -105,7 +105,7 @@ div.header_row{
 div.header_pagination{
 	position: absolute;
 	left: 0px;
-	font-size: 20px !important;
+	font-size: 25px !important;
     font-weight: bold;
     padding-top: 4px;
 }
@@ -152,7 +152,7 @@ div.classname_heading{
 
 div.news_heading{
 	border-bottom: 4px solid rgb(193, 194, 195);
-	font-size: 31.5px;
+	font-size: 25px;
 	font-weight: bold;
 	margin-top: 20px;
 	margin-bottom: 20px;

@@ -13,7 +13,7 @@
   </div>
 <%= f.hidden_field :term, :value => "Fall 2013" %>
 <!-- the dummy professor value will be changed in the controller -->
-<%= f.hidden_field :professor, :value => "Dummy Professor" %>
+<%= f.hidden_field :professor, :value => "Could not find data" %>
 
 <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
