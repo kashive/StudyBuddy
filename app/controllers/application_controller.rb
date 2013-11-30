@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 	# This is Devise's authentication
 	before_filter :authenticate_user!
 
-  helper_method :getAllNotifications, :numNewNotifications
+  helper_method :getAllNotifications, :numNewNotifications, :getAllCourses
   
   def after_sign_in_path_for(user)
   	dashboard_path(user)
@@ -57,6 +57,10 @@ class ApplicationController < ActionController::Base
         format.json { render :json=> { :number=> number}}
     end
     return number
+  end
+
+  def getAllCourses
+    return Course.where("user_id='#{current_user.id}'")
   end
 
   private

@@ -7,7 +7,7 @@ class SchedulesController < ApplicationController
     @user = current_user
     @toCheckOff = []
     Schedule.where("user_id = '#{current_user.id}'").each do |schedule|
-      @toCheckOff.push(schedule.day + " " + schedule.start_time + "-" + schedule.end_time)
+      @toCheckOff.push(schedule.day + " " + schedule.start_time.to_s + "-" + schedule.end_time.to_s)
     end
 
     @schedule = Schedule.new

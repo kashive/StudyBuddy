@@ -12,7 +12,6 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @courses = Course.where("user_id='#{current_user.id}'")
     @course = Course.find(params[:id])
     @studysessions = @course.study_sessions
     @allstudysessions = StudySession.where("course_name='#{@course.name}'")
@@ -27,7 +26,6 @@ class CoursesController < ApplicationController
   # GET /courses/new.json
   def new
     # make sure that you pass in the list of departments and courses to the views
-    @courses = Course.where("user_id='#{current_user.id}'")
     @course         = Course.new
     @user           = current_user
     @subjectHash    = Marshal.load (File.binread('script/CourseList1')) 
