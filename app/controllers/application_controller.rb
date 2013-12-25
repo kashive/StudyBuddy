@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 	# This is Devise's authentication
 	before_filter :authenticate_user!
 
-  helper_method :getAllNotifications, :numNewNotifications, :getAllCourses
+  helper_method :getAllNotifications, :numberOfUnseenNotifications, :getAllCourses
   
   def after_sign_in_path_for(user)
   	dashboard_path(user)
@@ -51,12 +51,14 @@ class ApplicationController < ActionController::Base
   	return toShow
   end
 
-  def numNewNotifications
-    number = Notification.where("user_id = '#{current_user.id}' AND seen = 'f'").size
-    respond_to do |format|
-        format.json { render :json=> { :number=> number}}
+  def numberOfUnseenNotifications
+    counter = 0
+    getAllNotifications.each do |k,v|
+      if v[2] == false
+        counter = counter + 1
+      end
     end
-    return number
+    return counter
   end
 
   def getAllCourses
