@@ -18,7 +18,7 @@
 
 $(document).ready(function() {
     $(function() {
-      var user_id = gon.current_user_id;
+      var user_id = gon.logged_user['id'];
       var faye = new Faye.Client('http://0.0.0.0:9292/faye');
       faye.subscribe("/foo/"+user_id, function (data) {
         number = Number($('sub').html());
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
           FB.ui({
             method:'apprequests',
-            message:'<%= current_user.first_name + " " + current_user.last_name%> wants you to join Study Buddy'
+            message: gon.logged_user['first_name'] + " " + gon.logged_user['last_name'] + " wants you to join Study Buddy"
         });
     });
 

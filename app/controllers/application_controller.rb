@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
 
   def gon_current_user
     if current_user != nil
-      gon.current_user_id = current_user.id
+      gon.logged_user = current_user
     else
-      gon.current_user_id = 0
+      gon.logged_user = 0
     end
   end
 
