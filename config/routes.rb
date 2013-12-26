@@ -22,7 +22,7 @@ StudyBuddy::Application.routes.draw do
 
   resources :users  do
     resources :notifications, :only => [:index]
-    resources :schedules, :only=>[:new, :create]
+    resources :schedules, :only=>[:new, :create, :show]
     resources :study_sessions, :only => [:index]
     resources :courses, :only => [:index,:create,:show,:new,:destroy] do
       resources :study_sessions, :only => [:index,:create,:show,:new,:destroy]

@@ -9,14 +9,19 @@ class StudySessionsController < ApplicationController
       end
     end
 	end
+  
+  def show
+    @study_session = StudySession.find(params[:id])
+    @course = @study_session.getCourse
+  end
 
-  	def new
-    	@studysession  = StudySession.new
-      @course = Course.where("id = '#{params[:course_id]}'").first
-  	end
+	def new
+  	@studysession  = StudySession.new
+    @course = Course.where("id = '#{params[:course_id]}'").first
+	end
 
 	def create
-    	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location])
+    	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location],:date => params[:date],:time => params[:time], :category => params[:category])
     	@studysession.course_id = params[:course_id]
       course = Course.find(params[:course_id])
       @studysession.course_name = course.name 
@@ -40,7 +45,7 @@ class StudySessionsController < ApplicationController
               toShow = showableNotification(notificationArray)
               sendPushNotification("/foo/#{classmate.id}", toShow)
             end
-        		format.html { redirect_to user_course_path(current_user,params[:course_id] ), notice: 'Study Session was successfully created. Invitations sent to all classmates' }
+        		format.html { redirect_to user_course_study_session_path(current_user,params[:course_id],@studysession.id ), notice: 'Study Session was successfully created. Invitations sent to all classmates' }
       		else  
       			format.html { render action: "new" }
     		end

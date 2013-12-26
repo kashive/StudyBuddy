@@ -21,6 +21,26 @@
     </div>
   </div>
 
+  <div class="control-group">
+    <%= f.label :date,:class => 'control-label' %><br />
+    <div class ="controls">    
+      <%= text_field_tag :date %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :time,:class => 'control-label' %><br />
+    <div class ="controls">    
+      <%= text_field_tag :time %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :category,:class => 'control-label' %><br />
+    <div class ="controls">    
+      <%= text_field_tag :category %>
+    </div>
+  </div>
 Top Recommendations Time Maker<br>
 <% @course.getTimingRecommendation.each do |key,value| %>
   <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
