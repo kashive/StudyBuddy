@@ -13,8 +13,21 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require timeago
 //= require_tree .
+
 $(document).ready(function() {
+    $(function() {
+      var user_id = gon.current_user_id;
+      var faye = new Faye.Client('http://0.0.0.0:9292/faye');
+      faye.subscribe("/foo/"+user_id, function (data) {
+        number = Number($('sub').html());
+        $.each(data, function( k, v ) {
+            $(".notification").prepend("<li class = \"notification_list\"> <a href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
+            $('sub').html(number+1);
+        });
+      });
+    }); 
 
 	$('#fb_link').popover({
                   'selector': '',

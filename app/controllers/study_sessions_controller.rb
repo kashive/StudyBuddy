@@ -31,10 +31,14 @@ class StudySessionsController < ApplicationController
                                 "study_session_id"=>@studysession.id,
                                 "status"=>"invited")
 
-              invitation.notifications.create("host_id"=>current_user.id,
-                                         "user_id"=>classmate.id,
-                                         "action"=> "invited",
-                                         "seen"=>false )
+              notification = invitation.notifications.create("host_id"=>current_user.id,
+                                                             "user_id"=>classmate.id,
+                                                             "action"=> "invited",
+                                                             "seen"=>false )
+              notificationArray = []
+              notificationArray.push(notification)
+              toShow = showableNotification(notificationArray)
+              sendPushNotification("/foo/#{classmate.id}", toShow)
             end
         		format.html { redirect_to user_course_path(current_user,params[:course_id] ), notice: 'Study Session was successfully created. Invitations sent to all classmates' }
       		else  

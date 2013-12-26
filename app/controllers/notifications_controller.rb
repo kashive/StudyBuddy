@@ -12,12 +12,12 @@ class NotificationsController < ApplicationController
   def seen
   	parameters = params[:data].split(",")
   	if parameters[0].include?("joined")
-  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1][-1]}' AND action = 'user_join'").each do |notification|
+  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'user_join'").each do |notification|
   			notification.seen = true
   			notification.save
   		end
   	elsif parameters[0].include?("invited")
-  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1][-1]}' AND action = 'invited'").each do |notification|
+  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'invited'").each do |notification|
   			notification.seen = true
   			notification.save
   		end
