@@ -1,0 +1,19 @@
+<%- model_class = StudySession -%>
+<table class="table", id="rsvp_yes">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <%host = User.where("id = '#{@study_session.host_id}'").first%>
+      <td><%=host.first_name + " " + host.last_name + " (Host)"%></td>
+    </tr>
+    <% @study_session.getYes.each do |rsvpYesUser| %>
+      <tr>
+        <td><%= rsvpYesUser.first_name + " " + rsvpYesUser.last_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

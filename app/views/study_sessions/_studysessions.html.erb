@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @studysessions.each do |session| %>
+    <% @myStudySessions.each do |session| %>
       <tr data-link="<%=user_course_study_session_path(current_user, session.course_id, session.id )%>">
         <td><%= session.title %></td>
       	<td><%= session.date %></td>

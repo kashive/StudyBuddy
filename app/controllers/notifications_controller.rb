@@ -21,6 +21,11 @@ class NotificationsController < ApplicationController
   			notification.seen = true
   			notification.save
   		end
+    elsif parameters[0].include?("attending")
+      Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'rsvp_yes'").each do |notification|
+        notification.seen = true
+        notification.save
+      end
   	end
   	respond_to do |format|
       format.json { render json: {} }

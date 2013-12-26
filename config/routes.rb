@@ -27,13 +27,13 @@ StudyBuddy::Application.routes.draw do
     resources :courses, :only => [:index,:create,:show,:new,:destroy] do
       resources :study_sessions, :only => [:index,:create,:show,:new,:destroy]
     end
-  end  
+  end
 
   root :to => "devise/sessions#new"
   
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
-  put '/notification_seen', to: "notifications#seen" 
-
+  put '/notification_seen', to: "notifications#seen"
+  post '/users/:user_id/courses/:course_id/study_sessions/:id/invitations_update/:status', to: "study_sessions#updateInvitation", as: "invitation_update"
   resources :activities
  
   # The priority is based upon order of creation:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128170857) do
+ActiveRecord::Schema.define(:version => 20131226175615) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20131128170857) do
     t.integer  "course_id"
     t.integer  "enrollment_id"
     t.string   "course_name"
+    t.string   "host_id"
   end
 
   create_table "users", :force => true do |t|

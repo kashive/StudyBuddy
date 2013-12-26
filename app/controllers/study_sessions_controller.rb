@@ -20,8 +20,35 @@ class StudySessionsController < ApplicationController
     @course = Course.where("id = '#{params[:course_id]}'").first
 	end
 
+  def updateInvitation
+    invitation = Invitation.where("user_id = '#{params[:user_id]}' AND course_id = '#{params[:course_id]}' AND study_session_id = '#{params[:id]}'").first
+    study_session = StudySession.where("id = '#{params[:id]}'").first
+    if invitation == nil
+      invitation = Invitation.create("user_id"=>params[:user_id],
+                                     "course_id"=> params[:course_id],
+                                     "study_session_id"=>params[:id],
+                                     "status"=>"invited",
+                                     "host_id"=>study_session.host_id)
+    end
+    if params[:status] == "yes"
+      invitation.status = "yes"
+      notification = study_session.notifications.create("host_id"=>current_user.id,
+                                                       "user_id"=>study_session.host_id,
+                                                       "action"=>"rsvp_yes",
+                                                       "seen"=>false
+                                                       )
+      notificationArray = []
+      notificationArray.push(notification)
+      toShow = showableNotification(notificationArray)
+      sendPushNotification("/foo/#{study_session.host_id}", toShow)
+    end
+    invitation.status = "no" if params[:status] == "no"
+    invitation.save
+    redirect_to user_course_study_session_path(current_user,params[:course_id],params[:id]), notice: 'RSVP updated!'
+  end
+
 	def create
-    	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location],:date => params[:date],:time => params[:time], :category => params[:category])
+    	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location],:date => params[:date],:time => params[:time], :category => params[:category], :host_id => current_user.id)
     	@studysession.course_id = params[:course_id]
       course = Course.find(params[:course_id])
       @studysession.course_name = course.name 

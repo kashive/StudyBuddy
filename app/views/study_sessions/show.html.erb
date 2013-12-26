@@ -59,13 +59,27 @@
     </div>
       <div class = "span5 facebook_marketing">
         <div class = "news_headings">
-          <p>My Study Sessions</p>
+          <p>Current Status</p>
         </div> 
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        <% if @study_session.host_id.to_s == current_user.id.to_s%>
+          You are the host of this study sesssion
+        <%else%>
+          RSVP:<br>
+          <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @study_session.id, "yes"), method: :post%><br>
+          <%= link_to "No", invitation_update_path(current_user.id, @course.id, @study_session.id, "no"), method: :post%>
+        <%end%>
       </div>
       <div class = "span5 recent_updates">
         <div class = "news_headings">
-          <p>All Study Sessions<p>
+          <p>Invited<p>
         </div>
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        <%= render :partial => 'invited' %>
+        <div class = "news_headings">
+          <p>RSVP Yes<p>
+        </div>
+        <%= render :partial => 'yes' %>
+        <div class = "news_headings">
+          <p>RSVP No<p>
+        </div>
+        <%= render :partial => 'no' %>
       </div>

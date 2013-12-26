@@ -1,0 +1,15 @@
+<%- model_class = StudySession -%>
+<table class="table", id="rsvp_nos">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @study_session.getNo.each do |rsvpNoUser| %>
+      <tr>
+        <td><%= rsvpNoUser.first_name + " " + rsvpNoUser.last_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

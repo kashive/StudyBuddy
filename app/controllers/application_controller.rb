@@ -35,10 +35,10 @@ class ApplicationController < ActionController::Base
   def sendPushNotification(url, data)
     require 'eventmachine'
     EM.run {
-      client = Faye::Client.new('http://localhost:9292/faye')
+      client = Faye::Client.new('http://0.0.0.0:9292/faye')
       publication= client.publish(url, data)
       publication.callback do
-        logger.debug 'Message received by server!'
+        logger.debug "Message received by server! #{url} and data #{data}"
       end
 
       publication.errback do |error|
@@ -72,6 +72,14 @@ class ApplicationController < ActionController::Base
         pathAndTime.push(notification.created_at)
         pathAndTime.push(notification.seen)
         notificationText = "#{hostUser.first_name} has invited you to join #{studySession.title} for your #{course.name} class"
+        toShow[notificationText] = pathAndTime
+      elsif notification.action == "rsvp_yes"
+        studySession = notification.notifiable
+        pathAndTime = []
+        pathAndTime.push(user_course_study_session_path(current_user,studySession.getCourse.id, studySession.id))
+        pathAndTime.push(notification.created_at)
+        pathAndTime.push(notification.seen)
+        notificationText = "#{hostUser.first_name} is attending #{studySession.title}"
         toShow[notificationText] = pathAndTime
       end
     end
