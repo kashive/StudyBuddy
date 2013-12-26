@@ -32,6 +32,7 @@ class StudySessionsController < ApplicationController
     end
     if params[:status] == "yes"
       invitation.status = "yes"
+      study_session.create_activity :rsvp, owner: current_user
       notification = study_session.notifications.create("host_id"=>current_user.id,
                                                        "user_id"=>study_session.host_id,
                                                        "action"=>"rsvp_yes",

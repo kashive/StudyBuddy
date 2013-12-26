@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
         studySession = StudySession.where("id = '#{invitation.study_session_id}'").first
         course = Course.where("id = '#{invitation.course_id}'").first
         pathAndTime=[]
-        pathAndTime.push("#")
+        pathAndTime.push(user_course_study_session_path(current_user,course.id, studySession.id))
         pathAndTime.push(notification.created_at)
         pathAndTime.push(notification.seen)
         notificationText = "#{hostUser.first_name} has invited you to join #{studySession.title} for your #{course.name} class"

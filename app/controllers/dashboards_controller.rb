@@ -8,7 +8,7 @@ class DashboardsController < ApplicationController
 		elsif @courses.size == 0
 			size = 2
 		end
-		@activities = PublicActivity::Activity.order("created_at desc").page(params[:page]).per(size)
+		@activities = PublicActivity::Activity.order("created_at desc").where("owner_id !='#{current_user.id}'").page(params[:page]).per(size)
 		render "/layouts/dashboard.html.erb"
 	end
 end

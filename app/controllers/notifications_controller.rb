@@ -17,7 +17,9 @@ class NotificationsController < ApplicationController
   			notification.save
   		end
   	elsif parameters[0].include?("invited")
-  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'invited'").each do |notification|
+      study_session_id = parameters[1].split('/')[-1]
+      invitation_id = Invitation.where("user_id = '#{parameters[1][7]}' AND study_session_id= '#{parameters[1].split('/')[-1]}'").first.id
+  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{invitation_id}' AND action = 'invited'").each do |notification|
   			notification.seen = true
   			notification.save
   		end
