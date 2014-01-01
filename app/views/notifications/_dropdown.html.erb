@@ -4,7 +4,7 @@
 	<%break if counter == 6%>
 	<li class = "notification_list">
 			
-		<%= link_to key, value[0] %>
+		<%= link_to key, value[0], :class=> "notification_href" %>
 	</li>
 	<div class = "time_ago">
    		<%=time_ago_in_words(value[1])%> ago

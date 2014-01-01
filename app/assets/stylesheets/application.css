@@ -223,6 +223,22 @@ div.bio_photo_soha{
 	width: 225px;
 	background: url("/assets/soha.jpg") no-repeat;
 }
+
+div.bio_photo_berk{
+	height: 200px;
+	width: 225px;
+	background: url("/assets/berk.jpg") no-repeat;
+}
+div.bio_photo_mustapha{
+	height: 200px;
+	width: 225px;
+	background: url("/assets/mustapha.jpg") no-repeat;
+}
+div.bio_photo_derrick{
+	height: 200px;
+	width: 225px;
+	background: url("/assets/derrick.jpg") no-repeat;
+}
 .contact_us_text{
 	width:97%;
 }

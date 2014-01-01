@@ -57,8 +57,10 @@ class ApplicationController < ActionController::Base
       hostUser = User.where("id = '#{notification.host_id}'").first
       if notification.action == "user_join"
         course = notification.notifiable
+        receivingUser = User.where("id = '#{notification.user_id}'").first
+        courseForReceiver = Course.where("user_id = '#{notification.user_id}' AND name ='#{course.name}'").first
         pathAndTime = []
-        pathAndTime.push(user_course_path(current_user,course))
+        pathAndTime.push(user_course_path(receivingUser.id,courseForReceiver.id))
         pathAndTime.push(notification.created_at)
         pathAndTime.push(notification.seen)
         notificationText = "#{hostUser.first_name} has joined #{course.name} and is now a classmate"

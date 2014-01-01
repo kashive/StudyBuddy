@@ -23,7 +23,7 @@ $(document).ready(function() {
       faye.subscribe("/foo/"+user_id, function (data) {
         number = Number($('sub').html());
         $.each(data, function( k, v ) {
-            $(".notification").prepend("<li class = \"notification_list\"> <a href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
+            $(".notification").prepend("<li class = \"notification_list\"> <a class = \"notification_href\" href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
             $('sub').html(number+1);
         });
       });
@@ -133,8 +133,8 @@ $(document).ready(function() {
         $('#table1').css('display','none');
     });
 
-    $(".notification_list").click(function(){
-        var data = $(this).find("a").text() + ","+ $(this).find("a").attr('href');
+    $(".notification_href").on("click",function() {
+        var data = $(this).text() + ","+ $(this).attr('href');
         $.ajax({
             type: "PUT",
             url: "/notification_seen",

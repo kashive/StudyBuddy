@@ -95,7 +95,8 @@ class CoursesController < ApplicationController
 
           @course.getClassmates.each do |classmate|
             next if classmate.id == current_user.id
-            notification = @course.notifications.create("host_id"=>current_user.id,
+            courseForClassmate = Course.where("user_id = '#{classmate.id}' AND name = '#{@course.name}'").first
+            notification = courseForClassmate.notifications.create("host_id"=>current_user.id,
                                          "user_id"=>classmate.id,
                                          "action"=> "user_join",
                                          "seen"=>false )
