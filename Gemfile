@@ -27,6 +27,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'nokogiri'
 gem "mechanize", "~> 2.7.2"
 gem 'gon'

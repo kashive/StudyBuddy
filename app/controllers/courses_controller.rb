@@ -31,7 +31,6 @@ class CoursesController < ApplicationController
     @user           = current_user
     @subjectHash    = Marshal.load (File.binread('script/CourseListSpring')) 
     gon.subjectHash = @subjectHash
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @course }

@@ -18,6 +18,9 @@ class StudySessionsController < ApplicationController
 	def new
   	@studysession  = StudySession.new
     @course = Course.where("id = '#{params[:course_id]}'").first
+    locationsArray = []
+    StudySession.all.each do |ss| locationsArray.push(ss.location) end
+    gon.locations = locationsArray.uniq.join(',')
 	end
 
   def updateInvitation

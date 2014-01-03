@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.autocomplete
 //= require twitter/bootstrap
 //= require timeago
 //= require_tree .
@@ -27,7 +28,12 @@ $(document).ready(function() {
             $('sub').html(number+1);
         });
       });
-    }); 
+    });
+
+    $('#fb_link').autocomplete({
+        source: gon.locations
+    });
+
 
 	$('#fb_link').popover({
                   'selector': '',
