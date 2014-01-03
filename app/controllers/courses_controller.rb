@@ -29,8 +29,9 @@ class CoursesController < ApplicationController
     # make sure that you pass in the list of departments and courses to the views
     @course         = Course.new
     @user           = current_user
-    @subjectHash    = Marshal.load (File.binread('script/CourseList1')) 
+    @subjectHash    = Marshal.load (File.binread('script/CourseListSpring')) 
     gon.subjectHash = @subjectHash
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @course }
@@ -40,53 +41,58 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @course = Course.new(params[:course])
+    @course = Course.new
+    subjectHash    = Marshal.load (File.binread('script/CourseListSpring'))
+    timingHash     = Marshal.load (File.binread('script/CourseTimings'))
+    @course.department = params[:course][:department]
+    number = params[:course][:name].strip
+    number = number + " 1" if !"234".include?(number[-1])
+    @course.name = subjectHash[@course.department][number].keys.first
     @course.user_id = params[:user_id]
+    @course.professor = subjectHash[@course.department][number][@course.name]
+    @course.term = "Spring 2014"
     alreadyExists = false
     if Course.where("user_id = '#{@course.user_id}' AND name = '#{@course.name}'").first != nil
       alreadyExists = true
     end
-    subjectHash    = Marshal.load (File.binread('script/CourseList1'))
-    timingHash     = Marshal.load (File.binread('script/CourseTimings'))
-    @course.professor = subjectHash[@course.department][@course.name].gsub! /"/, ''
     respond_to do |format|
       if alreadyExists == false
         if @course.save
           # updating the activity table
           @course.create_activity :create, owner: current_user
           # updating the schedule timings
-          @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
-          @schedule = Schedule.new if @schedule == nil
-          @schedule.user_id = current_user
-          @schedule.course_id = @course.id
-          timingHash[@course.name]['daysInWeek'].each do |day|
-            if day == "M"
-              @schedule.day = "Monday"
-              @schedule.start_time = timingHash[@course.name]['startTime']
-              @schedule.end_time   = timingHash[@course.name]['endTime']
-              @schedule.save
-            elsif day =="T"
-              @schedule.day = "Tuesday"
-              @schedule.start_time = timingHash[@course.name]['startTime']
-              @schedule.end_time   = timingHash[@course.name]['endTime']
-              @schedule.save
-            elsif day =="W"
-              @schedule.day = "Wednesday"
-              @schedule.start_time = timingHash[@course.name]['startTime']
-              @schedule.end_time   = timingHash[@course.name]['endTime']
-              @schedule.save
-            elsif day =="Th"
-              @schedule.day = "Thursday"
-              @schedule.start_time = timingHash[@course.name]['startTime']
-              @schedule.end_time   = timingHash[@course.name]['endTime']
-              @schedule.save
-            elsif day = "F"
-              @schedule.day = "Friday"
-              @schedule.start_time = timingHash[@course.name]['startTime']
-              @schedule.end_time   = timingHash[@course.name]['endTime']
-              @schedule.save
-            end
-          end
+          # @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
+          # @schedule = Schedule.new if @schedule == nil
+          # @schedule.user_id = current_user
+          # @schedule.course_id = @course.id
+          # timingHash[@course.name]['daysInWeek'].each do |day|
+          #   if day == "M"
+          #     @schedule.day = "Monday"
+          #     @schedule.start_time = timingHash[@course.name]['startTime']
+          #     @schedule.end_time   = timingHash[@course.name]['endTime']
+          #     @schedule.save
+          #   elsif day =="T"
+          #     @schedule.day = "Tuesday"
+          #     @schedule.start_time = timingHash[@course.name]['startTime']
+          #     @schedule.end_time   = timingHash[@course.name]['endTime']
+          #     @schedule.save
+          #   elsif day =="W"
+          #     @schedule.day = "Wednesday"
+          #     @schedule.start_time = timingHash[@course.name]['startTime']
+          #     @schedule.end_time   = timingHash[@course.name]['endTime']
+          #     @schedule.save
+          #   elsif day =="Th"
+          #     @schedule.day = "Thursday"
+          #     @schedule.start_time = timingHash[@course.name]['startTime']
+          #     @schedule.end_time   = timingHash[@course.name]['endTime']
+          #     @schedule.save
+          #   elsif day = "F"
+          #     @schedule.day = "Friday"
+          #     @schedule.start_time = timingHash[@course.name]['startTime']
+          #     @schedule.end_time   = timingHash[@course.name]['endTime']
+          #     @schedule.save
+          #   end
+          # end
 
           @enrollment = Enrollment.new
           @enrollment.user_id   =  current_user.id

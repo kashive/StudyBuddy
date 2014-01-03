@@ -10,7 +10,10 @@ jQuery ($) ->
 				for course in Object.keys(gon.subjectHash[selected_text])
 					# teacher = gon.subjectHash[selected_text][course]
 					# teacher = teacher.substring(1,teacher.length - 1)
-					$("#course_name").append($('<option></option>').val(course).html(course)) if course != ""
+					courseName = Object.keys(gon.subjectHash[selected_text][course])[0]
+					if course.charAt(course.length-1) == "1"
+						course = course[0..(course.length-2)]
+					$("#course_name").append($('<option></option>').val(course).html(course + " => " + courseName)) if course != ""
 		$(document).on 'click', 'tr[data-link]', (evt) -> 
 			window.location = this.dataset.link
 		$("table").delegate "td", "mouseover mouseleave", (e) ->

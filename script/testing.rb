@@ -1,8 +1,8 @@
-list = if File.exists?('CoursesList')
-          File.open('CoursesList') do|file|
+list = if File.exists?('CourseListSpring')
+          File.open('CourseListSpring') do|file|
             Marshal.load(file)
           end
         else
            0
         end
-puts list["Psychology"].inspect
+puts list["Economics"]["ECON 20A 1"].inspect
