@@ -1,9 +1,19 @@
 class StudySession < ActiveRecord::Base
 	include PublicActivity::Common
-  	attr_accessible :category, :date, :description, :location, :time, :title, :host_id
+  	attr_accessible :category, :description, :location, :time, :title, :host_id
+    validates :title, :time, :category, :location, :description, presence: true
+    validate :old_date?
   	belongs_to :course
     has_many :notifications, as: :notifiable
 
+    def old_date?
+      if self.time < Time.now
+        self.errors.add(:time, 'Please select time in the future') 
+        return false
+      else
+        return true
+      end
+    end
   	# returns the user that created this study session
   	def getUser
   		user_id = Course.where("id = '#{self.course_id}'").first.user_id

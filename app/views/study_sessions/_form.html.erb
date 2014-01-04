@@ -1,31 +1,36 @@
 <%= form_for @studysession, :url => {action: "create"}, :html => { :class => 'form-horizontal' } do |f| %>
+<% if @studysession.errors.any? %>
+        <div class="alert alert-error" id= "error_explanation">
+          <%= @studysession.errors.full_messages.first%>
+        </div>
+  <% end %>
   
   <div class="control-group">
     <%= f.label :title,:class => 'control-label'%><br />
     <div class ="controls">    
-      <%= text_field_tag :title %>
+      <%= f.text_field :title, :id => 'title', :name =>'title' %>
     </div>
   </div>
 
   <div class="control-group">
     <%= f.label :description,:class => 'control-label' %><br />
     <div class ="controls">    
-      <%= text_field_tag :description %>
+      <%= f.text_area :description, :id =>'description', :name => 'description' %>
     </div>
   </div>
 
   <div class="control-group">
     <%= f.label :location,:class => 'control-label' %><br />
     <div class ="controls">    
-      <%= text_field_tag :location %>
+      <%= f.text_field :location, :id => 'location', :name =>'location' %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :Date_Time,:class => 'control-label' %><br />
+    <%= f.label :time,:class => 'control-label' %><br />
     <div class ="controls">
       <div id="datetimepicker2" class="input-append">
-        <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+        <input name="time" id="time" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
         <span class="add-on">
           <i data-time-icon="icon-time" data-date-icon="icon-calendar">
           </i>
@@ -45,11 +50,11 @@
   <div class="control-group">
     <%= f.label :category,:class => 'control-label' %><br />
     <div class ="controls">    
-      <%= text_field_tag :category %>
+      <%= f.text_field :category, :id => 'category', :name => 'category' %>
     </div>
   </div>
 Top Recommendations Time Maker<br>
-<% @course.getTimingRecommendation.each do |key,value| %>
+<% Course.where("id = '#{params[:course_id]}'").first.getTimingRecommendation.each do |key,value| %>
   <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
   <br>
 <%end%>

@@ -4,7 +4,7 @@
     <%= form_for(@get_in_touch) do |f| %>
       <% if @get_in_touch.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@get_in_touch.errors.count, "error") %> prohibited this get_in_touch from being saved:</h2>
+          <h2><%= pluralize(@get_in_touch.errors.count, "error") %> prohibited this message from being saved:</h2>
 
           <ul>
           <% @get_in_touch.errors.full_messages.each do |msg| %>
