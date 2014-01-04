@@ -24,7 +24,7 @@ class SchedulesController < ApplicationController
   # POST /schedules
   # POST /schedules.json
   def create
-    Schedule.where("user_id = '#{current_user.id}'").each do |schedule| 
+    Schedule.where("user_id = '#{current_user.id}' AND course_id is NULL").each do |schedule| 
       schedule.destroy 
     end
     params[:time].keys.each do |times|
