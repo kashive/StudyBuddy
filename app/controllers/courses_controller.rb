@@ -63,9 +63,11 @@ class CoursesController < ApplicationController
           @course.create_activity :create, owner: current_user
           # updating the schedule timings
           # @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
-          # @schedule = Schedule.new if @schedule == nil
-          # @schedule.user_id = current_user
-          # @schedule.course_id = @course.id
+          # if @schedule == nil
+          #   @schedule = Schedule.new 
+          #   @schedule.user_id = current_user
+          #   @schedule.course_id = @course.id
+          # end
           # timingHash[@course.name]['daysInWeek'].each do |day|
           #   if day == "M"
           #     @schedule.day = "Monday"

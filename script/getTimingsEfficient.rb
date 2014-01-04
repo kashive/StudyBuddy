@@ -47,7 +47,7 @@ a.get('http://www.brandeis.edu/registrar/schedule/search?strm=1141&view=all') do
 			charArray.each_with_index do |char, indx|
 				if including.include?(char)
 					toInclude = true
-					if char == ":" && !charArray[indx + 1].numeric?
+					if char == ":" && !numeric?(charArray[indx + 1])
 						toInclude = false
 					end
 				end

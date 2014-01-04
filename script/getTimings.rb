@@ -31,9 +31,6 @@ a.get('http://www.brandeis.edu/registrar/schedule/search?strm=1141&view=all') do
 			dayTime = {}
 			endTime = ""
 			startTime = ""
-			if classNumber == "BIOL 14A 1"
-				debugger
-			end
 			if courseTiming.include?('<br>') && !courseTiming.include?('<hr>')
 				endTime = Sanitize.clean(courseTiming.split('<br>')[1].strip).split('–')[1].strip
 				startTime = Sanitize.clean(courseTiming.split('<br>')[1].strip).split('–')[0].split(' ')[1..2].join(" ")
