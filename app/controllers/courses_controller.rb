@@ -44,12 +44,14 @@ class CoursesController < ApplicationController
     subjectHash    = Marshal.load (File.binread('script/CourseListSpring'))
     timingHash     = Marshal.load (File.binread('script/CourseTimings'))
     @course.department = params[:course][:department]
-    number = params[:course][:name].strip
-    number = number + " 1" if !"234".include?(number[-1])
-    @course.name = subjectHash[@course.department][number].keys.first
-    @course.user_id = params[:user_id]
-    @course.professor = subjectHash[@course.department][number][@course.name]
-    @course.term = "Spring 2014"
+    number = params[:course][:name].to_s
+    if number != ""
+      number = number + " 1" if !"234".include?(number[-1])
+      @course.name = subjectHash[@course.department][number].keys.first
+      @course.user_id = params[:user_id]
+      @course.professor = subjectHash[@course.department][number][@course.name]
+      @course.term = "Spring 2014"
+    end
     alreadyExists = false
     if Course.where("user_id = '#{@course.user_id}' AND name = '#{@course.name}'").first != nil
       alreadyExists = true
@@ -117,7 +119,7 @@ class CoursesController < ApplicationController
           format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
           format.json { render json: @course, status: :created, location: @course }
         else
-          format.html { redirect_to dashboard_path(current_user), alert: 'Error occured. Did you try adding more than 6 courses?' }
+          format.html { redirect_to dashboard_path(current_user), alert: "Error occured. Did you try adding more than 6 courses? or not select a course" }
           format.json { render json: @course.errors, status: :unprocessable_entity }
         end
       else

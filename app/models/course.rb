@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   include PublicActivity::Common
+  validates :name, :department, presence: true
   validate :cannot_have_more_than_six_courses, on: :create
   attr_accessible :name, :department, :professor, :term
 
