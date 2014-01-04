@@ -101,7 +101,9 @@ class CoursesController < ApplicationController
           @enrollment.user_id   =  current_user.id
           @enrollment.course_name =  @course.name
           @enrollment.save
-
+          @course.enrollment_id = @enrollment.id
+          @course.save
+          
           @course.getClassmates.each do |classmate|
             next if classmate.id == current_user.id
             courseForClassmate = Course.where("user_id = '#{classmate.id}' AND name = '#{@course.name}'").first
