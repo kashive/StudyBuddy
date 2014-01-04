@@ -6,7 +6,7 @@ class SchedulesController < ApplicationController
     @courses = Course.where("user_id='#{current_user.id}'")
     @user = current_user
     @toCheckOff = []
-    Schedule.where("user_id = '#{current_user.id}'").each do |schedule|
+    Schedule.where("user_id = '#{current_user.id}' AND course_id IS NULL").each do |schedule|
       @toCheckOff.push(schedule.day + " " + schedule.start_time.to_s + "-" + schedule.end_time.to_s)
     end
 

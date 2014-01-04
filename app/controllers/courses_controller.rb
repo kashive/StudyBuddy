@@ -38,13 +38,38 @@ class CoursesController < ApplicationController
   end
 
   def putIntoDatabase(day,course,time)
-    @schedule = Schedule.new
-    @schedule.day = day
-    @schedule.user_id = current_user
-    @schedule.course_id = course.id
-    @schedule.start_time = time.split('-')[0].split(' ').join.downcase
-    @schedule.end_time = time.split('-')[1].split(' ').join.downcase
-    @schedule.save
+    # modifying time so that the database remains uniform
+    startTimePMAM = time.split('-')[0].split(' ')[1]
+    endTimePMAM = time.split('-')[1].split(' ')[1]
+    startTimeFirstNumber = time.split('-')[0].split(' ')[0].split(':')[0]
+    startTimeSecondNumber = time.split('-')[0].split(' ')[0].split(':')[1]
+    endTimeFirstNumber = time.split('-')[1].split(' ')[0].split(':')[0]
+    endTimeSecondNumber = time.split('-')[1].split(' ')[0].split(':')[1]
+
+    if startTimeSecondNumber.to_i == 0 && endTimeSecondNumber.to_i == 50
+      start_time = startTimeFirstNumber + startTimePMAM.downcase
+      end_time = (endTimeFirstNumber.to_i + 1).to_s + endTimePMAM.downcase
+      Schedule.create("user_id" => current_user.id,
+                      "day" => day,
+                      "course_id" => course.id,
+                      "start_time"=> start_time,
+                      "end_time"=>end_time)  
+    else
+      start_time = startTimeFirstNumber + startTimePMAM.downcase
+      end_time = endTimeFirstNumber + endTimePMAM.downcase
+      Schedule.create("user_id" => current_user.id,
+                      "day" => day,
+                      "course_id" => course.id,
+                      "start_time"=> start_time,
+                      "end_time"=>end_time)
+      start_time = endTimeFirstNumber + endTimePMAM.downcase
+      end_time = (endTimeFirstNumber.to_i + 1).to_s + endTimePMAM.downcase
+      Schedule.create("user_id" => current_user.id,
+                    "day" => day,
+                    "course_id" => course.id,
+                    "start_time"=> start_time,
+                    "end_time"=>end_time)    
+    end
   end
 
   # POST /courses
