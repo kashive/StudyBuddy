@@ -1,8 +1,8 @@
-is going to
 <% if activity.trackable %>
+  is going to
   <%= link_to activity.trackable.title, user_course_study_session_path(activity.owner.id,activity.trackable) %>
   for
   <%= link_to activity.trackable.getCourse.name, user_course_path(activity.owner.id,activity.trackable.getCourse) %>
 <% else %>
-  which has since been removed 
+  was going to a study session which has since been removed 
 <% end %>

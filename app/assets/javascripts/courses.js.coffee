@@ -16,10 +16,10 @@ jQuery ($) ->
 					$("#course_name").append($('<option></option>').val(course).html(course + " => " + courseName)) if course != ""
 		$(document).on 'click', 'tr[data-link]', (evt) -> 
 			window.location = this.dataset.link
-		#$("table").delegate "td", "mouseover mouseleave", (e) ->
-		#  if e.type is "mouseover"
-		#    $(this).parent().addClass "hover"
-		#    $("colgroup").eq($(this).index()).addClass "hover"
-		#  else
-		#    $(this).parent().removeClass "hover"
-		#    $("colgroup").eq($(this).index()).removeClass "hover"
+		$("table").delegate "td", "mouseover mouseleave", (e) ->
+		  if e.type is "mouseover"
+		    $(this).parent().addClass "hover"
+		    $("colgroup").eq($(this).index()).addClass "hover"
+		  else
+		    $(this).parent().removeClass "hover"
+		    $("colgroup").eq($(this).index()).removeClass "hover"

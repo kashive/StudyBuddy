@@ -9,6 +9,28 @@ class StudySessionsController < ApplicationController
       end
     end
 	end
+
+  def destroy
+    @study_session = StudySession.find(params[:id])
+    course = @study_session.getCourse
+    @study_session.getYes.each do |rsvpYesUser|
+      next if rsvpYesUser.id == current_user.id
+      notification = course.notifications.create("host_id"=>current_user.id,
+                                                       "user_id"=>rsvpYesUser.id,
+                                                       "action"=> "session_delete",
+                                                       "seen"=>false )
+      notificationArray = []
+      notificationArray.push(notification)
+      toShow = showableNotification(notificationArray)
+      sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
+    end
+    Invitation.where("study_session_id = '#{@study_session.id}'").each do |invitation| invitation.destroy end
+    @study_session.destroy
+    respond_to do |format|
+      format.html { redirect_to dashboard_path(current_user), notice: 'Study Session was successfully deleted' }
+      format.json { head :no_content }
+    end
+  end
   
   def show
     @study_session = StudySession.find(params[:id])
