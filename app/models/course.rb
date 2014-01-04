@@ -2,7 +2,7 @@ class Course < ActiveRecord::Base
   include PublicActivity::Common
   validates :name, :department, presence: true
   validate :cannot_have_more_than_six_courses, on: :create
-  attr_accessible :name, :department, :professor, :term
+  attr_accessible :name, :department, :professor, :term, :course_number
 
   has_many :study_sessions
   has_many :enrollments, dependent: :destroy

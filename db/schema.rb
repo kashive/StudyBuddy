@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140104042610) do
+ActiveRecord::Schema.define(:version => 20140104185812) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20140104042610) do
     t.string   "department"
     t.integer  "study_session_id"
     t.integer  "enrollment_id"
+    t.string   "course_number"
   end
 
   create_table "enrollments", :force => true do |t|
@@ -103,17 +104,17 @@ ActiveRecord::Schema.define(:version => 20140104042610) do
   end
 
   create_table "study_sessions", :force => true do |t|
+    t.datetime "time"
     t.text     "title"
     t.string   "category"
     t.string   "location"
     t.text     "description"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "course_id"
     t.integer  "enrollment_id"
     t.string   "course_name"
     t.string   "host_id"
-    t.datetime "date_time"
   end
 
   create_table "users", :force => true do |t|

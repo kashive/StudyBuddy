@@ -5,4 +5,4 @@ list = if File.exists?('CourseTimingsSpring')
         else
            0
         end
-puts list["ECON 80A 1"].inspect
+puts list["COSI 12B 1"].inspect

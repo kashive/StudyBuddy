@@ -18,6 +18,8 @@
       <dd><%= @course.professor %></dd>
       <dt><strong>Department:</strong></dt>
       <dd><%= @course.department %></dd>
+      <dt><strong>Number:</strong></dt>
+      <dd><%= @course.course_number %></dd>
       <dt><strong>Current Enrollment:</strong></dt>
       <dd><%= Enrollment.where("course_name='#{@course.name}'").size() %></dd>
     </dl>

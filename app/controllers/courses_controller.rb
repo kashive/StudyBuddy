@@ -37,16 +37,27 @@ class CoursesController < ApplicationController
     end
   end
 
+  def putIntoDatabase(day,course,time)
+    @schedule = Schedule.new
+    @schedule.day = day
+    @schedule.user_id = current_user
+    @schedule.course_id = course.id
+    @schedule.start_time = time.split('-')[0].split(' ').join.downcase
+    @schedule.end_time = time.split('-')[1].split(' ').join.downcase
+    @schedule.save
+  end
+
   # POST /courses
   # POST /courses.json
   def create
     @course = Course.new
     subjectHash    = Marshal.load (File.binread('script/CourseListSpring'))
-    timingHash     = Marshal.load (File.binread('script/CourseTimings'))
+    timingHash     = Marshal.load (File.binread('script/CourseTimingsSpring'))
     @course.department = params[:course][:department]
     number = params[:course][:name].to_s
     if number != ""
       number = number + " 1" if !"234".include?(number[-1])
+      @course.course_number = number
       @course.name = subjectHash[@course.department][number].keys.first
       @course.user_id = params[:user_id]
       @course.professor = subjectHash[@course.department][number][@course.name]
@@ -61,49 +72,38 @@ class CoursesController < ApplicationController
         if @course.save
           # updating the activity table
           @course.create_activity :create, owner: current_user
-          # updating the schedule timings
-          # @schedule = Schedule.where("user_id = '#{@course.user_id}'").first
-          # if @schedule == nil
-          #   @schedule = Schedule.new 
-          #   @schedule.user_id = current_user
-          #   @schedule.course_id = @course.id
-          # end
-          # timingHash[@course.name]['daysInWeek'].each do |day|
-          #   if day == "M"
-          #     @schedule.day = "Monday"
-          #     @schedule.start_time = timingHash[@course.name]['startTime']
-          #     @schedule.end_time   = timingHash[@course.name]['endTime']
-          #     @schedule.save
-          #   elsif day =="T"
-          #     @schedule.day = "Tuesday"
-          #     @schedule.start_time = timingHash[@course.name]['startTime']
-          #     @schedule.end_time   = timingHash[@course.name]['endTime']
-          #     @schedule.save
-          #   elsif day =="W"
-          #     @schedule.day = "Wednesday"
-          #     @schedule.start_time = timingHash[@course.name]['startTime']
-          #     @schedule.end_time   = timingHash[@course.name]['endTime']
-          #     @schedule.save
-          #   elsif day =="Th"
-          #     @schedule.day = "Thursday"
-          #     @schedule.start_time = timingHash[@course.name]['startTime']
-          #     @schedule.end_time   = timingHash[@course.name]['endTime']
-          #     @schedule.save
-          #   elsif day = "F"
-          #     @schedule.day = "Friday"
-          #     @schedule.start_time = timingHash[@course.name]['startTime']
-          #     @schedule.end_time   = timingHash[@course.name]['endTime']
-          #     @schedule.save
-          #   end
-          # end
-
+          timingHash[number].each do |day, times|
+            if day == "M"
+              times.each do |time|
+                putIntoDatabase("Monday",@course,time)
+              end
+            elsif day =="T"
+              times.each do |time|
+                putIntoDatabase("Tuesday",@course,time)
+              end
+            elsif day =="W"
+              times.each do |time|
+                putIntoDatabase("Wednesday",@course,time)
+              end
+            elsif day =="Th"
+              times.each do |time|
+                putIntoDatabase("Thursday",@course,time)
+              end
+            elsif day = "F"
+              times.each do |time|
+                putIntoDatabase("Friday",@course,time)
+              end
+            end
+          end
+      
           @enrollment = Enrollment.new
           @enrollment.user_id   =  current_user.id
           @enrollment.course_name =  @course.name
+          @enrollment.course_id = @course.id
           @enrollment.save
           @course.enrollment_id = @enrollment.id
           @course.save
-          
+
           @course.getClassmates.each do |classmate|
             next if classmate.id == current_user.id
             courseForClassmate = Course.where("user_id = '#{classmate.id}' AND name = '#{@course.name}'").first
@@ -154,6 +154,8 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     enrollments = Enrollment.where("user_id='#{current_user.id}' AND course_name = '#{@course.name}'")
     enrollments.each do |enrollment| enrollment.destroy end
+    schedules = Schedule.where("course_id = '#{@course.id}'")
+    schedules.each do |schedule| schedule.destroy end
     @course.create_activity :delete, owner: current_user
     @course.destroy
     respond_to do |format|
