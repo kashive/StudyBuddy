@@ -24,7 +24,6 @@ class StudySessionsController < ApplicationController
       toShow = showableNotification(notificationArray)
       sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
     end
-    Invitation.where("study_session_id = '#{@studysession.id}'").each do |invitation| invitation.destroy end
     @studysession.destroy
     respond_to do |format|
       format.html { redirect_to dashboard_path(current_user), notice: 'Study Session was successfully deleted' }

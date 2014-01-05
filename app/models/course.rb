@@ -31,6 +31,15 @@ class Course < ActiveRecord::Base
     end
     return classmates;
   end
+  # checks if the passed in user object is one of the classmates
+  def includeUser?(user_id)
+    self.getClassmates.each do |classmate|
+      if user_id == classmate.id
+        return true
+      end
+    end
+    return false
+  end
 
   def getTimingRecommendation
     dayTimeAndPopularity = Hash.new { |hash, key| hash[key] = {} }

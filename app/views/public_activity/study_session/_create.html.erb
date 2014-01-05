@@ -1,8 +1,12 @@
 added study session 
 <% if activity.trackable %>
-  <%= link_to activity.trackable.title, user_course_study_session_path(activity.owner.id,activity.trackable) %>
-  in 
-  <%= link_to activity.trackable.getCourse.name, user_course_path(activity.owner.id,activity.trackable.getCourse) %>
+	<% if activity.trackable.getCourse.includeUser?(request.url.split('/')[request.url.split('/').index("users")+1].to_i)%>
+	  <%= link_to activity.trackable.title, user_course_study_session_path(request.url.split('/')[request.url.split('/').index("users")+1], activity.trackable.getCourse,activity.trackable) %>
+	  in 
+	  <%= link_to activity.trackable.getCourse.name, user_course_path(request.url.split('/')[request.url.split('/').index("users")+1],activity.trackable.getCourse) %>
+	<%else%>
+	  <%= activity.trackable.title%> in <%= activity.trackable.getCourse.name%>
+	<%end%>
 <% else %>
   which has since been removed 
 <% end %>

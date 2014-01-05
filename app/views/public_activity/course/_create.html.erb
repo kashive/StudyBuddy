@@ -1,6 +1,11 @@
 added course 
-<% if activity.trackable %>
-  <%= link_to activity.trackable.name, user_course_path(activity.trackable.user_id,activity.trackable) %>
+<% if activity.trackable%>
+	<!-- getting the user id from the url -->
+	<% if activity.trackable.includeUser?(request.url.split('/')[request.url.split('/').index("users")+1].to_i)%>
+  		<%= link_to activity.trackable.name, user_course_path(request.url.split('/')[request.url.split('/').index("users")+1],activity.trackable) %>
+  	<%else%>
+  		<%=activity.trackable.name%>
+  	<%end%>
 <% else %>
   which has since been removed 
 <% end %>

@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
         toShow[notificationText] = pathAndTime
       elsif notification.action == "invited"
         invitation = notification.notifiable
-        if invitation == nil
+        if invitation == nil || invitation.getStudySession == nil
           pathAndTime=[]
           pathAndTime.push("#")
           pathAndTime.push(notification.created_at)

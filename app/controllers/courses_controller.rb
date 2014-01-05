@@ -181,10 +181,12 @@ class CoursesController < ApplicationController
     enrollments.each do |enrollment| enrollment.destroy end
     schedules = Schedule.where("course_id = '#{@course.id}'")
     schedules.each do |schedule| schedule.destroy end
+    allUserCourseStudySessions = StudySession.where("host_id = '#{current_user.id}' AND course_id = '#{@course.id}'")
+    allUserCourseStudySessions.each do |study_session| study_session.destroy end
     @course.create_activity :delete, owner: current_user
     @course.destroy
     respond_to do |format|
-      format.html { redirect_to dashboard_path(current_user), notice: 'Course was successfully deleted' }
+      format.html { redirect_to dashboard_path(current_user), notice: 'Course was successfully deleted.' }
       format.json { head :no_content }
     end
   end

@@ -4,6 +4,7 @@ class StudySession < ActiveRecord::Base
     validates :title, :time, :category, :location, :description, presence: true
     validate :old_date?
   	belongs_to :course
+    before_destroy :deleteAllInvitations
     has_many :notifications, as: :notifiable
 
     def old_date?
@@ -17,6 +18,11 @@ class StudySession < ActiveRecord::Base
       else
         return true
       end
+    end
+
+    def deleteAllInvitations
+      debugger
+      Invitation.where("study_session_id = '#{self.id}'").each do |invitation| invitation.destroy end
     end
   	# returns the user that created this study session
   	def getUser
@@ -50,5 +56,15 @@ class StudySession < ActiveRecord::Base
         rsvpInvited.push(User.where("id = '#{invitation.user_id}'").first)
       end
       return rsvpInvited
+    end
+
+    def isInvited?(user_id)
+      self.getInvited.each do |invitedUser|
+        if invitedUser.id == user_id
+          return true
+        else
+          return false
+        end
+      end
     end
 end
