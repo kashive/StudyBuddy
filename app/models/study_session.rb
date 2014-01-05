@@ -7,6 +7,10 @@ class StudySession < ActiveRecord::Base
     has_many :notifications, as: :notifiable
 
     def old_date?
+      if self.time == nil
+        self.errors.add(:time, 'Please select time')
+        return false 
+      end
       if self.time < Time.now
         self.errors.add(:time, 'Please select time in the future') 
         return false

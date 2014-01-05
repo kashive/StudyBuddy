@@ -11,9 +11,9 @@ class StudySessionsController < ApplicationController
 	end
 
   def destroy
-    @study_session = StudySession.find(params[:id])
-    course = @study_session.getCourse
-    @study_session.getYes.each do |rsvpYesUser|
+    @studysession = StudySession.find(params[:id])
+    course = @studysession.getCourse
+    @studysession.getYes.each do |rsvpYesUser|
       next if rsvpYesUser.id == current_user.id
       notification = course.notifications.create("host_id"=>current_user.id,
                                                        "user_id"=>rsvpYesUser.id,
@@ -24,8 +24,8 @@ class StudySessionsController < ApplicationController
       toShow = showableNotification(notificationArray)
       sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
     end
-    Invitation.where("study_session_id = '#{@study_session.id}'").each do |invitation| invitation.destroy end
-    @study_session.destroy
+    Invitation.where("study_session_id = '#{@studysession.id}'").each do |invitation| invitation.destroy end
+    @studysession.destroy
     respond_to do |format|
       format.html { redirect_to dashboard_path(current_user), notice: 'Study Session was successfully deleted' }
       format.json { head :no_content }
@@ -33,12 +33,55 @@ class StudySessionsController < ApplicationController
   end
   
   def show
-    @study_session = StudySession.find(params[:id])
-    @course = @study_session.getCourse
+    @studysession = StudySession.find(params[:id])
+    @course = @studysession.getCourse
+  end
+
+  def edit
+    @studysession = StudySession.find(params[:id])
+    @user = current_user
+    @course = @studysession.getCourse
+  end
+
+  def update
+    @studysession = StudySession.find(params[:id])
+    course = @studysession.getCourse
+    @studysession.title = params[:title]
+    @studysession.description = params[:description]
+    @studysession.location = params[:location]
+    @studysession.category = params[:category]
+    @studysession.host_id = current_user.id
+    if params[:time] != ""
+      @studysession.time = DateTime.parse(Time.strptime(params[:time], '%m/%d/%Y %H:%M:%S %P').to_s) 
+    end
+    @studysession.course_id = course.id
+    @studysession.course_name = course.name 
+    respond_to do |format|
+      if @studysession.save
+        @studysession.getYes.each do |rsvpYesUser|
+          next if rsvpYesUser.id == current_user.id
+          notification = @studysession.notifications.create("host_id"=>current_user.id,
+                                                           "user_id"=>rsvpYesUser.id,
+                                                           "action"=> "session_update",
+                                                           "seen"=>false )
+          notificationArray = []
+          notificationArray.push(notification)
+          toShow = showableNotification(notificationArray)
+          sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
+        end
+        format.html { redirect_to user_course_study_session_path(current_user,course,@studysession), notice: 'Study Session was successfully updated.'}
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @course.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 	def new
   	@studysession  = StudySession.new
+    @course = @studysession.getCourse
+    @user = current_user
     locationsArray = []
     StudySession.all.each do |ss| locationsArray.push(ss.location) end
     gon.locations = locationsArray.uniq.join(',')
@@ -74,7 +117,7 @@ class StudySessionsController < ApplicationController
 
 	def create
   	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location], :category => params[:category], :host_id => current_user.id)
-    @studysession.time = DateTime.parse(Time.strptime(params[:time], '%m/%d/%Y %H:%M:%S %P').to_s)
+    @studysession.time = DateTime.parse(Time.strptime(params[:time], '%m/%d/%Y %H:%M:%S %P').to_s) if params[:time] != ""
   	@studysession.course_id = params[:course_id]
     course = Course.find(params[:course_id])
     @studysession.course_name = course.name 

@@ -1,66 +1,135 @@
-<%= form_for @studysession, :url => {action: "create"}, :html => { :class => 'form-horizontal' } do |f| %>
-<% if @studysession.errors.any? %>
+<!-- This is very inefficient, need to research more and solve the problem -->
+<%if @studysession.id == nil%>
+  <%= form_for @studysession, :url => {action: "create"}, :html => { :class => 'form-horizontal' } do |f| %>
+    <% if @studysession.errors.any? %>
+            <div class="alert alert-error" id= "error_explanation">
+              <%= @studysession.errors.full_messages.first%>
+            </div>
+      <% end %>
+      
+      <div class="control-group">
+        <%= f.label :title,:class => 'control-label'%><br />
+        <div class ="controls">    
+          <%= f.text_field :title, :id => 'title', :name =>'title' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :description,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.text_area :description, :id =>'description', :name => 'description' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :location,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.text_field :location, :id => 'location', :name =>'location' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :time,:class => 'control-label' %><br />
+        <div class ="controls">
+          <div id="datetimepicker2" class="input-append">
+            <input name="time" id="time" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(function() {
+            $('#datetimepicker2').datetimepicker({
+              language: 'en',
+              pick12HourFormat: true
+            });
+          });
+        </script>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :category,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.text_field :category, :id => 'category', :name => 'category' %>
+        </div>
+      </div>
+    Top Recommendations Time Maker<br>
+    <% Course.where("id = '#{params[:course_id]}'").first.getTimingRecommendation.each do |key,value| %>
+      <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
+      <br>
+    <%end%>
+
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  dashboard_path(current_user), :class => 'btn' %>
+
+  <% end %>
+  <%else%>
+    <%= form_for ([@user,@course,@studysession]) do |f| %>
+      <% if @studysession.errors.any? %>
         <div class="alert alert-error" id= "error_explanation">
           <%= @studysession.errors.full_messages.first%>
         </div>
-  <% end %>
-  
-  <div class="control-group">
-    <%= f.label :title,:class => 'control-label'%><br />
-    <div class ="controls">    
-      <%= f.text_field :title, :id => 'title', :name =>'title' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :description,:class => 'control-label' %><br />
-    <div class ="controls">    
-      <%= f.text_area :description, :id =>'description', :name => 'description' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :location,:class => 'control-label' %><br />
-    <div class ="controls">    
-      <%= f.text_field :location, :id => 'location', :name =>'location' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :time,:class => 'control-label' %><br />
-    <div class ="controls">
-      <div id="datetimepicker2" class="input-append">
-        <input name="time" id="time" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
-        <span class="add-on">
-          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-          </i>
-        </span>
+      <% end %>
+      
+      <div class="control-group">
+        <%= f.label :title,:class => 'control-label'%><br />
+        <div class ="controls">    
+          <%= f.text_field :title, :id => 'title', :name =>'title' %>
+        </div>
       </div>
-    </div>
-    <script type="text/javascript">
-      $(function() {
-        $('#datetimepicker2').datetimepicker({
-          language: 'en',
-          pick12HourFormat: true
-        });
-      });
-    </script>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :category,:class => 'control-label' %><br />
-    <div class ="controls">    
-      <%= f.text_field :category, :id => 'category', :name => 'category' %>
-    </div>
-  </div>
-Top Recommendations Time Maker<br>
-<% Course.where("id = '#{params[:course_id]}'").first.getTimingRecommendation.each do |key,value| %>
-  <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
-  <br>
+      <div class="control-group">
+        <%= f.label :description,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.text_area :description, :id =>'description', :name => 'description' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :location,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.text_field :location, :id => 'location', :name =>'location' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :time,:class => 'control-label' %><br />
+        <div class ="controls">
+          <div id="datetimepicker2" class="input-append">
+            <input name="time" id="time" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(function() {
+            $('#datetimepicker2').datetimepicker({
+              language: 'en',
+              pick12HourFormat: true
+            });
+          });
+        </script>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :category,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.text_field :category, :id => 'category', :name => 'category' %>
+        </div>
+      </div>
+      Top Recommendations Time Maker<br>
+      <% Course.where("id = '#{params[:course_id]}'").first.getTimingRecommendation.each do |key,value| %>
+        <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
+        <br>
+      <%end%>
+
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  dashboard_path(current_user), :class => 'btn' %>
+  <% end %>
 <%end%>
-
-<%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-              dashboard_path(current_user), :class => 'btn' %>
-
-<% end %>

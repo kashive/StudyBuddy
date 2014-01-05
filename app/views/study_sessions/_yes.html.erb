@@ -7,10 +7,10 @@
   </thead>
   <tbody>
     <tr>
-      <%host = User.where("id = '#{@study_session.host_id}'").first%>
+      <%host = User.where("id = '#{@studysession.host_id}'").first%>
       <td><%=host.first_name + " " + host.last_name + " (Host)"%></td>
     </tr>
-    <% @study_session.getYes.each do |rsvpYesUser| %>
+    <% @studysession.getYes.each do |rsvpYesUser| %>
       <tr>
         <td><%= rsvpYesUser.first_name + " " + rsvpYesUser.last_name %></td>
       </tr>

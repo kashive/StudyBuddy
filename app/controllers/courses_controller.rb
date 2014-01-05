@@ -14,7 +14,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
     @studysessions = @course.study_sessions
-    @myStudySessions = StudySession.where("host_id = 'current_user.id' AND course_name = '#{@course.name}'")
+    @myStudySessions = StudySession.where("host_id = '#{current_user.id}' AND course_name = '#{@course.name}'")
     @allstudysessions = StudySession.where("course_name='#{@course.name}'")
     @classmates = @course.getClassmates
     respond_to do |format|

@@ -6,7 +6,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @study_session.getInvited.each do |rsvpInvitedUser| %>
+    <% @studysession.getInvited.each do |rsvpInvitedUser| %>
       <tr>
         <td><%= rsvpInvitedUser.first_name + " " + rsvpInvitedUser.last_name %></td>
       </tr>

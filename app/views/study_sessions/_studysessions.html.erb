@@ -3,7 +3,6 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:title) %></th>
-      <th><%= model_class.human_attribute_name(:date) %></th>
       <th><%= model_class.human_attribute_name(:time) %></th>
     </tr>
   </thead>
@@ -11,7 +10,6 @@
     <% @myStudySessions.each do |session| %>
       <tr data-link="<%=user_course_study_session_path(current_user, session.course_id, session.id )%>">
         <td><%= session.title %></td>
-      	<td><%= session.date %></td>
       	<td><%= session.time %></td>
       </tr>
     <% end %>

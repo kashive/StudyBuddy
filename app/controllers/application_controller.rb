@@ -123,6 +123,22 @@ class ApplicationController < ActionController::Base
           notificationText = "A study session for #{course.name} that you rsvp'ed has been cancelled"
         end
         toShow[notificationText] = pathAndTime
+      elsif notification.action == "session_update"
+        studySession = notification.notifiable
+        if studySession == nil
+          pathAndTime = []
+          pathAndTime.push("#")
+          pathAndTime.push(notification.created_at)
+          pathAndTime.push(notification.seen)
+          notificationText = "#{hostUser.first_name} edited a study session you rsvp'ed for, which has since been deleted"
+        else
+          pathAndTime = []
+          pathAndTime.push(user_course_study_session_path(current_user,studySession.getCourse.id, studySession.id))
+          pathAndTime.push(notification.created_at)
+          pathAndTime.push(notification.seen)
+          notificationText = "#{hostUser.first_name} updated study session #{studySession.title} which you are attending"
+        end
+        toShow[notificationText] = pathAndTime
       end
     end
     return toShow

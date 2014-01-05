@@ -5,7 +5,7 @@
       <!-- pagination of the table-->
     </div>
     <div class = "add_course_button">
-      <%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
+      <%= link_to "Add Study Session",
               new_user_course_study_session_path(current_user,@course),
               :class => 'btn btn-primary' %>
         </div>
