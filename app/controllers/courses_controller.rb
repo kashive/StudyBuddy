@@ -161,7 +161,6 @@ class CoursesController < ApplicationController
   # PUT /courses/1.json
   def update
     @course = Course.find(params[:id])
-
     respond_to do |format|
       if @course.update_attributes(params[:course])
         format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully updated.' }
@@ -177,12 +176,6 @@ class CoursesController < ApplicationController
   # DELETE /courses/1.json
   def destroy
     @course = Course.find(params[:id])
-    enrollments = Enrollment.where("user_id='#{current_user.id}' AND course_name = '#{@course.name}'")
-    enrollments.each do |enrollment| enrollment.destroy end
-    schedules = Schedule.where("course_id = '#{@course.id}'")
-    schedules.each do |schedule| schedule.destroy end
-    allUserCourseStudySessions = StudySession.where("host_id = '#{current_user.id}' AND course_id = '#{@course.id}'")
-    allUserCourseStudySessions.each do |study_session| study_session.destroy end
     @course.create_activity :delete, owner: current_user
     @course.destroy
     respond_to do |format|

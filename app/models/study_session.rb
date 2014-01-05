@@ -21,7 +21,6 @@ class StudySession < ActiveRecord::Base
     end
 
     def deleteAllInvitations
-      debugger
       Invitation.where("study_session_id = '#{self.id}'").each do |invitation| invitation.destroy end
     end
   	# returns the user that created this study session
