@@ -6,5 +6,4 @@ class RegistrationsController < Devise::RegistrationsController
   		@user.create_activity :create, owner: @user
   	end
   end
-
 end

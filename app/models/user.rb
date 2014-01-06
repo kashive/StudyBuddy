@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,:confirmable,:omniauthable
-
+  before_destroy :deleteCourses, :deleteNotifications, :deleteAllActivities
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :college,
   :major_minors,:exp_graduation_date,:gender,:highschool,:about_yourself,:contact_number, :authentication_token
@@ -32,6 +32,21 @@ class User < ActiveRecord::Base
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.college = "Brandeis University"
     end
+  end
+
+  def deleteCourses
+    courses = Course.where("user_id = '#{self.id}'")
+    courses.each do |course| course.destroy end
+  end
+
+  def deleteAllActivities
+    activities = PublicActivity::Activity.where("owner_id = '#{self.id}' AND owner_type= 'User'")
+    activities.each do |activity| activity.destroy end
+  end
+
+  def deleteNotifications
+    notifications = Notification.where("user_id = '#{self.id}' OR host_id = '#{self.id}'")
+    notifications.each do |notification| notification.destroy end
   end
 
   def self.new_with_session(params, session)
