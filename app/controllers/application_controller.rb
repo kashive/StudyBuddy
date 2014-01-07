@@ -139,6 +139,33 @@ class ApplicationController < ActionController::Base
           notificationText = "#{hostUser.first_name} updated study session #{studySession.title} which you are attending"
         end
         toShow[notificationText] = pathAndTime
+      elsif notification.action == "session_2_hour_update" || notification.action == "session_24_hour_update"
+        studySession = notification.notifiable
+        if studySession == nil
+          pathAndTime = []
+          pathAndTime.push("#")
+          pathAndTime.push(notification.created_at)
+          pathAndTime.push(notification.seen)
+          message = ""
+          if notification.action == "session_2_hour_update"
+            message = "The study session by #{hostUser.first_name} was happening in 2 hours but now is cancelled."
+          else
+            message = "The study session by #{hostUser.first_name} was happening in 24 hours but now is cancelled."
+          end
+          notificationText = message
+        else
+          pathAndTime = []
+          pathAndTime.push(user_course_study_session_path(current_user,studySession.getCourse.id, studySession.id))
+          pathAndTime.push(notification.created_at)
+          pathAndTime.push(notification.seen)
+          if notification.action == "session_2_hour_update"
+            message = "Reminder #{studySession.title} is happening in 2 hours at #{studySession.location}"
+          else
+            message = "Reminder #{studySession.title} is happening in 24 hours at #{studySession.location}"
+          end
+          notificationText = message
+        end
+        toShow[notificationText] = pathAndTime
       end
     end
     return toShow
