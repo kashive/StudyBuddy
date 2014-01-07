@@ -6,4 +6,10 @@ class RegistrationsController < Devise::RegistrationsController
   		@user.create_activity :create, owner: @user
   	end
   end
+
+  protected
+
+	def after_update_path_for(resource)
+	  edit_user_registration_path(resource)
+	end
 end
