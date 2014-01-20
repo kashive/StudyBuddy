@@ -47,7 +47,7 @@ class Course < ActiveRecord::Base
     dayTimeAndPopularity = Hash.new { |hash, key| hash[key] = {} }
     classmates = self.getClassmates
     classmates.each do |classmate|
-      Schedule.where("user_id = '#{classmate.id}' AND course_id IS NULL").each do |schedule|
+      Schedule.where("user_id = '#{classmate.id}' AND status = 'available'").each do |schedule|
         time = schedule.start_time + "-" + schedule.end_time
         dayTimeAndPopularity[schedule.day][time] = dayTimeAndPopularity[schedule.day][time].to_i + 1
       end

@@ -1,4 +1,9 @@
-This data is used to recommend timings when most of your classmates are free to study.
+<h5>Legend</h5>
+Red Box = Busy for group study<br>
+Green Box = Available for group study<br>
+White Box = No Preference<br><br>
+
+This data is used to recommend timings when most of your classmates are free to study. Class timings are already checked off as busy timings in the table
 <div id = 'buttons_wrapper'>
   <div id ='schedule_buttons'>
     <button class = 'btn btn-info' id = "afternoon">4pm till 12am</button>
@@ -24,18 +29,29 @@ This data is used to recommend timings when most of your classmates are free to 
                   <td><%=day%></td>
                   <%@columnNumbers.each do |columnNumber|%>
                     <td>
-                    <% if @toCheckOff.include?("#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1]}")%>    
-                        
-                          <%=check_box_tag "time[#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1]}]", "", "yes" %>
-                        
-                    <%else%>
-                         <%=check_box_tag "time[#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1]}]", "" %>
-                    <%end%>
+                      <!-- check status of each scheudle -->
+                      <% if @toCheckOff.include?("#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1] + " " + "busy"}")%>
+                          <%= content_tag :div,"", class: "red-box show", :id => "red-box_#{day}_#{columnNumber}#{tableNumber}" %>
+                          <%= content_tag :div,"", class: "green-box hide", :id => "green-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                          <%= content_tag :div,"", class: "white-box hide", :id => "white-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                      <%elsif @toCheckOff.include?("#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1] + " " + "available"}")%>
+                          <%= content_tag :div,"", class: "red-box hide", :id => "red-box_#{day}_#{columnNumber}#{tableNumber}" %>
+                          <%= content_tag :div,"", class: "green-box show", :id => "green-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                          <%= content_tag :div,"", class: "white-box hide", :id => "white-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                      <%elsif @toCheckOff.include?("#{day + " " + @times[tableNumber][columnNumber] + "-" + @times[tableNumber][columnNumber+1] + " " + "none"}")%>
+                          <%= content_tag :div,"", class: "red-box hide", :id => "red-box_#{day}_#{columnNumber}#{tableNumber}" %>
+                          <%= content_tag :div,"", class: "green-box hide", :id => "green-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                          <%= content_tag :div,"", class: "white-box show", :id => "white-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                      <%else%>
+                        <%= content_tag :div,"", class: "white-box show", :id => "white-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                        <%= content_tag :div,"", class: "red-box hide", :id => "red-box_#{day}_#{columnNumber}#{tableNumber}" %>
+                        <%= content_tag :div,"", class: "green-box hide", :id => "green-box_#{day}_#{columnNumber}#{tableNumber}"%>
+                      <%end%>
                     </td>
                   <%end%>
               </tr>
           <%end%>
       </table>
   <%end%>
-  <%= f.submit "Update Schedule", :class => 'btn btn-primary' %>
+  <%= link_to "Update Schedule","#",:id => "schedule_update", :class=>'btn btn-primary' %>
 <% end %>

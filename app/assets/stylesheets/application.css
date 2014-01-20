@@ -258,3 +258,26 @@ div.bio_photo_derrick{
 ul.dropdown-menu.notification{
 	min-width: 450px;
 }
+
+.red-box{
+	height:20px;
+	width: 30px;
+	background: url("/assets/red.png") no-repeat;
+}
+.green-box{
+	height:20px;
+	width: 30px;
+	background: url("/assets/green.png") no-repeat;
+}
+.white-box{
+	height:20px;
+	width: 30px;
+	background: url("/assets/white.png") no-repeat;
+}
+
+.hide{
+	display:none;
+}
+.show{
+	display:inherit;
+}

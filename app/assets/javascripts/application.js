@@ -148,4 +148,51 @@ $(document).ready(function() {
             data: {"data":data},
         });
     });
+
+    $(".red-box").click(function(){
+        var myid = $(this).attr("id");
+        var arr = myid.split('_');
+        var toShowId = "green-box_" + arr[1] + "_" + arr[2];
+        $("div#" + toShowId).css('display','inherit');
+        $(this).css('display','none');
+    });
+
+    $(".green-box").click(function(){
+        var myid = $(this).attr("id");
+        var arr = myid.split('_');
+        var toShowId = "white-box_" + arr[1] + "_" + arr[2];
+        $("div#" + toShowId).css('display','inherit');
+        $(this).css('display','none');
+    });
+
+    $(".white-box").click(function(){
+        var myid = $(this).attr("id");
+        var arr = myid.split('_');
+        var toShowId = "red-box_" + arr[1] + "_" + arr[2];
+        $("div#" + toShowId).css('display','inherit');
+        $(this).css('display','none');
+    });
+
+    $("#schedule_update").click(function(){
+        var dataArray = new Array();
+        // get all div that have display inherit
+        $(".red-box").filter(function() { return $(this).css("display") != "none" }).each(function(){
+            dataArray.push($(this).attr("id"));
+        });
+        $(".green-box").filter(function() { return $(this).css("display") != "none" }).each(function(){
+            dataArray.push($(this).attr("id"));
+        });
+        $(".white-box").filter(function() { return $(this).css("display") != "none" }).each(function(){
+            dataArray.push($(this).attr("id"));
+        });
+        $.ajax({
+            type: "PUT",
+            url: "/update_schedule",
+            dataType: "json",
+            data: {"data":dataArray},
+            success: function(data){
+                location.reload();
+            }
+        });
+    });
 });

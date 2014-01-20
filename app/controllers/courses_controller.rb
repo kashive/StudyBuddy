@@ -53,7 +53,8 @@ class CoursesController < ApplicationController
                       "day" => day,
                       "course_id" => course.id,
                       "start_time"=> start_time,
-                      "end_time"=>end_time)  
+                      "end_time"=>end_time,
+                      "status"=>"busy")  
     else
       start_time = startTimeFirstNumber + startTimePMAM.downcase
       end_time = endTimeFirstNumber + endTimePMAM.downcase
@@ -61,14 +62,16 @@ class CoursesController < ApplicationController
                       "day" => day,
                       "course_id" => course.id,
                       "start_time"=> start_time,
-                      "end_time"=>end_time)
+                      "end_time"=>end_time,
+                      "status"=>"busy")
       start_time = endTimeFirstNumber + endTimePMAM.downcase
       end_time = (endTimeFirstNumber.to_i + 1).to_s + endTimePMAM.downcase
       Schedule.create("user_id" => current_user.id,
                     "day" => day,
                     "course_id" => course.id,
                     "start_time"=> start_time,
-                    "end_time"=>end_time)    
+                    "end_time"=>end_time,
+                    "status"=>"busy")    
     end
   end
 
