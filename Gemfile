@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby "1.9.3"
 
 gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
@@ -33,8 +34,8 @@ gem "mechanize", "~> 2.7.2"
 gem 'gon'
 gem "rspec-rails", :group => [:test, :development]
 gem "koala"
+gem 'pg'
 group :development, :test do
-	gem 'sqlite3' 
 	gem 'pry' #command line interactive debugger as well as an interative online shell
 	gem 'better_errors' #makes the exception page pretty and adds interactive debugging tool
 	gem 'binding_of_caller'
@@ -48,7 +49,7 @@ group :test do
   gem "guard-rspec"
 end
 group :production do
-  gem 'rails_12factor', '0.0.2'
+  gem 'rails_12factor'
 end
 
 

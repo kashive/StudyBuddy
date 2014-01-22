@@ -104,13 +104,13 @@ ActiveRecord::Schema.define(:version => 20140104185812) do
   end
 
   create_table "study_sessions", :force => true do |t|
-    t.datetime "time"
     t.text     "title"
     t.string   "category"
+    t.time     "time"
     t.string   "location"
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "course_id"
     t.integer  "enrollment_id"
     t.string   "course_name"
