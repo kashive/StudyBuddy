@@ -9,6 +9,6 @@ class DashboardsController < ApplicationController
 			size = 2
 		end
 		@activities = PublicActivity::Activity.order("created_at desc").where("owner_id !='#{current_user.id}'").page(params[:page]).per(size)
-		render "/layouts/dashboard.html.erb"
+		render "/layouts/dashboard"
 	end
 end

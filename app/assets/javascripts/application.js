@@ -102,7 +102,7 @@ $(document).ready(function() {
     	return window.location = this.dataset.link;
     });
 
-   	if (document.cookie == "signed_in=1"){
+   	if (document.cookie.indexOf("signed_in=1") != -1){
 		$("body").css("background-color","rgb(247, 246, 246)")
 	}
 	if (document.cookie.indexOf("signed_in=1") == -1){
