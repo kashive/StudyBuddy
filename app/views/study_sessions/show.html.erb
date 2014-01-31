@@ -1,3 +1,5 @@
+<% @page_title = "#{@studysession.title}" %>
+
 <div class = "span5" id = "list_table">
   <div class = "header_row">
     <div class = "header_pagination">
@@ -67,8 +69,15 @@
           <%= link_to "Edit this study session", edit_user_course_study_session_path(current_user.id, @course, @studysession)%>
         <%else%>
           RSVP:<br>
-          <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
-          <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+          <!-- If Yes, show no, if no show yes, else show all -->
+          <%if @studysession.getRsvpStatus(current_user.id) == "yes"%>
+            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+          <%elsif @studysession.getRsvpStatus(current_user.id) == "no"%>
+            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
+          <%else%>  
+            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
+            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+          <%end%>
         <%end%>
       </div>
       <div class = "span5 recent_updates">
