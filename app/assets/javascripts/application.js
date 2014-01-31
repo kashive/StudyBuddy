@@ -30,6 +30,7 @@ $(document).ready(function() {
       });
     });
 
+
     $('#fb_link').autocomplete({
         source: gon.locations
     });
@@ -104,8 +105,7 @@ $(document).ready(function() {
    	if (document.cookie == "signed_in=1"){
 		$("body").css("background-color","rgb(247, 246, 246)")
 	}
-
-	if (document.cookie == ""){
+	if (document.cookie.indexOf("signed_in=1") == -1){
 		$("body").css("background-color","#5283B0")
 	}
     // to make sure that the body color is blue if we are viewing the static pages

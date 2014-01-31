@@ -30,7 +30,7 @@ class StudySession < ActiveRecord::Base
   	end
 
   	def getCourse
-  		return Course.where("id='#{self.course_id}'").first
+  		return Course.where("id=#{self.course_id.to_i}").first
   	end
 
     def getYes
