@@ -17,7 +17,7 @@
 <!-- the dummy professor value will be changed in the controller -->
 <%= f.hidden_field :professor, :value => "Could not find data" %>
 
-<%= f.submit nil, :class => 'btn btn-primary' %>
+<%= f.submit "Enroll Now", :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
               dashboard_path(current_user), :class => 'btn' %>
 
