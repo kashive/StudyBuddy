@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140109035538) do
+ActiveRecord::Schema.define(:version => 20140202012330) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(:version => 20140109035538) do
   create_table "study_sessions", :force => true do |t|
     t.text     "title"
     t.string   "category"
-    t.time     "time"
     t.string   "location"
     t.text     "description"
     t.datetime "created_at",             :null => false
@@ -118,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20140109035538) do
     t.string   "host_id"
     t.boolean  "twoHourReminder"
     t.boolean  "twentyFourHourReminder"
+    t.datetime "time"
   end
 
   create_table "users", :force => true do |t|

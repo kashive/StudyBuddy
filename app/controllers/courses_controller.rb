@@ -139,14 +139,6 @@ class CoursesController < ApplicationController
                                          "user_id"=>classmate.id,
                                          "action"=> "user_join",
                                          "seen"=>false )
-            notificationArray = []
-            notificationArray.push(notification)
-            toShow = showableNotification(notificationArray)
-            sendPushNotification("/foo/#{classmate.id}", toShow)
-            # publish the notification record to the channel
-            # when the channel receives the message the channel is going to forward the message
-            # to the user, if the user is suscribe
-            # if the user is not suscribed then don't do anything
           end
           format.html { redirect_to user_course_path(current_user,@course), notice: 'Course was successfully created.' }
           format.json { render json: @course, status: :created, location: @course }

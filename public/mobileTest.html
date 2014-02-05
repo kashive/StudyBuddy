@@ -4,17 +4,22 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$("#red-box").click(function(){
-			$(this).css('display','none');
-			$('#green-box').css('display','inherit');
-		});
-		$("#green-box").click(function(){
-			$(this).css('display','none');
-			$('#white-box').css('display','inherit');
-		});
-		$("#white-box").click(function(){
-			$(this).css('display','none');
-			$('#red-box').css('display','inherit');
+		$("#log-in").click(function(){
+			var user_name = $("#user").val();
+			var password = $("#log-in").val();
+			var data = {"user":{"email":user_name, "password":password}}
+			$.ajax({
+				type: "POST",
+				headers: {'X-CSRF-Token': $('meta[name="avisheksfjfksld;f"]').attr('content')},
+				url: "http://0.0.0.0:3000/checkUserExist.json",
+				data: data,
+				success: function(data){
+				    console.log(data);
+				},
+				error: function(data){
+				    console.log(data);
+				}
+			});
 		});
 	});
 </script>
@@ -26,12 +31,7 @@
 	<form id="input" onsubmit="return sendLogin()">
 	Username: <input type="text" id="user">
 	Password: <input type="password" name="password">
-	<input type="submit" value="Submit">
+	<input type="submit" value="Submit" id = "log-in">
 	</form> <br>
 
-	<div id = "check-box">
-		<div id = "red-box"></div>
-		<div id = "green-box"></div>
-		<div id = "white-box"></div>
-	</div>
 </body>

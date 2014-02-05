@@ -20,34 +20,16 @@ class StudySession < ActiveRecord::Base
       end
     end
 
+
+
     def deleteAllInvitations
       Invitation.where("study_session_id = '#{self.id}'").each do |invitation| invitation.destroy end
     end
   	# returns the user that created this study session
   	def getUser
   		user_id = Course.where("id = '#{self.course_id}'").first.user_id
-  		return User.where("id = '#{user_id}'")
+  		return User.where("id = '#{user_id}'").first
   	end
-
-    def sendReminder(timeBeforeEvent)
-      action = ""
-      if timeBeforeEvent == 20
-        action = "session_2_hour_update"
-      else
-        action = "session_24_hour_update"
-      end
-        allInvitedAndHost = self.getYes.push(self.getUser)
-        allInvitedAndHost.each do |rsvpYesUser|
-          notification = self.notifications.create("host_id"=>current_user.id,
-                                                             "user_id"=>rsvpYesUser.id,
-                                                             "action"=> action,
-                                                             "seen"=>false )
-            notificationArray = []
-            notificationArray.push(notification)
-            toShow = showableNotification(notificationArray)
-            sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
-        end
-    end
 
   	def getCourse
   		return Course.where("id=#{self.course_id.to_i}").first
@@ -102,5 +84,21 @@ class StudySession < ActiveRecord::Base
           return false
         end
       end
+    end
+
+    def sendReminder(timeBeforeEvent)
+      action = ""
+      if timeBeforeEvent == 2
+        action = "session_2_hour_update"
+      elsif timeBeforeEvent == 24
+        action = "session_24_hour_update"
+      end
+        allInvitedAndHost = self.getYes.push(self.getUser)
+        allInvitedAndHost.each do |rsvpYesUser|
+          notification = self.notifications.create("host_id"=>self.getUser.id,
+                                                               "user_id"=>rsvpYesUser.id,
+                                                               "action"=> action,
+                                                               "seen"=>false)
+        end
     end
 end

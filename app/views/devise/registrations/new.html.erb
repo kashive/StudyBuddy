@@ -16,7 +16,7 @@
       <div><%= f.text_field :last_name,:placeholder=>"Last Name" %></div>
 
       <%= f.hidden_field :college, :value => "Dummy Professor" %>
-      <div><%= f.submit "Register", :class=>'btn btn-info'%></div>
+      <div><%= f.submit "Register", :class=>'btn btn-info', :id=>"register_user"%></div>
     <% end %>
   <%= render "devise/shared/links" %>
   </div>

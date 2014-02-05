@@ -19,10 +19,6 @@ class StudySessionsController < ApplicationController
                                                        "user_id"=>rsvpYesUser.id,
                                                        "action"=> "session_delete",
                                                        "seen"=>false )
-      notificationArray = []
-      notificationArray.push(notification)
-      toShow = showableNotification(notificationArray)
-      sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
     end
     @studysession.destroy
     respond_to do |format|
@@ -63,10 +59,6 @@ class StudySessionsController < ApplicationController
                                                            "user_id"=>rsvpYesUser.id,
                                                            "action"=> "session_update",
                                                            "seen"=>false )
-          notificationArray = []
-          notificationArray.push(notification)
-          toShow = showableNotification(notificationArray)
-          sendPushNotification("/foo/#{rsvpYesUser.id}", toShow)
         end
         format.html { redirect_to user_course_study_session_path(current_user,course,@studysession), notice: 'Study Session was successfully updated.'}
         format.json { head :no_content }
@@ -104,10 +96,6 @@ class StudySessionsController < ApplicationController
                                                        "action"=>"rsvp_yes",
                                                        "seen"=>false
                                                        )
-      notificationArray = []
-      notificationArray.push(notification)
-      toShow = showableNotification(notificationArray)
-      sendPushNotification("/foo/#{study_session.host_id}", toShow)
     end
     invitation.status = "no" if params[:status] == "no"
     invitation.save
@@ -118,6 +106,8 @@ class StudySessionsController < ApplicationController
   	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location], :category => params[:category], :host_id => current_user.id)
     @studysession.time = DateTime.parse(Time.strptime(params[:time], '%m/%d/%Y %H:%M:%S %P').to_s) if params[:time] != ""
   	@studysession.course_id = params[:course_id]
+    @studysession.twoHourReminder = false
+    @studysession.twentyFourHourReminder = false
     course = Course.find(params[:course_id])
     @studysession.course_name = course.name 
 		if @studysession.save
@@ -133,11 +123,7 @@ class StudySessionsController < ApplicationController
         notification = invitation.notifications.create("host_id"=>current_user.id,
                                                        "user_id"=>classmate.id,
                                                        "action"=> "invited",
-                                                       "seen"=>false )
-        notificationArray = []
-        notificationArray.push(notification)
-        toShow = showableNotification(notificationArray)
-        sendPushNotification("/foo/#{classmate.id}", toShow)
+                                                       "seen"=>false)
       end
   		redirect_to user_course_study_session_path(current_user,params[:course_id],@studysession.id ), notice: 'Study Session was successfully created. Invitations sent to all classmates'
 		else  

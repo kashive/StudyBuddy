@@ -17,6 +17,7 @@
 //= require timeago
 //= require_tree .
 
+
 $(document).ready(function() {
     $(function() {
       var user_id = gon.logged_user['id'];
@@ -28,6 +29,25 @@ $(document).ready(function() {
             $('sub').html(number+1);
         });
       });
+    });
+
+    // parse sign up sync
+    $("#register_user").click(function(){
+        Parse.initialize("U1PP7nWyKWWXEstBSGfHbT64QNUN7XSTskLw9fae", "Pe0NiGPkXqccjpERtufisXOJYhJ8763Cdz2uT3AX");
+        var user = new Parse.User();
+        user.set("username", $('#user_email').val());
+        user.set("password", $('#user_password').val());
+        user.set("firstname", $('#user_first_name').val());
+        user.set("lastname", $('#user_last_name').val());
+        user.signUp(null, {
+            success: function(user) {
+                alert("Sign up success!");
+            },
+            error: function(user, error) {
+            // Show the error message somewhere and let the user try again.
+            alert("Error: " + error.code + " " + error.message);
+            }
+         });
     });
 
 
