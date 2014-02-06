@@ -281,3 +281,7 @@ ul.dropdown-menu.notification{
 .show{
 	display:inherit;
 }
+
+li.dropdown:nth-child(3) > a:nth-child(1) > sub:nth-child(1){
+	color:red;
+}
