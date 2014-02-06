@@ -9,17 +9,19 @@ class UsersController < ApplicationController
 		redirect_to root_path, :notice => "Account Deleted. Thanks For Trying StudyBuddy :)"
 	end
 	def checkUserExist
-		debugger
 		flag = false
 		resource = User.find_by_email(params[:user][:email])
-		if resource
+		if resource && resource.valid_password?(params[:user][:password])
 			sign_in(:user, resource)
 	      	resource.ensure_authentication_token
 	      	flag = true 
 	    end
 		respond_to do |format|
-        	format.json { render :json=> { :auth_token=> "success" }, :status => 200} if flag == true
-        	format.json { render :json=> { :auth_token=> "failure" }} if flag == false
+			if flag == true
+        		format.json { render :json=> { :auth_token=> "success" }, :status => 200}
+        	else
+        		format.json { render :json=> { :auth_token=> "failure" }}
+        	end
       	end
 	end
 end

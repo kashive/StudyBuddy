@@ -4,13 +4,13 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$("#log-in").click(function(){
+		$("#submit").click(function(){
 			var user_name = $("#user").val();
-			var password = $("#log-in").val();
-			var data = {"user":{"email":user_name, "password":password}}
+			var password = $("#password").val();
+			var data = {"user":{"email":user_name, "password":password}};
+			alert(JSON.stringify(data));
 			$.ajax({
 				type: "POST",
-				headers: {'X-CSRF-Token': $('meta[name="avisheksfjfksld;f"]').attr('content')},
 				url: "http://0.0.0.0:3000/checkUserExist.json",
 				data: data,
 				success: function(data){
@@ -18,20 +18,17 @@
 				},
 				error: function(data){
 				    console.log(data);
-				}
+				},
 			});
 		});
 	});
 </script>
-<style>
-	
-</style>
 
 <body>
-	<form id="input" onsubmit="return sendLogin()">
+	<form id="input">
 	Username: <input type="text" id="user">
-	Password: <input type="password" name="password">
-	<input type="submit" value="Submit" id = "log-in">
+	Password: <input type="password" name="password"  id = "password">
+	<a herf ="#" id = "submit">Submit</a>
 	</form> <br>
 
 </body>
