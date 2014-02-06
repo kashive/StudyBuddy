@@ -36,7 +36,7 @@
 							<li>Current Enrollment: <%=Enrollment.where("course_name='#{course.name}'").size()%></li>
 							<li>Upcoming Study Sessions: <%=course.getUpcomingStudySessions.size%></li>
 							<li><%= link_to t('.add_study_session', :default => t("helpers.links.add_study_session")),
-                      new_user_course_study_session_path(current_user,course) %></li>
+                      new_user_course_study_session_path(current_user,course), :class => "btn btn-warning" %></li>
 						</ul>
 					</div>
 				</div>
