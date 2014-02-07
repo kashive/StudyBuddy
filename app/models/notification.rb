@@ -5,7 +5,6 @@ class Notification < ActiveRecord::Base
   after_create :sendPushNotification, if: -> {self.action.split('_').first != "session"}
   
   def sendPushNotification
-    debugger
     require 'eventmachine'
     toShow = Notification.showableNotification([self])
     EM.run {
@@ -55,7 +54,7 @@ class Notification < ActiveRecord::Base
           studySession = StudySession.where("id = '#{invitation.study_session_id}'").first
           course = Course.where("id = '#{invitation.course_id}'").first
           pathAndTime=[]
-          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(hostUser,course.id, studySession.id))
+          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(notification.user_id,course.id, studySession.id))
           pathAndTime.push(notification.created_at)
           pathAndTime.push(notification.seen)
           notificationText = "#{hostUser.first_name} has invited you to join #{studySession.title} for your #{course.name} class"
@@ -71,7 +70,7 @@ class Notification < ActiveRecord::Base
           notificationText = "#{hostUser.first_name} was attending a study session which has since been deleted"
         else
           pathAndTime = []
-          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(hostUser,studySession.getCourse.id, studySession.id))
+          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(notification.user_id,studySession.getCourse.id, studySession.id))
           pathAndTime.push(notification.created_at)
           pathAndTime.push(notification.seen)
           notificationText = "#{hostUser.first_name} is attending #{studySession.title}"
@@ -103,7 +102,7 @@ class Notification < ActiveRecord::Base
           notificationText = "#{hostUser.first_name} edited a study session you rsvp'ed for, which has since been deleted"
         else
           pathAndTime = []
-          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(hostUser,studySession.getCourse.id, studySession.id))
+          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(notification.user_id,studySession.getCourse.id, studySession.id))
           pathAndTime.push(notification.created_at)
           pathAndTime.push(notification.seen)
           notificationText = "#{hostUser.first_name} updated study session #{studySession.title} which you are attending"
@@ -125,7 +124,7 @@ class Notification < ActiveRecord::Base
           notificationText = message
         else
           pathAndTime = []
-          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(hostUser,studySession.getCourse.id, studySession.id))
+          pathAndTime.push(Rails.application.routes.url_helpers.user_course_study_session_path(notification.user_id,studySession.getCourse.id, studySession.id))
           pathAndTime.push(notification.created_at)
           pathAndTime.push(notification.seen)
           if notification.action == "session_2_hour_update"

@@ -3,7 +3,7 @@ task :send_twenty_four_hour_reminders => :environment do
   # get me all the events that are happening in between Time.now and 24 hours from now that I haven't sent a 24 hour reminder to already
 	StudySession.where("time > '#{Time.now}' AND time <= '#{oneDayFromNow}' AND \"twoHourReminder\" = 'false'").each do |studySession|
       studySession.sendReminder(24) 
-		  studySession.twentyFourHourHourReminder = true
+		  studySession.twentyFourHourReminder = true
       studySession.save
   end
 end
