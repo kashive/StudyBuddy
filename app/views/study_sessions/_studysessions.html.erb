@@ -8,7 +8,7 @@
   </thead>
   <tbody>
     <% @myStudySessions.each do |session| %>
-    <%next if session == nil%>
+    <%next if session.time == nil%>
       <tr data-link="<%=user_course_study_session_path(current_user, session.course_id, session.id )%>">
         <td><%= session.title %></td>
       	<td><%= session.time.strftime("%d/%m/%Y %I:%M %p") %></td>
