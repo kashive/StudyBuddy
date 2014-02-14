@@ -37,5 +37,5 @@ StudyBuddy::Application.configure do
   config.assets.debug = true
 
   #from devise
-  config.action_mailer.default_url_options = { :host => 'studybuddy.fwd.wf' }
+  config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
 end
