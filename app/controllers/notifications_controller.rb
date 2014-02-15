@@ -11,10 +11,13 @@ class NotificationsController < ApplicationController
 
   def seen
   	parameters = params[:data].split(",")
+    puts parameters.inspect
   	if parameters[0].include?("joined")
+      puts "hit the joined"
   		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'user_join'").each do |notification|
   			notification.seen = true
   			notification.save
+        puts "notification saved"
   		end
   	elsif parameters[0].include?("invited")
       study_session_id = parameters[1].split('/')[-1]
