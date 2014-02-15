@@ -104,7 +104,7 @@ class StudySessionsController < ApplicationController
 
 	def create
   	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location], :category => params[:category], :host_id => current_user.id)
-    @studysession.time = params[:time] if params[:time] != ""
+    @studysession.time = DateTime.strptime(params[:time], '%m/%d/%Y %H:%M:%S %P') if params[:time] != ""
   	@studysession.course_id = params[:course_id]
     @studysession.twoHourReminder = false
     @studysession.twentyFourHourReminder = false
