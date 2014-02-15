@@ -11,33 +11,30 @@ class NotificationsController < ApplicationController
 
   def seen
   	parameters = params[:data].split(",")
-    puts parameters.inspect
   	if parameters[0].include?("joined")
-      puts "hit the joined"
-  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'user_join'").each do |notification|
+  		Notification.where("user_id = '#{parameters[1].split('/')[2]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'user_join'").each do |notification|
   			notification.seen = true
   			notification.save
-        puts "notification saved"
   		end
   	elsif parameters[0].include?("invited")
       study_session_id = parameters[1].split('/')[-1]
-      invitation_id = Invitation.where("user_id = '#{parameters[1][7]}' AND study_session_id= '#{parameters[1].split('/')[-1]}'").first.id
-  		Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{invitation_id}' AND action = 'invited'").each do |notification|
+      invitation_id = Invitation.where("user_id = '#{parameters[1].split('/')[2]}' AND study_session_id= '#{parameters[1].split('/')[-1]}'").first.id
+  		Notification.where("user_id = '#{parameters[1].split('/')[2]}' AND notifiable_id = '#{invitation_id}' AND action = 'invited'").each do |notification|
   			notification.seen = true
   			notification.save
   		end
     elsif parameters[0].include?("attending")
-      Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'rsvp_yes'").each do |notification|
+      Notification.where("user_id = '#{parameters[1].split('/')[2]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'rsvp_yes'").each do |notification|
         notification.seen = true
         notification.save
       end
   	elsif parameters[0].include?("2 hours")
-      Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'session_2_hour_update'").each do |notification|
+      Notification.where("user_id = '#{parameters[1].split('/')[2]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'session_2_hour_update'").each do |notification|
         notification.seen = true
         notification.save
       end
     elsif parameters[0].include?("24 hours")
-      Notification.where("user_id = '#{parameters[1][7]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'session_24_hour_update'").each do |notification|
+      Notification.where("user_id = '#{parameters[1].split('/')[2]}' AND notifiable_id = '#{parameters[1].split('/')[-1]}' AND action = 'session_24_hour_update'").each do |notification|
         notification.seen = true
         notification.save
       end
