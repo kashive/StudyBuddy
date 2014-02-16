@@ -130,13 +130,6 @@
           <%end%>
         </div>
       </div>
-          <div class="control-group">
-         <%= f.label :Click_to_get_recommendation,:class => 'control-label',:id =>"generate_recommendation" %>
-      <% @course.getTimingRecommendation.each do |key,value| %>
-        <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
-        <br>
-      <%end%>
-    </div>
 
       <div class="control-group">
         <%= f.label :time,:class => 'control-label' %><br />
