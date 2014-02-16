@@ -24,6 +24,13 @@
       </div>
 
       <div class="control-group">
+         <%= f.label "Make study session private to invited classmates (public by default)",:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.check_box :is_private, :id => 'is_private', :name =>'is_private' %>
+        </div>
+      </div>
+
+      <div class="control-group">
         <%= f.label :location,:class => 'control-label' %><br />
         <div class ="controls">    
           <%= f.text_field :location, :id => 'location', :name =>'location' %>
@@ -97,6 +104,13 @@
         <%= f.label :description,:class => 'control-label' %><br />
         <div class ="controls">    
           <%= f.text_area :description, :id =>'description', :name => 'description' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+         <%= f.label "Make study session private to invited classmates (public by default)",:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.check_box :is_private, :id => 'is_private', :name =>'is_private' %>
         </div>
       </div>
 

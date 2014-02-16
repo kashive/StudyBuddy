@@ -16,6 +16,16 @@
       <dd><%= @studysession.category %></dd>
       <dt><strong>Location:</strong></dt>
       <dd><%= @studysession.location %></dd>
+      <dt><strong>Is Private:</strong></dt>
+      <dd>
+        <%if @studysession.is_private == false %>
+          No
+        <%elsif @studysession.is_private == true%>
+          Yes
+        <%else%>
+          No
+        <%end%>
+      </dd>
     </dl>
   </div>
 </div>
@@ -74,7 +84,12 @@
             <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
           <%elsif @studysession.getRsvpStatus(current_user.id) == "no"%>
             <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
-          <%else%>  
+          <%elsif @studysession.getRsvpStatus(current_user.id) == "invited"%>  
+            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
+            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+          <%elsif @studysession.getRsvpStatus(current_user.id) == "none" && @studysession.is_private == true%>
+            Cannot RSVP as this study session is private
+          <%elsif @studysession.getRsvpStatus(current_user.id) == "none" && @studysession.is_private == (false || nil)%>
             <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
             <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
           <%end%>

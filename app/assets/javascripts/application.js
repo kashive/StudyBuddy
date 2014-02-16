@@ -180,9 +180,8 @@ $(document).ready(function() {
     });
 
     $("#submit_session").click(function(){
-        var checkBoxes = $('.invitation_checkboxes');
         // check if the none of the invitations are checked off
-        if (!checkBoxes.prop("checked")){
+        if ($(".invitation_checkboxes:checked").length == 0){
             alert('You must invite atleast one classmate!!');
         }else{
             $('#new_study_session').submit();
@@ -193,15 +192,13 @@ $(document).ready(function() {
         // collect all the checked off people and send it to the server
         // which then will do the computation and return back the text to render in the form
         var dataArray = new Array();
-        var checkBoxes = $('.invitation_checkboxes');
         // check if the none of the invitations are checked off
-        if (!checkBoxes.prop("checked")){
+        if ($(".invitation_checkboxes:checked").length == 0){
             alert('You must invite atleast one classmate!!');
         }else{
-            checkBoxes.each(function(){
+            $('.invitation_checkboxes:checked').each(function(){
                 dataArray.push($(this).attr('id'));
             });
-            alert(dataArray);
             $.ajax({
                 type: "PUT",
                 url: "/getTimingRecommendation",

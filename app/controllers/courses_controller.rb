@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @studysessions = @course.study_sessions
     @myStudySessions = StudySession.where("host_id = '#{current_user.id}' AND course_name = '#{@course.name}'")
-    @allstudysessions = StudySession.where("course_name='#{@course.name}'")
+    @allstudysessions = StudySession.where("course_name = '#{@course.name}' AND is_private is NULL OR is_private is FALSE") - @myStudySessions
     @classmates = @course.getClassmates
     respond_to do |format|
       format.html # show.html.erb

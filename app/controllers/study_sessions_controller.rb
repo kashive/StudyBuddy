@@ -115,6 +115,11 @@ class StudySessionsController < ApplicationController
   	@studysession.course_id = params[:course_id]
     @studysession.twoHourReminder = false
     @studysession.twentyFourHourReminder = false
+    if params[:is_private] == "1"
+      @studysession.is_private = true
+    elsif params[:is_private] == "0"
+      @studysession.is_private = false
+    end
     @course = Course.find(params[:course_id])
     @user = current_user
     @studysession.course_name = @course.name 

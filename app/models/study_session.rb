@@ -1,6 +1,6 @@
 class StudySession < ActiveRecord::Base
 	include PublicActivity::Common
-  	attr_accessible :category, :description, :location, :time, :title, :host_id, :twoHourReminder, :twentyFourHourReminder
+  	attr_accessible :category, :description, :location, :time, :title, :host_id, :twoHourReminder, :twentyFourHourReminder, :is_private
     validates :title, :time, :category, :location, :description, presence: true
     validate :old_date?
   	belongs_to :course
@@ -44,19 +44,13 @@ class StudySession < ActiveRecord::Base
     end
 
     def getRsvpStatus(user_id)
-      yesPeople = self.getYes
-      noPeople = self.getNo
-      invitedPeople = self.getInvited
-      allStatusPeople = []
-      allStatusPeople.push(yesPeople,noPeople,invitedPeople)
-      allStatusPeople.each do |people|
-        people.each do |rsvpedUser|
-          if rsvpedUser.id = user_id.to_i
-            return Invitation.where("study_session_id = '#{self.id}' AND user_id = '#{rsvpedUser.id}'").first.status
-          end
-        end
+      
+      invitation = Invitation.where("study_session_id = '#{self.id}' AND user_id = '#{user_id}'").first
+      if invitation
+        return invitation.status
+      else
+        return "none"
       end
-      return "none"
     end
 
     def getNo
