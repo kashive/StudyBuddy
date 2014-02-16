@@ -33,6 +33,7 @@ StudyBuddy::Application.routes.draw do
   
   get '/users/:id/dashboard', to:"dashboards#show" ,as: "dashboard"
   put '/notification_seen', to: "notifications#seen"
+  put '/getTimingRecommendation', to: "application#getTimingRecommendation"
   put '/update_schedule', to: "schedules#update_schedule"
   post '/checkUserExist', to: "users#checkUserExist"
   post '/users/:user_id/courses/:course_id/study_sessions/:id/invitations_update/:status', to: "study_sessions#updateInvitation", as: "invitation_update"

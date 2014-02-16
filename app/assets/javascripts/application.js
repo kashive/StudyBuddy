@@ -174,6 +174,47 @@ $(document).ready(function() {
         $(this).css('display','none');
     });
 
+    $("#invitation_select_all").click(function(){
+        var checkBoxes = $('.invitation_checkboxes');
+        checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+    });
+
+    $("#submit_session").click(function(){
+        var checkBoxes = $('.invitation_checkboxes');
+        // check if the none of the invitations are checked off
+        if (!checkBoxes.prop("checked")){
+            alert('You must invite atleast one classmate!!');
+        }else{
+            $('#new_study_session').submit();
+        }
+    });
+
+    $("#generate_recommendation").click(function(){
+        // collect all the checked off people and send it to the server
+        // which then will do the computation and return back the text to render in the form
+        var dataArray = new Array();
+        var checkBoxes = $('.invitation_checkboxes');
+        // check if the none of the invitations are checked off
+        if (!checkBoxes.prop("checked")){
+            alert('You must invite atleast one classmate!!');
+        }else{
+            checkBoxes.each(function(){
+                dataArray.push($(this).attr('id'));
+            });
+            alert(dataArray);
+            $.ajax({
+                type: "PUT",
+                url: "/getTimingRecommendation",
+                dataType: "json",
+                data: {"data":dataArray},
+                success: function(data){
+                    alert(JSON.stringify(data));
+                    $('#time_recommendation').append("<strong>" +  JSON.stringify(data) + "</strong>");
+                }
+            });
+        }
+    });
+
     $("#schedule_update").click(function(){
         var dataArray = new Array();
         // get all div that have display inherit

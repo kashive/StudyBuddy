@@ -71,8 +71,8 @@ class StudySessionsController < ApplicationController
 
 	def new
   	@studysession  = StudySession.new
-    @course = @studysession.getCourse
     @user = current_user
+    @course = Course.find(params[:course_id])
     locationsArray = []
     StudySession.all.each do |ss| locationsArray.push(ss.location) end
     gon.locations = locationsArray.uniq.join(',')
@@ -103,29 +103,36 @@ class StudySessionsController < ApplicationController
   end
 
 	def create
+    # getting all user_id of all the classmates that were invited to this study session
+    invitedClassmates = []
+    params.each do |k,v|
+      if v == "yes"
+        invitedClassmates.push(k)
+      end
+    end
   	@studysession  = StudySession.new(:title => params[:title], :description => params[:description], :location => params[:location], :category => params[:category], :host_id => current_user.id)
     @studysession.time = DateTime.strptime(params[:time], '%m/%d/%Y %H:%M:%S %P') if params[:time] != ""
   	@studysession.course_id = params[:course_id]
     @studysession.twoHourReminder = false
     @studysession.twentyFourHourReminder = false
-    course = Course.find(params[:course_id])
-    @studysession.course_name = course.name 
+    @course = Course.find(params[:course_id])
+    @user = current_user
+    @studysession.course_name = @course.name 
 		if @studysession.save
       @studysession.create_activity :create, owner: current_user
-      course.getClassmates.each do |classmate|
-        next if classmate.id == current_user.id
+      invitedClassmates.each do |classmateId|
         invitation = Invitation.create("host_id"=>current_user.id,
-                          "user_id"=>classmate.id,
-                          "course_id"=>course.id,
+                          "user_id"=>classmateId,
+                          "course_id"=>@course.id,
                           "study_session_id"=>@studysession.id,
                           "status"=>"invited")
 
         notification = invitation.notifications.create("host_id"=>current_user.id,
-                                                       "user_id"=>classmate.id,
+                                                       "user_id"=>classmateId,
                                                        "action"=> "invited",
                                                        "seen"=>false)
       end
-  		redirect_to user_course_study_session_path(current_user,params[:course_id],@studysession.id ), notice: 'Study Session was successfully created. Invitations sent to all classmates'
+  		redirect_to user_course_study_session_path(current_user,params[:course_id],@studysession.id ), notice: 'Study Session was successfully created. Notifications sent to all invited classmates'
 		else  
 			render action: :new
 	  end

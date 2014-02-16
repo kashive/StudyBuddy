@@ -50,6 +50,28 @@ class ApplicationController < ActionController::Base
     return Course.where("user_id='#{current_user.id}'")
   end
 
+
+  def getTimingRecommendation
+    dayTimeAndPopularity = Hash.new { |hash, key| hash[key] = {} }
+    classmates = params[:data]
+    # inserting the current user as we need to their schedule in account to
+    classmates.push(current_user.id)
+    classmates.each do |classmateId|
+      Schedule.where("user_id = 'classmateId' AND status = 'available'").each do |schedule|
+        time = schedule.start_time + "-" + schedule.end_time
+        dayTimeAndPopularity[schedule.day][time] = dayTimeAndPopularity[schedule.day][time].to_i + 1
+      end
+    end
+    dayTopChoice = {}
+    dayTimeAndPopularity.keys.each do |day|
+      dayTopChoice[day] = dayTimeAndPopularity[day].sort_by{|key,value| value}.reverse.first
+    end
+    
+    respond_to do |format|
+        format.json { render :json=> { :recommendation=> dayTopChoice }}
+    end
+  end
+
   private
 	def authenticate_user_from_token!
 		user_email = params[:user_email].presence

@@ -29,6 +29,21 @@
           <%= f.text_field :location, :id => 'location', :name =>'location' %>
         </div>
       </div>
+      <div class="control-group">
+        <%= f.label :Invite_Classmates,:class => 'control-label' %><br />
+        <div class ="controls">
+          <a herf ="#" id = "invitation_select_all">Select/Deselect all</a><br>    
+          <% @course.getClassmates().each do |classmate|%>
+            <%next if classmate.id == @user.id%>
+            <%= check_box_tag classmate.id, 'yes', false, class: 'invitation_checkboxes'%><%=classmate.first_name%><br>
+          <%end%>
+        </div>
+      </div>
+      <div class="control-group">
+         <%= f.label :Click_to_get_recommendation, :class => 'control-label',:id =>"generate_recommendation" %>
+         <div id = "time_recommendation">
+         </div>
+     </div>
 
       <div class="control-group">
         <%= f.label :time,:class => 'control-label' %><br />
@@ -38,7 +53,7 @@
             <span class="add-on">
               <i data-time-icon="icon-time" data-date-icon="icon-calendar">
               </i>
-            </span>
+            </span>         
           </div>
         </div>
         <script type="text/javascript">
@@ -57,13 +72,8 @@
           <%= f.text_field :category, :id => 'category', :name => 'category' %>
         </div>
       </div>
-    Top Recommendations Time Maker<br>
-    <% Course.where("id = '#{params[:course_id]}'").first.getTimingRecommendation.each do |key,value| %>
-      <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
-      <br>
-    <%end%>
 
-    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to "Create Study Session","#",:id => "submit_session", :class=>'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                   dashboard_path(current_user), :class => 'btn' %>
 
@@ -96,6 +106,23 @@
           <%= f.text_field :location, :id => 'location', :name =>'location' %>
         </div>
       </div>
+       <div class="control-group">
+        <%= f.label :Invite_Classmates,:class => 'control-label' %><br />
+        <div class ="controls">
+          <a herf ="#" id = "invitation_select_all">Select/Deselect all</a><br>    
+          <% @course.getClassmates().each do |classmate|%>
+            <%next if classmate.id == @user.id%>
+            <%= check_box_tag classmate.id, 'yes', false, class: 'invitation_checkboxes'%><%=classmate.first_name%><br>
+          <%end%>
+        </div>
+      </div>
+          <div class="control-group">
+         <%= f.label :Click_to_get_recommendation,:class => 'control-label',:id =>"generate_recommendation" %>
+      <% @course.getTimingRecommendation.each do |key,value| %>
+        <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
+        <br>
+      <%end%>
+    </div>
 
       <div class="control-group">
         <%= f.label :time,:class => 'control-label' %><br />
@@ -119,18 +146,12 @@
       </div>
 
       <div class="control-group">
-        <%= f.label :category,:class => 'control-label' %><br />
-        <div class ="controls">    
-          <%= f.text_field :category, :id => 'category', :name => 'category' %>
-        </div>
-      </div>
-      Top Recommendations Time Maker<br>
-      <% Course.where("id = '#{params[:course_id]}'").first.getTimingRecommendation.each do |key,value| %>
-        <%= key +"--> " + "Best Time -->" + value[0] + " Number of Classmates ->> " + value[1].to_s%>
-        <br>
-      <%end%>
+         <%= f.label :Click_to_get_recommendation, :class => 'control-label',:id =>"generate recommendation" %>
+         <div id = "time_recommendation">
+         </div>
+     </div>
 
-    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to "Create Study Session","#",:id => "submit_session", :class=>'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                   dashboard_path(current_user), :class => 'btn' %>
   <% end %>
