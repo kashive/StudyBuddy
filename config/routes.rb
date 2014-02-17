@@ -39,6 +39,8 @@ StudyBuddy::Application.routes.draw do
   post '/users/:user_id/courses/:course_id/study_sessions/:id/invitations_update/:status', to: "study_sessions#updateInvitation", as: "invitation_update"
   resources :activities
  
+ # for pusher authentication
+ post 'pusher/auth'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

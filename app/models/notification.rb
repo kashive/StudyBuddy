@@ -2,22 +2,12 @@ class Notification < ActiveRecord::Base
 
   attr_accessible :action, :host_id, :notifiable_type, :notifiable_id, :user_id, :seen
   belongs_to :notifiable, polymorphic: true
-  after_create :sendPushNotification, if: -> {self.action.split('_').first != "session"}
+  after_create :sendPushNotification
   
   def sendPushNotification
-    require 'eventmachine'
     toShow = Notification.showableNotification([self])
-    EM.run {
-      client = Faye::Client.new('http://0.0.0.0:9292/faye')
-      publication= client.publish("/foo/#{self.user_id}", toShow)
-      publication.callback do
-        logger.debug "Message received by server! Data #{toShow}"
-      end
-
-      publication.errback do |error|
-        logger.debug 'There was a problem: ' + error.message
-      end
-    }
+    # sending push notification after the notification has been created
+    Pusher["private-" + self.user_id.to_s].trigger('notification', {:toShow => toShow})
   end
 
   def self.showableNotification(notificationArray)

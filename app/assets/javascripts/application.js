@@ -10,7 +10,7 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
+//= require jquery.min
 //= require jquery_ujs
 //= require jquery.ui.autocomplete
 //= require twitter/bootstrap
@@ -19,18 +19,20 @@
 
 
 $(document).ready(function() {
-    $(function() {
-      var user_id = gon.logged_user['id'];
-      var faye = new Faye.Client('http://0.0.0.0:9292/faye');
-      faye.subscribe("/foo/"+user_id, function (data) {
-        number = Number($('sub').html());
-        $.each(data, function( k, v ) {
-            $(".notification").prepend("<li class = \"notification_list\"> <a class = \"notification_href\" href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
-            $('sub').html(number+1);
-        });
-      });
-    });
 
+    $(function() {
+        var user_id = gon.logged_user['id'];
+        var pusher = new Pusher('19d5c989143e4861ce3a'); // Replace with your app key
+        var channel = pusher.subscribe('private-'+ user_id);
+
+       channel.bind('notification', function(data) {
+            number = Number($('sub').html());
+            $.each(data['toShow'], function( k, v ) {
+                $(".notification").prepend("<li class = \"notification_list\"> <a class = \"notification_href\" href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
+                $('sub').html(number+1);
+            });
+        });
+    });
 
     $('#fb_link').autocomplete({
         source: gon.locations

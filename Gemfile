@@ -9,10 +9,9 @@ gem 'devise'
 gem 'omniauth-facebook', '1.4.0'
 gem 'public_activity'
 gem 'kaminari'
-gem 'faye'
 gem 'thin'
-gem 'eventmachine'
 gem 'newrelic_rpm'
+gem 'pusher'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

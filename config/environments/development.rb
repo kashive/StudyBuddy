@@ -38,4 +38,10 @@ StudyBuddy::Application.configure do
 
   #from devise
   config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
+
+  # heroku pusher configuration
+  require 'pusher'
+  Pusher.app_id = '66214'
+  Pusher.key = '19d5c989143e4861ce3a'
+  Pusher.secret = 'f100a8088557c3ca2eb4'
 end
