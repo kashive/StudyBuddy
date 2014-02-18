@@ -89,7 +89,8 @@ input#sign_in_button{
   width: 18%;
   height: 20px;
   margin-left: 20px !important;
-  background: url("/assets/study_buddy_transparent.gif") no-repeat scroll 0px 7px;
+  background: url("/assets/study_buddy_transparent.gif") no-repeat scroll 0px 7px,
+    url("/assets/beta_logo.png") no-repeat right 15px;
 }
 
 #friends{
@@ -228,7 +229,7 @@ div.bio_photo_soha{
 div.bio_photo_berk{
 	height: 200px;
 	width: 225px;
-	background: url("/assets/berk.jpg") no-repeat;
+	background: url("/assets/berk.png") no-repeat;
 }
 div.bio_photo_mustapha{
 	height: 200px;
