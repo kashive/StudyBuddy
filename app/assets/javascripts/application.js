@@ -17,22 +17,75 @@
 //= require timeago
 //= require_tree .
 
-
 $(document).ready(function() {
-
+    var user_id = gon.logged_user['id'];
+    var pusher = new Pusher('19d5c989143e4861ce3a');
     $(function() {
-        var user_id = gon.logged_user['id'];
-        var pusher = new Pusher('19d5c989143e4861ce3a'); // Replace with your app key
-        var channel = pusher.subscribe('private-'+ user_id);
+        // making sure that the chat is closed to begin with
+        $('.chat').slideToggle(300, 'swing');
+       //check if the user is signed in
+       if (user_id !== undefined){
+            var notificationChannel = pusher.subscribe('private-'+ user_id);
+            var chatChannel = pusher.subscribe('presence-chat');
+            var receivedChatChannel;
+            notificationChannel.bind('notification', function(data) {
+                number = Number($('sub').html());
+                $.each(data['toShow'], function( k, v ) {
+                    $(".notification").prepend("<li class = \"notification_list\"> <a class = \"notification_href\" href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
+                    $('sub').html(number+1);
+                });
+            });
+             // in the success callback get all the people that are currently subscribed to the chatChannel, iterate thorough then and check if they are a classmate and if they are then append the person's name, email and the classrelationship into the chat box
+            chatChannel.bind('pusher:subscription_succeeded', function(members) {
+              $.update_chat(user_id, members);
+            });
 
-       channel.bind('notification', function(data) {
-            number = Number($('sub').html());
-            $.each(data['toShow'], function( k, v ) {
-                $(".notification").prepend("<li class = \"notification_list\"> <a class = \"notification_href\" href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
-                $('sub').html(number+1);
+            chatChannel.bind('pusher:member_added', function(member) {
+              $.update_chat(user_id, chatChannel.members);              
+            });
+
+            chatChannel.bind('pusher:member_removed', function(member) {
+              $.update_chat(user_id, chatChannel.members);
+            }); 
+            chatChannel.bind('client-join', function(data) {
+                alert('client join chat trigter!!!');
+              // subscribing to the same channel as the user who initiated the chat
+              if (data[gon.logged_user['email']] !== undefined){
+                receivedChatChannel = pusher.subscribe('private-' + gon.logged_user['email'] + data[gon.logged_user['email']]);
+                receivedChatChannel.bind('pusher:subscription_succeeded',function(){
+                    alert("subscribtiont by the receiving user also done");
+                });
+                receivedChatChannel.bind('pusher:subscription_error',function(status){
+                    alert("subscribtiont by the receiving user error");
+                });
+              }
+            });
+
+            if (receivedChatChannel !== undefined){
+                receivedChatChannel.bind('message',function(data){
+                    // append the message into the chat window
+                    alert(JSON.stringify(data));
+                });
+            }
+       }
+    });
+
+    jQuery.update_chat = function(user_id,members){
+        $("#number_online").html("(" + (members.count - 1) + ")");
+          // get rid of all the names that are already there in the chat box
+        $(".chat-history").empty();
+        // add all the members who are a classmate, except the current user into the chat box
+        members.each(function(member) {
+            if (member.id == user_id){
+                return true;
+            }
+            $.each(member.info["allClassmatesId"], function(k , v){
+                if(k == user_id){
+                    $(".chat-history").append("<div class= \"chat-message clearfix\"> <div class= \"chat-message-content clearfix\"> <h5 class = \"chatheader\">" + member.info["first_name"] + " " + member.info["last_name"] + " (" + member.info["email"] + ")" + "<br> <span class = \"class_name\">" + v[v.length - 1] + "</span></h5></div></div><hr>");
+                }
             });
         });
-    });
+    }
 
     $('#fb_link').autocomplete({
         source: gon.locations
@@ -235,5 +288,38 @@ $(document).ready(function() {
                 location.reload();
             }
         });
+    });
+
+    // CHAT JQUERY
+    $('#live-chat header').on('click', function() {
+        $('.chat').slideToggle(300, 'swing');
+
+    });
+
+    $('.chat-history').on('mouseover','.chatheader',function(){
+        $(this).css('cursor', 'pointer');
+    });
+
+    $('.chat-history').on('click','.chatheader',function(){
+       // start a private channel with current user and the clicked user email addressess (take into account authentication)
+            //for this user you can directly subscribe
+            //but for the other user, send a message(two emails) to a custom binding and then the other user also joins that channel 
+       // open a new chat box with the clicked user's name on title
+       // var privateChatChannel = pusher.subscribe('private-'+ user_id);
+       // extracting the email from the clicked chat name of format "(avishek@brandeis.edu)"
+        var nameEmail = $(this).html().split('<br>')[0].split(' ');
+        var email = (nameEmail[nameEmail.length - 1].replace('(','').replace(')',''));
+        // subscribing to the private chat channel
+        var privateChat = pusher.subscribe('private-'+ gon.logged_user['email'] + email);
+        privateChat.bind('pusher:subscription_succeeded', function() {
+            alert('yoyoyoy');
+             pusher.channel('presence-chat').trigger('client-join', {email:gon.logged_user['email']});
+        });
+
+    });
+
+    $('.chat-close').on('click', function(e) {
+        e.preventDefault();
+        $('#live-chat').fadeOut(300);
     });
 });

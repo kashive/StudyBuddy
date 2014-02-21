@@ -4,9 +4,10 @@
 <title>StudyBuddy - <%= @page_title || "Group Study Helper" %></title>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= include_gon %>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag  "application", :media => "all" %>
+  <%= stylesheet_link_tag  "http://fonts.googleapis.com/css?family=Droid+Sans:400,700" %>
   <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
 
@@ -136,5 +137,27 @@
 			<div class = "span1"></div>
 		</div>
 	</div>
+
+	<% if user_signed_in? %>
+		<div id="live-chat" class = "first">
+			
+			<header class="clearfix">
+
+				<%= link_to "X", "#",html_options = {"data-original-title"=>"Warning",
+													 "title"=>"Turn off chat",
+													 "class" => "chat-close"}
+				%>
+
+				<h4 class = "chatheader">Online Classmates <span id = "number_online"></span></h4>
+
+			</header>
+
+			<div class="chat">
+				
+				<div class="chat-history">
+					
+			    </div> <!-- end chat -->
+			</div> <!-- end live-chat -->
+	<%end%>
 </body>
 </html>

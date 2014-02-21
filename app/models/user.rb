@@ -37,6 +37,34 @@ class User < ActiveRecord::Base
     end
   end
 
+  # this method takes in a user_id and returns back the first class the self has in common with the user_id
+  def firstCommonClass(user_id)
+    # get all of the self's courses and get all of the user_id's courses and see if there is any commonality and get the first commonality
+    coursesForSelf = Course.where("user_id = '#{self.id}'")
+    coursesForUserId = Course.where("user_id = '#{user_id.to_s}'")
+    coursesForSelf.each do |courseForSelf|
+      coursesForUserId.each do |courseForUserId|
+        if courseForSelf.name == courseForUserId.name
+          return courseForUserId.name
+        end
+      end
+    end
+    return nil
+  end
+
+  # this method returns all the classmates for the user
+  def getAllClassmates
+    # get all user courses and for each course get all the classmates, remove duplicates and the self user from the array before sending it back
+    allClassmates = []
+    courses = Course.where("user_id = '#{self.id}'")
+    courses.each do |course|
+      course.getClassmates.each do |classmate|
+        allClassmates.push(classmate)
+      end
+    end
+    return (allClassmates - [self]).uniq
+  end
+
   def deleteCourses
     courses = Course.where("user_id = '#{self.id}'")
     courses.each do |course| course.destroy end
