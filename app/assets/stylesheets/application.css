@@ -82,11 +82,13 @@ input#sign_in_button{
  }
 
  a.brand{
-  width: 18%;
+  width: 24%;
   height: 20px;
+  background: url("final_beta_logo.png") scroll 0px 7px;
   margin-left: 20px !important;
-  background: url("/assets/study_buddy_transparent.gif") no-repeat scroll 0px 7px;
-  /*,url("/assets/beta_logo.png") no-repeat right 15px*/
+  background-position: left top;
+  background-repeat: no-repeat;
+  margin-top: 6px;
 }
 
 #friends{
