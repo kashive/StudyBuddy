@@ -28,6 +28,8 @@ application.js: application-a0f606cab9c374753f4005959140ffb1.js
 application/index.js: application-a0f606cab9c374753f4005959140ffb1.js
 application.css: application-52ccedc3f9a0d251e1980d843e0b7e32.css
 application/index.css: application-52ccedc3f9a0d251e1980d843e0b7e32.css
+chat.css: chat-e08ef1118556e1d6cbaa4fa87b8eb8d2.css
+chat/index.css: chat-e08ef1118556e1d6cbaa4fa87b8eb8d2.css
 jquery-ui/animated-overlay.gif: jquery-ui/animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
 jquery-ui/animated-overlay/index.gif: jquery-ui/animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
 jquery-ui/ui-bg_flat_0_aaaaaa_40x100.png: jquery-ui/ui-bg_flat_0_aaaaaa_40x100-7d1197a52442bc56fcad60d0390f4b32.png
