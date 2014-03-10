@@ -41,7 +41,7 @@ StudyBuddy::Application.routes.draw do
   get '/chatStart', to: "chats#getOnline"
   post '/chatMessageSave', to: "chats#create"
   get '/chatHistory', to: "chats#getHistory"
-  post '/joinPrivateChannel', to: "chats#joinPrivateChannel"
+  get '/getCommonClass', to: "chats#getCommonClass"
   # for pusher authentication
   post 'pusher/auth'
   # The priority is based upon order of creation:

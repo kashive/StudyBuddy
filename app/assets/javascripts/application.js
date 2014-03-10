@@ -235,7 +235,6 @@ $(document).ready(function() {
             }
         });
     });
-    var channelName="";
     $('#chat_open').click(function (event) {
       // open up the popup with the correct rails path
       window.open("http://0.0.0.0:3000/chatStart","_blank","width=800,height=430");
@@ -245,8 +244,6 @@ $(document).ready(function() {
     });
 
     $('li.onlineUserList').click(function(){
-        // for some reason triggering the request in the front end does not work and triggering it from the server side seems to work fine
-        // thus, an ajax call is being placed to the server side rather than making the trigger here
         clicked_user_id = $(this).attr('id');
         // hide all the threads and show the thread of the user that has currently been clicked on 
         $('.message-thread').css('display','none');
@@ -256,38 +253,40 @@ $(document).ready(function() {
          psconsole.scrollTop(
             psconsole[0].scrollHeight - psconsole.height()
          );
-        // sign up both users for the private channel
-        var privateChannel = pusher.subscribe('private-'+ user_id +'-'+ clicked_user_id);
-        $.ajax({
-            type: "POST",
-            url: "/joinPrivateChannel",
-            dataType: "json",
-            data: {"host_id":user_id, "receiver_id":clicked_user_id},
-        });
     });
 
     if(window.location.pathname == "/chatStart"){
-        var chatChannel = pusher.subscribe('presence-chat');
-        chatChannel.bind('privateChannelRequest', function(data) {
-            // checking if the user is the receiver
-            if (data["receiver_id"] == user_id){
-                var privateChatChannel = pusher.subscribe('private-' +  data["host_id"] + '-' + data["receiver_id"]);
-                channelName = 'private-' +  data["host_id"] + '-' + data["receiver_id"];
-                privateChatChannel.bind('message', function(data) {
-                    // check to see if the message thread is available, if it isn't then create one and
-                    // append the data into the message thread
-                    if ($('div#thread'+ data['sender_id']).length > 0) { 
-                        $('div#thread'+ data['sender_id'] + '.message-thread').append("<div class=\"message bubble-right\"> <label class=\"message-user\">" + data['sender_name'] + "</label> <label class=\"message-timestamp\">" + jQuery.timeago(new Date()) + "</label> <p>" + data['message'] + "</p></div>");
-                        $('.message-thread').css('display','none');
-                        $('#thread'+ data['sender_id']).css('display','block');
-                        // scrolling the message thread onto the bottom
-                        var psconsole = $('div#thread'+ data['sender_id'] + '.message-thread');
-                         psconsole.scrollTop(
-                            psconsole[0].scrollHeight - psconsole.height()
-                         );
-                    }                   
-                });
-            }
+        var presenceChatChannel = pusher.subscribe('presence-chat');
+        presenceChatChannel.bind('pusher:member_added', function(member) {
+          var commonClass = "";
+          // append the name and info in the online user list
+          debugger;
+          // getting the common class between the current_user and the new member
+          $.ajax({
+                type: "GET",
+                url: "/getCommonClass",
+                dataType: "json",
+                data: {"user_id":member['id']},
+                success: function(data){
+                    commonClass = data['commonClass']
+                }
+            });
+          alert("a new member added");
+          $('.message-user-list').append("<li class=\"onlineUserList " + member['id'] + "\" id=\"" + member['id'] + "\"> <a href=\"#\"><span class=\"user-img\"></span> <span class=\"user-title\">" + member['info']['first_name'] + " " + member['info']['last_name'] + "</span><p class=\"user-desc\">" + member['info']['email'] + "</p> <p class=\"user-desc\">" + commonClass + "</p></a></li>");
+        });
+        channel.bind('pusher:member_removed', function(member) {
+          // remove the name and the thread for that particular user
+          debugger;
+          alert('a new member removed');
+        });
+        var privateChatChannel = pusher.subscribe('private-chat' + user_id);
+        privateChatChannel.bind('message', function(data) {
+            $('div#thread'+ data['sender_id'] + '.message-thread').append("<div class=\"message bubble-right\"> <label class=\"message-user\">" + data['sender_name'] + "</label> <label class=\"message-timestamp\">" + jQuery.timeago(new Date()) + "</label> <p>" + data['message'] + "</p></div>");
+            $('.message-thread').css('display','none');
+            $('#thread'+ data['sender_id']).css('display','block');
+            // scrolling the message thread onto the bottom
+            var psconsole = $('div#thread'+ data['sender_id'] + '.message-thread');
+            psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height());
         });
     }
 
@@ -302,9 +301,8 @@ $(document).ready(function() {
             type: "POST",
             url: "/chatMessageSave",
             dataType: "json",
-            data: {"message":$('textarea').val(), "receiver_id":receiver_thread_id, "channelName":channelName},
+            data: {"message":$('textarea').val(), "receiver_id":receiver_thread_id},
             success: function(data){
-                debugger;
                 // append the saved message into the chat history
                 $('div#'+ receiver_thread_id + '.message-thread').append("<div class=\"message bubble-left\"> <label class=\"message-user\">" + gon.logged_user['first_name'] + " " + gon.logged_user['last_name'] + "</label> <label class=\"message-timestamp\">" + jQuery.timeago(new Date()) + "</label> <p>" + $('textarea').val() + "</p></div>");
                  // making sure that the thread scrolls at the bottom

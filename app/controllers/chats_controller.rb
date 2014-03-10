@@ -28,6 +28,12 @@ skip_before_filter :verify_authenticity_token
     end
   	render "show"
   end
+  # get the common class between chat users
+  def getCommonClass
+     respond_to do |format|
+        format.json { render :json=> { :commonClass => current_user.firstCommonClass(params[:user_id])}}
+    end
+  end
 
   def getHistory
     # sending a trigger to everybody who is signed up to the presence-chat
@@ -49,23 +55,14 @@ skip_before_filter :verify_authenticity_token
                    "sender_id" => current_user.id.to_s,
                    "receiver_id" => receiver_id.to_s
                    )
-    # sending a trigger to both as right now we don't know which is the right channel combination
-    Pusher['private-'+receiver_id+'-'+current_user.id.to_s].trigger('message', {:message => params[:message], :receiver_id => receiver_id, :sender_id => current_user.id, :sender_name => current_user.first_name + " " + current_user.last_name})
-    Pusher['private-'+current_user.id.to_s+'-'+receiver_id].trigger('message', {:message => params[:message], :receiver_id => receiver_id, :sender_id => current_user.id, :sender_name => current_user.first_name + " " + current_user.last_name})
+    # sending a trigger to the receiver of the message
+    Pusher['private-chat'+receiver_id].trigger('message', {:message => params[:message], :receiver_id => receiver_id, :sender_id => current_user.id, :sender_name => current_user.first_name + " " + current_user.last_name})
     respond_to do |format|
         format.json { render :json=> { :message => params[:message], 
                                        :receiver_id=>receiver_id,
                                        :sender_id=>current_user.id
                                        }
                     }
-    end
-  end
-  
-  # this method is used to send a trigger to the presence chat notifying the client side to subscribe to the private chat between two users
-  def joinPrivateChannel
-    Pusher['presence-chat'].trigger('privateChannelRequest',{:host_id=>params[:host_id], :receiver_id=>params[:receiver_id]})
-    respond_to do |format|
-        format.json { render :json=> { :success => "true"}}
     end
   end
 end
