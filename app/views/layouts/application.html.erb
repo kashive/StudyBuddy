@@ -139,9 +139,9 @@
 	</div>
 	<%if user_signed_in?%>
 		<%if checkIfAlreadyOnline == false%>
-			<%=link_to "Open up chat", "", :id => :chat_open%>
+			<%=link_to "Open up chat", "", :id => :chat_open, :class => 'btn btn-info'%>
 		<%elsif checkIfAlreadyOnline == true%>
-			<p>Chat currently open</p>
+			<%=link_to "Chat Already Open", "", :class => 'btn btn-info'%>
 		<%end%>
 	<%end%>
 </body>

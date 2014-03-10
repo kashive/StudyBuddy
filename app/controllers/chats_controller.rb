@@ -1,4 +1,6 @@
 class ChatsController < ApplicationController
+include ActionView::Helpers::DateHelper
+
 layout false
 skip_before_filter :verify_authenticity_token
 #except for the getOnline, the other methods don't render any html, just send back the json data 
@@ -28,26 +30,40 @@ skip_before_filter :verify_authenticity_token
     end
   	render "show"
   end
+  # gets the chatthread ready for append for the given user id
   # get the common class between chat users
+  def getThreadForUser
+    allMessages = Message.where("receiver_id = '#{params[:user_id]}' OR 
+                                       receiver_id = '#{current_user.id}' AND
+                                       sender_id   = '#{current_user.id}' OR
+                                       sender_id   = '#{params[:user_id]}'"
+                                      ).order("created_at asc")
+    sender = User.find(params[:user_id])
+    sender_name = sender.first_name + " " + sender.last_name
+    initialHTML = "<div class=\"message-thread\" id = \"thread#{params['user_id']}\" style=\"display: none\">"
+    middleHTML = ""
+    allMessages.each do |message|
+      if (message.sender_id == current_user.id.to_s)
+        bubble = "left"
+        user_name = current_user.first_name + " " + current_user.last_name
+      else
+        bubble = "right"
+        user_name = sender_name
+      end
+      middleHTML = middleHTML + "<div class=\"message bubble-#{bubble}\"> <label class=\"message-user\">#{user_name}</label> <label class=\"message-timestamp\">#{time_ago_in_words(message.created_at)} ago</label> <p>#{message.message}</p></div>"
+    end
+    endingHTML = "</div> </div>"
+    respond_to do |format|
+        format.json { render :json=> { :chatHistory => initialHTML + middleHTML + endingHTML}}
+    end
+  end
+
   def getCommonClass
      respond_to do |format|
         format.json { render :json=> { :commonClass => current_user.firstCommonClass(params[:user_id])}}
     end
   end
-
-  def getHistory
-    # sending a trigger to everybody who is signed up to the presence-chat
-    # then they sign up to the same private channel as this user 
-    Pusher['presence-chat'].trigger('privateChannelRequest', {:host_id => current_user.id, :receiver_id => params[:receiver_id]})
-  	# give back all the chat between two users
-    userToClassmate = Message.where("receiver_id = '#{params[:user_id]}' AND sender_id = '#{current_user.id}'");
-    classMateToUser = Message.where("receiver_id = '#{current_user.id}' AND sender_id = '#{params[:user_id]}'");
-
-    respond_to do |format|
-        format.json { render :json=> { :userToClassmate => userToClassmate, :classMateToUser => classMateToUser}}
-    end
-  end
-
+  
   def create
     receiver_id = params[:receiver_id].split("thread").last
   	# save the message into the database

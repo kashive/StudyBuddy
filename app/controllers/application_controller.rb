@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
     # if the user is then render return true, else return false
     allUsers = Pusher.get('/channels/presence-chat/users')
     allUsers[:users].each do |userHash|
-      return true if userHash.first.last == current_user.id
+      return true if userHash.first.last == current_user.id.to_s
     end
     return false
   end

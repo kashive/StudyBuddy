@@ -243,7 +243,7 @@ $(document).ready(function() {
       event.preventDefault(); // Prevent link from following its href
     });
 
-    $('li.onlineUserList').click(function(){
+    $('.message-user-list').on("click","li",function(){
         clicked_user_id = $(this).attr('id');
         // hide all the threads and show the thread of the user that has currently been clicked on 
         $('.message-thread').css('display','none');
@@ -259,11 +259,12 @@ $(document).ready(function() {
         var presenceChatChannel = pusher.subscribe('presence-chat');
         presenceChatChannel.bind('pusher:member_added', function(member) {
           var commonClass = "";
+          var chatHistoryToAppend = "";
           // append the name and info in the online user list
-          debugger;
           // getting the common class between the current_user and the new member
           $.ajax({
                 type: "GET",
+                async:false,
                 url: "/getCommonClass",
                 dataType: "json",
                 data: {"user_id":member['id']},
@@ -271,13 +272,25 @@ $(document).ready(function() {
                     commonClass = data['commonClass']
                 }
             });
-          alert("a new member added");
+          $.ajax({
+                type: "GET",
+                async: false,
+                url: "/getThreadForUser",
+                dataType: "json",
+                data: {"user_id":member['id']},
+                success: function(data){
+                    chatHistoryToAppend = data['chatHistory']
+                }
+            });
           $('.message-user-list').append("<li class=\"onlineUserList " + member['id'] + "\" id=\"" + member['id'] + "\"> <a href=\"#\"><span class=\"user-img\"></span> <span class=\"user-title\">" + member['info']['first_name'] + " " + member['info']['last_name'] + "</span><p class=\"user-desc\">" + member['info']['email'] + "</p> <p class=\"user-desc\">" + commonClass + "</p></a></li>");
+          // now appending all the chat history between the member and the current_user
+          $('.message-north').append(chatHistoryToAppend);
         });
-        channel.bind('pusher:member_removed', function(member) {
-          // remove the name and the thread for that particular user
-          debugger;
-          alert('a new member removed');
+        presenceChatChannel.bind('pusher:member_removed', function(member) {
+          // removing the thread as well as the name from the list
+          $("div#thread" + member['id']).remove();
+          $("li#"+ member['id']).remove();
+          $('#firstMessageThread').css('display','block');
         });
         var privateChatChannel = pusher.subscribe('private-chat' + user_id);
         privateChatChannel.bind('message', function(data) {
