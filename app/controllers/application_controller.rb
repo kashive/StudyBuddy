@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :gon_current_user
 
-  helper_method :getAllNotifications, :numberOfUnseenNotifications, :getAllCourses
+  helper_method :getAllNotifications, :numberOfUnseenNotifications, :getAllCourses, :checkIfAlreadyOnline
   
   def after_sign_in_path_for(user)
   	dashboard_path(user)
@@ -71,6 +71,16 @@ class ApplicationController < ActionController::Base
         format.json { render :json=> { :recommendation=> dayTopChoice }}
     end
   end
+  # this function tells us if the user has the chat open
+  def checkIfAlreadyOnline
+    # check the presence chat channel to see if the current users is subscribed to the channel
+    # if the user is then render return true, else return false
+    allUsers = Pusher.get('/channels/presence-chat/users')
+    allUsers[:users].each do |userHash|
+      return true if userHash.first.last == current_user.id
+    end
+    return false
+  end
 
   private
 	def authenticate_user_from_token!
@@ -84,5 +94,4 @@ class ApplicationController < ActionController::Base
 			sign_in user, store: false
 		end
 	end
-
 end

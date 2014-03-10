@@ -66,4 +66,10 @@ StudyBuddy::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+    # heroku pusher configuration
+  require 'pusher'
+  Pusher.app_id = '66214'
+  Pusher.key = '19d5c989143e4861ce3a'
+  Pusher.secret = 'f100a8088557c3ca2eb4'
 end

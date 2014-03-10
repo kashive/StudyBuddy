@@ -16,81 +16,27 @@
 //= require twitter/bootstrap
 //= require timeago
 //= require_tree .
-
+var pusher = new Pusher('19d5c989143e4861ce3a');
 $(document).ready(function() {
     var user_id = gon.logged_user['id'];
-    var pusher = new Pusher('19d5c989143e4861ce3a');
+
     $(function() {
-        // making sure that the chat is closed to begin with
-        $('.chat').slideToggle(300, 'swing');
        //check if the user is signed in
        if (user_id !== undefined){
-            var notificationChannel = pusher.subscribe('private-'+ user_id);
-            var chatChannel = pusher.subscribe('presence-chat');
-            var receivedChatChannel;
+            var notificationChannel = pusher.subscribe('private-'+ user_id)
             notificationChannel.bind('notification', function(data) {
                 number = Number($('sub').html());
                 $.each(data['toShow'], function( k, v ) {
                     $(".notification").prepend("<li class = \"notification_list\"> <a class = \"notification_href\" href = \""+ v[0]+ "\">" + k + "</a></li> <div class= \"time_ago\">" + jQuery.timeago(v[1]) + " <b>Unseen</b> </div> <li class=\"divider\"></li>");
                     $('sub').html(number+1);
                 });
-            });
-             // in the success callback get all the people that are currently subscribed to the chatChannel, iterate thorough then and check if they are a classmate and if they are then append the person's name, email and the classrelationship into the chat box
-            chatChannel.bind('pusher:subscription_succeeded', function(members) {
-              $.update_chat(user_id, members);
-            });
-
-            chatChannel.bind('pusher:member_added', function(member) {
-              $.update_chat(user_id, chatChannel.members);              
-            });
-
-            chatChannel.bind('pusher:member_removed', function(member) {
-              $.update_chat(user_id, chatChannel.members);
             }); 
-            chatChannel.bind('client-join', function(data) {
-                alert('client join chat trigter!!!');
-              // subscribing to the same channel as the user who initiated the chat
-              if (data[gon.logged_user['email']] !== undefined){
-                receivedChatChannel = pusher.subscribe('private-' + gon.logged_user['email'] + data[gon.logged_user['email']]);
-                receivedChatChannel.bind('pusher:subscription_succeeded',function(){
-                    alert("subscribtiont by the receiving user also done");
-                });
-                receivedChatChannel.bind('pusher:subscription_error',function(status){
-                    alert("subscribtiont by the receiving user error");
-                });
-              }
-            });
-
-            if (receivedChatChannel !== undefined){
-                receivedChatChannel.bind('message',function(data){
-                    // append the message into the chat window
-                    alert(JSON.stringify(data));
-                });
-            }
        }
     });
-
-    jQuery.update_chat = function(user_id,members){
-        $("#number_online").html("(" + (members.count - 1) + ")");
-          // get rid of all the names that are already there in the chat box
-        $(".chat-history").empty();
-        // add all the members who are a classmate, except the current user into the chat box
-        members.each(function(member) {
-            if (member.id == user_id){
-                return true;
-            }
-            $.each(member.info["allClassmatesId"], function(k , v){
-                if(k == user_id){
-                    $(".chat-history").append("<div class= \"chat-message clearfix\"> <div class= \"chat-message-content clearfix\"> <h5 class = \"chatheader\">" + member.info["first_name"] + " " + member.info["last_name"] + " (" + member.info["email"] + ")" + "<br> <span class = \"class_name\">" + v[v.length - 1] + "</span></h5></div></div><hr>");
-                }
-            });
-        });
-    }
 
     $('#fb_link').autocomplete({
         source: gon.locations
     });
-
 
 	$('#fb_link').popover({
                   'selector': '',
@@ -289,37 +235,86 @@ $(document).ready(function() {
             }
         });
     });
-
-    // CHAT JQUERY
-    $('#live-chat header').on('click', function() {
-        $('.chat').slideToggle(300, 'swing');
-
+    var channelName="";
+    $('#chat_open').click(function (event) {
+      // open up the popup with the correct rails path
+      window.open("http://0.0.0.0:3000/chatStart","_blank","width=800,height=430");
+      // manually change the turn chat on to chat currently open
+      $('#chat_open').html('Chat box currently open');
+      event.preventDefault(); // Prevent link from following its href
     });
 
-    $('.chat-history').on('mouseover','.chatheader',function(){
-        $(this).css('cursor', 'pointer');
-    });
-
-    $('.chat-history').on('click','.chatheader',function(){
-       // start a private channel with current user and the clicked user email addressess (take into account authentication)
-            //for this user you can directly subscribe
-            //but for the other user, send a message(two emails) to a custom binding and then the other user also joins that channel 
-       // open a new chat box with the clicked user's name on title
-       // var privateChatChannel = pusher.subscribe('private-'+ user_id);
-       // extracting the email from the clicked chat name of format "(avishek@brandeis.edu)"
-        var nameEmail = $(this).html().split('<br>')[0].split(' ');
-        var email = (nameEmail[nameEmail.length - 1].replace('(','').replace(')',''));
-        // subscribing to the private chat channel
-        var privateChat = pusher.subscribe('private-'+ gon.logged_user['email'] + email);
-        privateChat.bind('pusher:subscription_succeeded', function() {
-            alert('yoyoyoy');
-             pusher.channel('presence-chat').trigger('client-join', {email:gon.logged_user['email']});
+    $('li.onlineUserList').click(function(){
+        // for some reason triggering the request in the front end does not work and triggering it from the server side seems to work fine
+        // thus, an ajax call is being placed to the server side rather than making the trigger here
+        clicked_user_id = $(this).attr('id');
+        // hide all the threads and show the thread of the user that has currently been clicked on 
+        $('.message-thread').css('display','none');
+        $('#thread'+ clicked_user_id).css('display','block');
+        // making sure that the thread scrolls at the bottom
+         var psconsole = $('#thread'+ clicked_user_id);
+         psconsole.scrollTop(
+            psconsole[0].scrollHeight - psconsole.height()
+         );
+        // sign up both users for the private channel
+        var privateChannel = pusher.subscribe('private-'+ user_id +'-'+ clicked_user_id);
+        $.ajax({
+            type: "POST",
+            url: "/joinPrivateChannel",
+            dataType: "json",
+            data: {"host_id":user_id, "receiver_id":clicked_user_id},
         });
-
     });
 
-    $('.chat-close').on('click', function(e) {
-        e.preventDefault();
-        $('#live-chat').fadeOut(300);
+    if(window.location.pathname == "/chatStart"){
+        var chatChannel = pusher.subscribe('presence-chat');
+        chatChannel.bind('privateChannelRequest', function(data) {
+            // checking if the user is the receiver
+            if (data["receiver_id"] == user_id){
+                var privateChatChannel = pusher.subscribe('private-' +  data["host_id"] + '-' + data["receiver_id"]);
+                channelName = 'private-' +  data["host_id"] + '-' + data["receiver_id"];
+                privateChatChannel.bind('message', function(data) {
+                    // check to see if the message thread is available, if it isn't then create one and
+                    // append the data into the message thread
+                    if ($('div#thread'+ data['sender_id']).length > 0) { 
+                        $('div#thread'+ data['sender_id'] + '.message-thread').append("<div class=\"message bubble-right\"> <label class=\"message-user\">" + data['sender_name'] + "</label> <label class=\"message-timestamp\">" + jQuery.timeago(new Date()) + "</label> <p>" + data['message'] + "</p></div>");
+                        $('.message-thread').css('display','none');
+                        $('#thread'+ data['sender_id']).css('display','block');
+                        // scrolling the message thread onto the bottom
+                        var psconsole = $('div#thread'+ data['sender_id'] + '.message-thread');
+                         psconsole.scrollTop(
+                            psconsole[0].scrollHeight - psconsole.height()
+                         );
+                    }                   
+                });
+            }
+        });
+    }
+
+    $('#chatSend').click(function(){
+        // send an ajax request to the save the message
+        var receiver_thread_id;
+        // get the id of the message thread that is currently open so that we can get the receiver id
+        $(".message-thread").filter(function() { return $(this).css("display") != "none" }).each(function(){
+            receiver_thread_id = $(this).attr("id");
+        });
+        $.ajax({
+            type: "POST",
+            url: "/chatMessageSave",
+            dataType: "json",
+            data: {"message":$('textarea').val(), "receiver_id":receiver_thread_id, "channelName":channelName},
+            success: function(data){
+                debugger;
+                // append the saved message into the chat history
+                $('div#'+ receiver_thread_id + '.message-thread').append("<div class=\"message bubble-left\"> <label class=\"message-user\">" + gon.logged_user['first_name'] + " " + gon.logged_user['last_name'] + "</label> <label class=\"message-timestamp\">" + jQuery.timeago(new Date()) + "</label> <p>" + $('textarea').val() + "</p></div>");
+                 // making sure that the thread scrolls at the bottom
+                 var psconsole = $('div#'+ receiver_thread_id + '.message-thread');
+                 psconsole.scrollTop(
+                    psconsole[0].scrollHeight - psconsole.height()
+                 );
+                // clear the value in the text box
+                $('textarea').val('');
+            }
+        });
     });
 });

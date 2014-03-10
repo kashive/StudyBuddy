@@ -38,9 +38,12 @@ StudyBuddy::Application.routes.draw do
   post '/checkUserExist', to: "users#checkUserExist"
   post '/users/:user_id/courses/:course_id/study_sessions/:id/invitations_update/:status', to: "study_sessions#updateInvitation", as: "invitation_update"
   resources :activities
- 
- # for pusher authentication
- post 'pusher/auth'
+  get '/chatStart', to: "chats#getOnline"
+  post '/chatMessageSave', to: "chats#create"
+  get '/chatHistory', to: "chats#getHistory"
+  post '/joinPrivateChannel', to: "chats#joinPrivateChannel"
+  # for pusher authentication
+  post 'pusher/auth'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

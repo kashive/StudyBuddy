@@ -137,27 +137,12 @@
 			<div class = "span1"></div>
 		</div>
 	</div>
-
-	<% if user_signed_in? %>
-		<div id="live-chat" class = "first">
-			
-			<header class="clearfix">
-
-				<%= link_to "X", "#",html_options = {"data-original-title"=>"Warning",
-													 "title"=>"Turn off chat",
-													 "class" => "chat-close"}
-				%>
-
-				<h4 class = "chatheader">Online Classmates <span id = "number_online"></span></h4>
-
-			</header>
-
-			<div class="chat">
-				
-				<div class="chat-history">
-					
-			    </div> <!-- end chat -->
-			</div> <!-- end live-chat -->
+	<%if user_signed_in?%>
+		<%if checkIfAlreadyOnline == false%>
+			<%=link_to "Open up chat", "", :id => :chat_open%>
+		<%elsif checkIfAlreadyOnline == true%>
+			<p>Chat currently open</p>
+		<%end%>
 	<%end%>
 </body>
 </html>
