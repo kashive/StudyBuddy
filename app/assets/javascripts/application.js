@@ -237,7 +237,7 @@ $(document).ready(function() {
     });
     $('#chat_open').click(function (event) {
       // open up the popup with the correct rails path
-      window.open("http://0.0.0.0:3000/chatStart","_blank","width=800,height=430");
+      window.open("/chatStart","_blank","width=800,height=430");
       // manually change the turn chat on to chat currently open
       $('#chat_open').html('Chat box currently open');
       event.preventDefault(); // Prevent link from following its href
