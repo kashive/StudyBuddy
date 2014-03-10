@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<title> StudyBuddy Chat</title>
+		<%= include_gon %>
+		<%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
+		<%= stylesheet_link_tag "chat", :media => "all" %>
+		<%= javascript_include_tag "application"%>
+	</head>
+	<body>
+		<span id="chatBrand"></span>
+		<div id="wrapper">
+			<div class="message-container">
+				<div class="message-north">
+					<ul class="message-user-list">
+					<!-- Iterate over all the online classmates and add then into the list -->
+						<%@userListAndInfo.keys.each do |user_id|%>
+							<li class = "onlineUserList <%=user_id.to_s%>" id =<%=user_id.to_s%>>
+								<a href="#">
+									<span class="user-img"></span>
+									<span class="user-title"><%=@userListAndInfo[user_id]["name"]%></span>
+									<p class="user-desc"><%=@userListAndInfo[user_id]["email"]%> </p>
+									<p class="user-desc"><%=@userListAndInfo[user_id]["commonClass"]%> </p>
+								</a>
+							</li>
+						<%end%>
+					</ul>
+					<div class="message-thread" id = "firstMessageThread">
+						This is the first message thread
+					</div>
+					<%@userListAndInfo.keys.each do |user_id|%>
+						<div class="message-thread" id = "thread<%=user_id.to_s%>" style="display: none">
+						<%if @userListAndInfo[user_id]["messageHistory"] != nil%>
+							<%@userListAndInfo[user_id]["messageHistory"].each do |message|%>
+								<!-- determining whether the chat bubble should be left or right -->
+								<%if (message.sender_id == current_user.id.to_s)%>
+									<%bubble = "left"%>
+									<%user_name = current_user.first_name + " " + current_user.last_name%>
+								<%else%>
+									<%bubble = "right"%>
+									<%user_name = @userListAndInfo[user_id]["name"]%>
+								<%end%>
+								<div class="message bubble-<%=bubble%>">
+									<label class="message-user"><%=user_name%></label>
+									<label class="message-timestamp"><%=time_ago_in_words(message.created_at)%> ago</label>
+									<p><%=message.message%></p>
+								</div>
+							<%end%>
+						<%end%>	
+						</div>
+					<%end%>
+				</div>
+				<div class="message-south">
+					<textarea cols="20" rows="3"></textarea>
+					<button id = "chatSend">Send</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
