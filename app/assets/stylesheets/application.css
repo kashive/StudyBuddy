@@ -53,6 +53,13 @@ input#user_last_name{
 	font-weight: 500;
 }
 
+input#standardize{
+	width: 20%;
+	margin-top: 12px;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
 input#sign_in_button{
 	width:190px;
 }
@@ -409,3 +416,4 @@ li.dropdown:nth-child(3) > a:nth-child(1) > sub:nth-child(1){
 	.chat-message {
 		margin: 10px 0;
 	}
+	
