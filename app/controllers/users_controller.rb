@@ -16,9 +16,10 @@ class UsersController < ApplicationController
 	      	resource.ensure_authentication_token
 	      	flag = true 
 	    end
+	    allCourses = resource.getAllCourses
 		respond_to do |format|
 			if flag == true
-        		format.json { render :json=> { :auth_token=> "success" }, :status => 200}
+        		format.json { render :json=> { :auth_token=> "success", :user_id => resource.id, :courses => allCourses.to_json }, :status => 200}
         	else
         		format.json { render :json=> { :auth_token=> "failure" }}
         	end

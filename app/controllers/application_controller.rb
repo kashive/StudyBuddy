@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
     # inserting the current user as we need to their schedule in account to
     classmates.push(current_user.id)
     classmates.each do |classmateId|
-      Schedule.where("user_id = 'classmateId' AND status = 'available'").each do |schedule|
+      Schedule.where("user_id = '#{classmateId}' AND status = 'available'").each do |schedule|
         time = schedule.start_time + "-" + schedule.end_time
         dayTimeAndPopularity[schedule.day][time] = dayTimeAndPopularity[schedule.day][time].to_i + 1
       end
