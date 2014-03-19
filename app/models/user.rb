@@ -52,15 +52,6 @@ class User < ActiveRecord::Base
     return nil
   end
 
-  # returns all the classes for the user
-  def getAllCourses
-    allCourses = []
-    Enrollment.where("user_id = #{self.id}").each do |enrollment|
-      allCourses.push(Course.find(enrollment.course_id))
-    end
-    return allCourses
-  end
-
   # this method returns all the classmates for the user
   def getAllClassmates
     # get all user courses and for each course get all the classmates, remove duplicates and the self user from the array before sending it back
