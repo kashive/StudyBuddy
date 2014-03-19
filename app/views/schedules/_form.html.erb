@@ -11,6 +11,8 @@ This data is used to recommend timings when most of your classmates are free to 
     <button class = 'btn btn-info' id = "morning">8am till 4pm</button>
   </div>
 </div>
+<div align ="center"><%= link_to "Update Schedule","#",:id => "schedule_update", :class=>'btn btn-primary' %></div>
+
 <%= form_for([@user,@schedule]) do |f| %>
   
   <%@tableNumbers.each do |tableNumber|%>
@@ -53,5 +55,4 @@ This data is used to recommend timings when most of your classmates are free to 
           <%end%>
       </table>
   <%end%>
-  <%= link_to "Update Schedule","#",:id => "schedule_update", :class=>'btn btn-primary' %>
 <% end %>
