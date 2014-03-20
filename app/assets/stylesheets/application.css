@@ -81,6 +81,13 @@ input#sign_in_button{
 	margin: 20px;
  }
 
+ div.motto{
+ 	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+ 	font-size: 30px !important;
+ 	text-align:center;
+ 	color:white;
+ }
+
  a.brand{
   width: 29%;
   height: 20px;

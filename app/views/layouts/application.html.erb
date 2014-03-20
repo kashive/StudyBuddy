@@ -65,7 +65,7 @@
 					            <%end%>  
 					              <li class="divider"></li>
 								  <li><%= link_to "Enroll In New Course", new_user_course_path(current_user) %></li>
-								  <li><%= link_to "See All Course's Study Sessions", user_study_sessions_path(current_user) %></li>
+								  <li><%= link_to "See Study Sessions for All Courses", user_study_sessions_path(current_user) %></li>
 						        </ul>
 						    </li>
 				          	<li class="dropdown">
@@ -136,6 +136,9 @@
 			</div>
 			<div class = "span1"></div>
 		</div>
+		<% if !user_signed_in? %>
+		<br/><br/><div class="motto">Connect with classmates and join study sessions on StudyBuddy.</div>
+		<%end%>
 	</div>
 	<%if user_signed_in?%>
 		<%if checkIfAlreadyOnline == false%>
