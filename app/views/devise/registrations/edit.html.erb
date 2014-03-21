@@ -3,6 +3,8 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
+  <div><font size ="30"><i><center id = "user_profile_center"><a herf = "#" id = "Welcome to Study Buddy User Profile"> Welcome to Study Buddy User Profile</a></i></font><br>
+
   <div><%= f.label :email %><br />
   <%= f.email_field :email, :autofocus => true %></div>
 
@@ -43,5 +45,8 @@
   <div><%= f.label :contact_number %><br />
   <%= f.text_field :contact_number %></div>
   
-  <div><%= f.submit "Update" %></div>
+  <div><%= f.submit "Update", :class=>"btn btn-info" %></div><br>
+
+  <font size="30"><i><a herf = "#" id = "Thank You for Joining Us!">Thank You for Joining Us!</a><br></font> 
+ </center>
 <% end %>

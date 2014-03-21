@@ -24,31 +24,26 @@
     margin-bottom: 3px !important;
  }
 input#user_email{
-	width: 95%;
 	margin-top: 12px;
 	margin-bottom: 20px;
 	font-weight: 500;
 }
 input#user_password{
-	width: 95% ;
 	margin-bottom: 20px;
 	font-weight: 500;
 }
 
 input#user_password_confirmation{
-	width: 95% ;
 	margin-bottom: 20px;
 	font-weight: 500;
 }
 
 input#user_first_name{
-	width: 95% ;
 	margin-bottom: 20px;
 	font-weight: 500;
 }
 
 input#user_last_name{
-	width: 95% ;
 	margin-bottom: 20px;
 	font-weight: 500;
 }
@@ -291,4 +286,13 @@ li.dropdown:nth-child(3) > a:nth-child(1) > sub:nth-child(1){
 .login_buttons{
 	margin-top: 16px;
 }
-	
+
+#user_profile_center label{
+	font-weight: bold;
+}
+.login_textarea{
+	width: 95%;
+}
+.login_textarea input{
+	width: 95%;
+}
