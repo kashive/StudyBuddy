@@ -9,9 +9,16 @@
 				<i class="icon-circle-arrow-right" id ="class_pagination_right"></i>
 			
 		</div>
+
 		<div class = "add_course_button">
-			<%= link_to t('.add_course', :default => t("helpers.links.enroll_in_new_class")),
+			<%= link_to t('.add_course', :default => t("helpers.links.enroll_in_new_course")),
             	new_user_course_path(current_user),
+            	:class => 'btn btn-primary' %>
+        </div>
+        <div><br/><br/></div>
+        <div class = "add_course_button">
+			<%= link_to t('.new_user_schedule_path', :default => t("helpers.links.set_study_preference")),
+            	new_user_schedule_path(current_user),
             	:class => 'btn btn-primary' %>
         </div>
 	</div>

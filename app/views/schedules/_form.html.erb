@@ -1,9 +1,8 @@
-<h5>Legend</h5>
-Red Box = Busy for group study<br>
-Green Box = Available for group study<br>
-White Box = No Preference<br><br>
+<FONT size="3"><FONT COLOR="red">Red Box</FONT> = Busy for Group Study<br>
+<FONT COLOR="009900">Green Box</FONT> = Available for Group Study<br>
+White Box = No Preference<br><br></FONT>
 
-This data is used to recommend timings when most of your classmates are free to study. Class timings are already checked off as busy timings in the table
+This data is used to recommend times when most of your classmates are free to study. Class times are already checked off as busy times in the table
 <div id = 'buttons_wrapper'>
   <div id ='schedule_buttons'>
     <button class = 'btn btn-info' id = "afternoon">4pm till 12am</button>
@@ -11,6 +10,8 @@ This data is used to recommend timings when most of your classmates are free to 
     <button class = 'btn btn-info' id = "morning">8am till 4pm</button>
   </div>
 </div>
+<div align ="center"><%= link_to "Update Schedule","#",:id => "schedule_update", :class=>'btn btn-primary' %></div>
+
 <%= form_for([@user,@schedule]) do |f| %>
   
   <%@tableNumbers.each do |tableNumber|%>
@@ -53,5 +54,4 @@ This data is used to recommend timings when most of your classmates are free to 
           <%end%>
       </table>
   <%end%>
-  <%= link_to "Update Schedule","#",:id => "schedule_update", :class=>'btn btn-primary' %>
 <% end %>

@@ -55,10 +55,11 @@ input#sign_in_button{
 #sign_up_button{
 	width: 180px;
 }
- .hover { 
- 	background-color: #ccc !important; 
- 	cursor: pointer;
- }
+
+.hover { 
+	background-color: #ccc !important; 
+	cursor: pointer;
+}
 
  .navbar .nav{
  	float: right !important;
@@ -75,6 +76,13 @@ input#sign_in_button{
  	padding: 2px;
 	margin: 20px;
  }
+
+div.motto{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 30px !important;
+	text-align:center;
+	color:white;
+}
 
  a.brand{
   width: 29%;
