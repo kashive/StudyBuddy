@@ -25,7 +25,7 @@
 						<%end%>
 					</ul>
 					<div class="message-thread" id = "firstMessageThread">
-						This is the first message thread
+						Welcome to StudyBuddy 1-1 Chat! You can use this feature to chat with an online classmate. Please give us your feedback in the <%=link_to "contact us page.", new_get_in_touch_path, :target=>"_blank"%>
 					</div>
 					<%@userListAndInfo.keys.each do |user_id|%>
 						<div class="message-thread" id = "thread<%=user_id.to_s%>" style="display: none">

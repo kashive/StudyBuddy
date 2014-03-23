@@ -123,6 +123,10 @@ div.add_course_button{
 	right: 0px;
 }
 
+div.update_pref_button{
+	position: absolute;
+	right: 167px;
+}
 div.class_box{
 	border: 2px solid #a1a1a1;
 	background-color: rgb(249,249,300);
