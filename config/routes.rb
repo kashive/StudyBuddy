@@ -44,6 +44,7 @@ StudyBuddy::Application.routes.draw do
   get '/getThreadForUser', to: "chats#getThreadForUser"
   # for pusher authentication
   post 'pusher/auth'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
