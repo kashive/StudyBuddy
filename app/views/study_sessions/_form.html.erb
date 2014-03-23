@@ -8,6 +8,12 @@
               <%= @studysession.errors.full_messages.first%>
             </div>
       <% end %>
+      <div class="control-group">
+        <%= f.label :study_session_category,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.select :category, options_for_select([["Homework", "Homework"], ["Exam", "Exam"],["Problem Set", "Problem Set"], ["Team Meeting", "Team Meeting"],["Other","Other"] ]) %>
+        </div>
+      </div>
       
       <div class="control-group">
         <%= f.label :title,:class => 'control-label'%><br />
@@ -71,13 +77,6 @@
             });
           });
         </script>
-      </div>
-
-      <div class="control-group">
-        <%= f.label :category,:class => 'control-label' %><br />
-        <div class ="controls">    
-          <%= f.text_field :category, :id => 'category', :name => 'category' %>
-        </div>
       </div>
 
     <%= link_to "Create Study Session","#",:id => "submit_session", :class=>'btn btn-primary' %>

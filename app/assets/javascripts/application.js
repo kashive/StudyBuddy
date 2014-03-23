@@ -103,10 +103,11 @@ $(document).ready(function() {
     $('.class_box').click(function(){
     	return window.location = this.dataset.link;
     });
-
+    // background color when user is signed in 
    	if (document.cookie.indexOf("signed_in=1") != -1){
 		$("body").css("background-color","rgb(247, 246, 246)")
 	}
+    // background color whenuser is signed out
 	if (document.cookie.indexOf("signed_in=1") == -1){
 		$("body").css("background-color","#5283B0")
 	}

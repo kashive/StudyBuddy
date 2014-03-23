@@ -37,7 +37,7 @@
   </div>
   <script src = "//connect.facebook.net/en_US/all.js"></script>
   <div class = "add_course_button">
-      <%=link_to "Invite your Facebook friends to join in", "#", :id => "invite_fb_friends", :class=> 'btn btn-primary'%>
+      <%=link_to "Invite Your Facebook Friends to Join!", "#", :id => "invite_fb_friends", :class=> 'btn btn-primary'%>
   </div>
 </div>
   <table class="table", id="classmates">
@@ -70,28 +70,26 @@
       <p>Invitations</p>
     </div>
       <div class = "span5 facebook_marketing">
-        <div class = "news_headings">
-          <p>Current Status</p>
-        </div> 
+
         <% if @studysession.host_id.to_s == current_user.id.to_s%>
           You are the host of this study sesssion <br>
-          <%= link_to "Delete this study session", user_course_study_session_path(current_user, @course, @studysession), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }%><br>
-          <%= link_to "Edit this study session", edit_user_course_study_session_path(current_user.id, @course, @studysession)%>
+          <%= link_to "Delete this study session", user_course_study_session_path(current_user, @course, @studysession), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class=>'btn btn-danger'%><br><br>
+          <%= link_to "Edit this study session", edit_user_course_study_session_path(current_user.id, @course, @studysession), :class=>'btn btn-info'%>
         <%else%>
-          RSVP:<br>
+          Update Your RSVP:<br>
           <!-- If Yes, show no, if no show yes, else show all -->
           <%if @studysession.getRsvpStatus(current_user.id) == "yes"%>
-            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post, :class=>'btn btn-primary'%><br>
           <%elsif @studysession.getRsvpStatus(current_user.id) == "no"%>
-            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
+            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post, :class=>'btn btn-success'%><br><br>
           <%elsif @studysession.getRsvpStatus(current_user.id) == "invited"%>  
-            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
-            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post, :class=>'btn btn-success'%><br><br>
+            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post, :class=>'btn btn-primary'%>
           <%elsif @studysession.getRsvpStatus(current_user.id) == "none" && @studysession.is_private == true%>
             Cannot RSVP as this study session is private
           <%elsif @studysession.getRsvpStatus(current_user.id) == "none" && @studysession.is_private == (false || nil)%>
-            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post%><br>
-            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post%>
+            <%= link_to "Yes", invitation_update_path(current_user.id, @course.id, @studysession.id, "yes"), method: :post, :class=>'btn btn-success'%><br>
+            <%= link_to "No", invitation_update_path(current_user.id, @course.id, @studysession.id, "no"), method: :post, :class=>'btn btn-primary'%>
           <%end%>
         <%end%>
       </div>
