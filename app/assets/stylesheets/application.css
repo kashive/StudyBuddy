@@ -280,7 +280,25 @@ ul.dropdown-menu.notification{
 	width: 30px;
 	background: url("/assets/white.png") no-repeat;
 }
+#green-box{
+	float:left;
+	height:20px;
+	width: 30px;
+	background: url("/assets/green.png") no-repeat;
+}
+#red-box{
+	float:left;
+	height:20px;
+	width: 30px;
+	background: url("/assets/red.png") no-repeat;
+}
 
+#white-box{
+	float:left;
+	height:20px;
+	width: 30px;
+	background: url("/assets/white.png") no-repeat;
+}
 .hide{
 	display:none;
 }

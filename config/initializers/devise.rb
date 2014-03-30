@@ -237,7 +237,7 @@ Devise.setup do |config|
   end
 
   Warden::Manager.before_logout do |user,auth,opts|
-    auth.cookies.delete :signed_in
+    auth.cookies[:signed_in] = 0
   end
 
   # ==> Mountable engine configurations
