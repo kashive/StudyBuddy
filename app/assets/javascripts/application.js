@@ -304,6 +304,10 @@ $(document).ready(function() {
         });
     }
 
+    // $('#datetimepicker2').popover({
+    //     placement:top,
+    // });
+
     $('#chatSend').click(function(){
         // send an ajax request to the save the message
         var receiver_thread_id;

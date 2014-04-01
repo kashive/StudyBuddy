@@ -20,8 +20,6 @@ class StudySession < ActiveRecord::Base
       end
     end
 
-
-
     def deleteAllInvitations
       Invitation.where("study_session_id = '#{self.id}'").each do |invitation| invitation.destroy end
     end
