@@ -5,6 +5,6 @@ class StudySessionMailer < ActionMailer::Base
     @course = @study_session.getCourse
     @user = user
     # @url = user_course_study_session_path(@user,@course,@study_session)
-    mail(to: @user.email, subject: "You've been invited for a study session for #{@study_session.getCourse.name}")
+    mail(to: @user.email, subject: "You've been invited for a study session for #{@course.name}")
   end
 end
