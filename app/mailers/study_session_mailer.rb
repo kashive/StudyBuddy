@@ -1,7 +1,6 @@
 class StudySessionMailer < ActionMailer::Base
   default from: "study.collaborate@gmail.com"
   def study_session_invite(study_session,user)
-  	debugger
     @study_session = study_session
     @course = @study_session.getCourse
     @user = user
