@@ -326,3 +326,7 @@ li.dropdown:nth-child(3) > a:nth-child(1) > sub:nth-child(1){
 .login_textarea input{
 	width: 95%;
 }
+
+#generate_recommendation{
+	margin-top:10px;
+}

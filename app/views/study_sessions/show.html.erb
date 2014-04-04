@@ -16,7 +16,7 @@
       <dd><%= @studysession.category %></dd>
       <dt><strong>Location:</strong></dt>
       <dd><%= @studysession.location %></dd>
-      <dt><strong>Is Private:</strong></dt>
+      <dt><strong>Private:</strong></dt>
       <dd>
         <%if @studysession.is_private == false %>
           No
@@ -26,6 +26,8 @@
           No
         <%end%>
       </dd>
+      <dt><strong>Description:</strong></dt>
+      <dd><%= @studysession.description %></dd>
     </dl>
   </div>
 </div>

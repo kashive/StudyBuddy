@@ -190,7 +190,8 @@ $(document).ready(function() {
         }
     });
 
-    $("#generate_recommendation").click(function(){
+    $("#generate_recommendation").click(function(e){
+        e.preventDefault();
         // collect all the checked off people and send it to the server
         // which then will do the computation and return back the text to render in the form
         var dataArray = new Array();
@@ -207,8 +208,7 @@ $(document).ready(function() {
                 dataType: "json",
                 data: {"data":dataArray},
                 success: function(data){
-                    alert(JSON.stringify(data));
-                    $('#time_recommendation').append("<strong>" +  JSON.stringify(data) + "</strong>");
+                    $("<p><strong>" +  data['recommendation'] + "</strong></p>").insertAfter('#update_schedule_in_form');
                 }
             });
         }

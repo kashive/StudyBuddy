@@ -11,7 +11,7 @@
       <div class="control-group">
         <%= f.label :study_session_category,:class => 'control-label' %><br />
         <div class ="controls">    
-          <%= f.select :category, options_for_select([["Homework", "Homework"], ["Exam", "Exam"],["Problem Set", "Problem Set"], ["Team Meeting", "Team Meeting"],["Other","Other"] ]) %>
+          <%= f.select :category, options_for_select([["Homework", "Homework"], ["Exam", "Exam"], ["Team Meeting", "Team Meeting"],["Other","Other"] ]) %>
         </div>
       </div>
       
@@ -45,18 +45,15 @@
       <div class="control-group">
         <%= f.label :Invite_Classmates,:class => 'control-label' %><br />
         <div class ="controls">
-          <a herf ="#" id = "invitation_select_all">Select/Deselect all</a><br>    
+          <a href ="#" id = "invitation_select_all">Select/Deselect all</a><br>    
           <% @course.getClassmates().each do |classmate|%>
             <%next if classmate.id == @user.id%>
             <%= check_box_tag classmate.id, 'yes', false, class: 'invitation_checkboxes'%><%=classmate.first_name%><br>
           <%end%>
+          <%= link_to 'Click to get timing recommendation', '', :id=>'generate_recommendation', :class=>'btn btn-primary'%><br><br>
+          If you haven't already done so: <br><%= link_to 'Please update your schedule ', new_user_schedule_path(current_user), :id=>'update_schedule_in_form', :class=>'btn btn-warning'%><br>
         </div>
       </div>
-      <div class="control-group">
-         <%= f.label :Click_to_get_recommendation, :class => 'control-label',:id =>"generate_recommendation" %>
-         <div id = "time_recommendation">
-         </div>
-     </div>
 
       <div class="control-group">
         <%= f.label :time,:class => 'control-label' %><br />
@@ -91,6 +88,13 @@
               <%= @studysession.errors.full_messages.first%>
             </div>
       <% end %>
+
+       <div class="control-group">
+        <%= f.label :study_session_category,:class => 'control-label' %><br />
+        <div class ="controls">    
+          <%= f.select :category, options_for_select([["Homework", "Homework"], ["Exam", "Exam"], ["Team Meeting", "Team Meeting"],["Other","Other"] ]) %>
+        </div>
+      </div>
       
       <div class="control-group">
         <%= f.label :title,:class => 'control-label'%><br />
@@ -122,19 +126,15 @@
       <div class="control-group">
         <%= f.label :Invite_Classmates,:class => 'control-label' %><br />
         <div class ="controls">
-          <a herf ="#" id = "invitation_select_all">Select/Deselect all</a><br>    
+          <a href ="#" id = "invitation_select_all">Select/Deselect all</a><br>    
           <% @course.getClassmates().each do |classmate|%>
             <%next if classmate.id == @user.id%>
             <%= check_box_tag classmate.id, 'yes', false, class: 'invitation_checkboxes'%><%=classmate.first_name%><br>
           <%end%>
+          <%= link_to 'Click to get timing recommendation', '', :id=>'generate_recommendation', :class=>'btn btn-primary'%><br><br>
+          If you haven't already done so: <br><%= link_to 'Please update your schedule ', new_user_schedule_path(current_user), :id=>'update_schedule_in_form', :class=>'btn btn-warning'%><br>
         </div>
       </div>
-      <div class="control-group">
-         <%= f.label :Click_to_get_recommendation, :class => 'control-label',:id =>"generate_recommendation" %>
-         <div id = "time_recommendation">
-         </div>
-     </div>
-
       <div class="control-group">
         <%= f.label :time,:class => 'control-label' %><br />
         <div class ="controls">

@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
     # inserting the current user as we need to their schedule in account to
     classmates.push(current_user.id)
     classmates.each do |classmateId|
-      Schedule.where("user_id = 'classmateId' AND status = 'available'").each do |schedule|
+      Schedule.where("user_id = '#{classmateId}' AND status = 'available'").each do |schedule|
         time = schedule.start_time + "-" + schedule.end_time
         dayTimeAndPopularity[schedule.day][time] = dayTimeAndPopularity[schedule.day][time].to_i + 1
       end
@@ -66,9 +66,12 @@ class ApplicationController < ActionController::Base
     dayTimeAndPopularity.keys.each do |day|
       dayTopChoice[day] = dayTimeAndPopularity[day].sort_by{|key,value| value}.reverse.first
     end
-    
+    toReturn = "Based on your schedule and the schedules provided by your invited classemates, here are the times that work best for all of the invitees:<br>"
+    dayTopChoice.each do |key,value|
+      toReturn += "#{key}, #{value.last} invitee is available at #{value.first}<br>"
+    end
     respond_to do |format|
-        format.json { render :json=> { :recommendation=> dayTopChoice }}
+        format.json { render :json=> { :recommendation=> toReturn }}
     end
   end
   # this function tells us if the user has the chat open
