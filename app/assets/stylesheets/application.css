@@ -33,6 +33,10 @@ input#user_password{
 	font-weight: 500;
 }
 
+div.motto.audio{
+	cursor: pointer;
+}
+
 input#user_password_confirmation{
 	margin-bottom: 20px;
 	font-weight: 500;

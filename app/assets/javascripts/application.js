@@ -46,6 +46,11 @@ $(document).ready(function() {
                   
     });
 
+    $('div.motto.audio').click(function(){
+        window.open('https://soundcloud.com/avishek-neupane/studybuddy-ad', 'Study Buddy Audio');
+        return false;
+    });
+
     $("a#invite_fb_friends").click(function(){
           FB.init({
             appId:'405059632873984',
